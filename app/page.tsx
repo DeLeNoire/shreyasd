@@ -6,9 +6,9 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between pt-24 lg:p-24">
+    <main className="flex min-h-screen flex-col items-center justify-between p-6 lg:pt-24 lg:p-24">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <div className="fixed left-0 top-0 flex w-screen lg:w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit">
+        <div className="fixed left-0 top-0 flex  w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit">
         Don't be shy, say hi!&nbsp;
                   {/* Show text link on large screens and above */}
                   <code className="font-mono font-bold hidden lg:block">
@@ -49,7 +49,7 @@ export default function Home() {
           </div>&nbsp;
         </div>
       </div>
-      <div className="w-full">
+      <div className="w-screen lg:w-full">
         <Hero />
         <AppleCardsCarouselDemo />
         <GlobeDemo />
