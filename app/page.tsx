@@ -5,9 +5,9 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between pt-24 p-12 lg:p-24">
+    <main className="flex min-h-screen flex-col items-center justify-between pt-24 lg:p-24">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit">
+        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 lg:bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit">
         Don't be shy, say hi!&nbsp;
           <code className="font-mono font-bold ">
             <Link href="https://www.linkedin.com/in/shreyasd19/" >
