@@ -3,6 +3,7 @@ import Image from "next/image";
 import React from "react";
 import { Carousel, Card } from "@/components/ui/carousel";
 import { GlobeDemo } from "./globedemo";
+import { Content } from "next/font/google";
 
 export function AppleCardsCarouselDemo() {
   const cards = data.map((card, index) => (
@@ -19,7 +20,11 @@ export function AppleCardsCarouselDemo() {
   );
 }
 
-const DummyContent = () => {
+interface DummyContentProps {
+  useGlobe?: boolean; // Optional prop
+}
+
+const DummyContent: React.FC<DummyContentProps> = ({ useGlobe }) => {
   return (
     <>
       {[...new Array(3).fill(1)].map((_, index) => {
@@ -37,13 +42,16 @@ const DummyContent = () => {
               Langotiya jeetu ka mara hua yaar is ready to capture every
               thought.
             </p>
-            <Image
+            
+              <Image
               src=""
               alt="Macbook mockup from Aceternity UI"
               height="500"
               width="500"
               className="md:w-1/2 md:h-1/2 h-full w-full mx-auto object-contain"
             />
+            
+            
           </div>
         );
       })}
@@ -56,7 +64,7 @@ const data = [
     category: "My",
     title: "Projects ------->",
     src: "/pink.jpg",
-    content: <DummyContent />,
+    content: <DummyContent/>,
   },
   {
     category: "Productivity",
