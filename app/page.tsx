@@ -1,6 +1,6 @@
-import App from "@/components/Band";
+import { AppleCardsCarouselDemo } from "@/components/apple";
+import { GlobeDemo } from "@/components/globedemo";
 import Hero from "@/components/Hero";
-import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
@@ -24,6 +24,8 @@ export default function Home() {
       </div>
       <div className="w-full">
         <Hero />
+        <AppleCardsCarouselDemo />
+        <GlobeDemo />
       </div>
     </main>
   );
