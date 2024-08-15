@@ -1,6 +1,10 @@
+
 import { AppleCardsCarouselDemo } from "@/components/apple";
 import { GlobeDemo } from "@/components/globedemo";
 import Hero from "@/components/Hero";
+import { SparklesCore } from "@/components/ui/sparkles";
+import { Sparkles } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
 import Image from "next/image";
 import Link from "next/link";
 

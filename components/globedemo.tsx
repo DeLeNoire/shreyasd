@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
+import { SparklesCore } from "./ui/sparkles";
 
 const World = dynamic(() => import("@/components/ui/globe").then((m) => m.World), {
   ssr: false,
@@ -431,10 +432,27 @@ export function GlobeDemo() {
         </motion.div>
         <div className="absolute w-full bottom-0 inset-x-0 h-40 bg-gradient-to-b pointer-events-none select-none from-transparent dark:to-black to-white z-40" />
         <div className="absolute w-full -bottom-20 h-full z-10 p-5 md:p-0">
-          <div className="w-full h-4/6 md:h-screen p-3 md:p-0">
-
-          {showHero && <World data={sampleArcs} globeConfig={globeConfig} />}
+          {showHero && 
+          
+          <div className="h-[40rem] relative w-full bg-white flex flex-col items-center justify-center overflow-hidden rounded-md mt-10">
+          <div className="w-full absolute inset-0 h-screen">
+          <SparklesCore
+          id="tsparticlesfullpage"
+          background="transparent"
+          minSize={0.7}
+          maxSize={1.4}
+          particleDensity={100}
+          className="w-full h-full"
+          particleColor="#000000"
+          />
           </div>
+          <div className="w-full h-4/6 md:h-screen p-3 md:p-0">
+          <World data={sampleArcs} globeConfig={globeConfig} />
+          </div>
+          </div>
+
+
+          }
           
         </div>
       </div>
