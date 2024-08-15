@@ -4,6 +4,7 @@ import React from "react";
 import { Carousel, Card } from "@/components/ui/carousel";
 import { GlobeDemo } from "./globedemo";
 import { Content } from "next/font/google";
+import Web from "@/lib/constants/web"
 
 export function AppleCardsCarouselDemo() {
   const cards = data.map((card, index) => (
@@ -31,7 +32,7 @@ const DummyContent: React.FC<DummyContentProps> = ({ useGlobe }) => {
         return (
           <div
             key={"dummy-content" + index}
-            className="bg-[#F5F5F7] dark:bg-neutral-800 p-8 md:p-14 rounded-3xl mb-4"
+            className="bg-[#F5F5F7] dark:bg-neutral-800 p-8 md:p-14 rounded-xl mb-4"
           >
             <p className="text-neutral-600 dark:text-neutral-400 text-base md:text-2xl font-sans max-w-3xl mx-auto">
               <span className="font-bold text-neutral-700 dark:text-neutral-200">
@@ -50,8 +51,6 @@ const DummyContent: React.FC<DummyContentProps> = ({ useGlobe }) => {
               width="500"
               className="md:w-1/2 md:h-1/2 h-full w-full mx-auto object-contain"
             />
-            
-            
           </div>
         );
       })}
@@ -67,10 +66,10 @@ const data = [
     content: <DummyContent/>,
   },
   {
-    category: "Productivity",
+    category: "Web",
     title: "Enhance your productivity.",
     src: "/camera.jpg",
-    content: <DummyContent />,
+    content: <Web/>,
   },
   {
     category: "Product",
