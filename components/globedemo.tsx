@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 
@@ -394,6 +394,16 @@ export function GlobeDemo() {
     },
   ];
 
+  const [showHero, setShowHero] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowHero(true);
+    }, 3000); // 1-second delay
+
+    return () => clearTimeout(timer); // Cleanup timer on component unmount
+  }, []);
+
   return (
     <div className="flex flex-row items-center justify-center py-20 h-screen md:h-auto dark:bg-black bg-white relative w-full">
       <div className="max-w-7xl mx-auto w-full relative overflow-hidden h-full md:h-[40rem] md:px-4">
@@ -421,7 +431,8 @@ export function GlobeDemo() {
         </motion.div>
         <div className="absolute w-full bottom-0 inset-x-0 h-40 bg-gradient-to-b pointer-events-none select-none from-transparent dark:to-black to-white z-40" />
         <div className="absolute w-full -bottom-20 h-full z-10 p-5">
-          <World data={sampleArcs} globeConfig={globeConfig} />
+          {showHero && <World data={sampleArcs} globeConfig={globeConfig} />}
+          
         </div>
       </div>
     </div>
