@@ -430,8 +430,8 @@ export function GlobeDemo() {
           </p>
         </motion.div>
         <div className="absolute w-full bottom-0 inset-x-0 h-40 bg-gradient-to-b pointer-events-none select-none from-transparent dark:to-black to-white z-40" />
-        <div className="absolute w-full -bottom-20 h-full z-10 p-5">
-          <div className="w-full h-4/6 md:h-screen p-3">
+        <div className="absolute w-full -bottom-20 h-full z-10 p-5 md:p-0">
+          <div className="w-full h-4/6 md:h-screen p-3 md:p-0">
 
           {showHero && <World data={sampleArcs} globeConfig={globeConfig} />}
           </div>
