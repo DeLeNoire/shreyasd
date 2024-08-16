@@ -74,7 +74,16 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), (require("tailwindcss/lib/util/flattenColorPalette"))],
 } satisfies Config
 
 export default config
+
+function flattenColorPalette(colors: any): any {
+  return Object.entries(colors).reduce((acc: any, [key, value]: [string, any]) => {
+    if (typeof value === "object") {
+      return { ...acc, ...flattenColorPalette(value) };
+    }
+    return { ...acc, [key]: value };
+  }, {});
+}

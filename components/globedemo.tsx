@@ -406,7 +406,7 @@ export function GlobeDemo() {
   }, []);
 
   return (
-    <div className="flex flex-row items-center justify-center py-20 md:py-0 h-screen md:h-auto dark:bg-black bg-white relative w-full">
+    <div className="flex flex-row items-center justify-center py-20 md:py-0 h-screen md:h-auto dark:bg-black bg-white relative w-full mt-40">
       <div className="max-w-7xl mx-auto w-full relative overflow-hidden h-full md:h-[40rem] md:px-4">
         <motion.div
           initial={{
@@ -441,7 +441,7 @@ export function GlobeDemo() {
           background="transparent"
           minSize={0.7}
           maxSize={1.4}
-          particleDensity={100}
+          particleDensity={120}
           className="w-full h-full"
           particleColor="#000000"
           />
