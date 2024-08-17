@@ -5,7 +5,7 @@ const nextConfig = {
     reactStrictMode: true, // Enables strict mode for React
     swcMinify: true, // Enables SWC-based minification for faster builds
     images: {
-      domains: ['images.unsplash.com'], // List of allowed image domains
+      domains: ['images.unsplash.com' , 'assets.aceternity.com'], // List of allowed image domains
     },
     webpack: (config, { isServer }) => {
       // Custom webpack configurations (if needed)

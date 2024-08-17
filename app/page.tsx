@@ -1,5 +1,5 @@
 
-import { AppleCardsCarouselDemo } from "@/components/apple";
+
 import { GlobeDemo } from "@/components/globedemo";
 import Hero from "@/components/Hero";
 import { StickyScrollRevealDemo } from "@/components/sticky";
@@ -51,7 +51,7 @@ export default function Home() {
           </div>&nbsp;
         </div>
       </div>
-      <div className="w-screen lg:w-full z-20">
+      <div className="w-screen lg:w-full z-20 ">
         <Hero />
         <StickyScrollRevealDemo/>
       </div>

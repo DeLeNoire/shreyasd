@@ -1,89 +1,155 @@
-"use client";
-import React from "react";
-import { StickyScroll } from "@/components/ui/sticky-scroll-reveal";
-import Image from "next/image";
+
+import { StickyScroll } from "@/components/ui/stickyScroll";
 import { Card, Carousel } from "./ui/carousel";
-import Web from "@/lib/constants/web";
+import DevelopmentData from "@/lib/data/developmentdata";
 
 
 
-  const data = [
+  const dev = [
     {
-      category: "My",
-      title: "Projects ------->",
+      category: "Development",
+      title: "Projects",
       src: "/pink.jpg",
-      content: <Web/>,
+      content: <DevelopmentData/>,
     },]
 
-    const cards = data.map((card, index) => (
+    const devcards = dev.map((card, index) => (
         <Card key={card.src} card={card} index={index} />
       ));
 
 
+
+  const cyber = [
+    {
+      category: "cyber",
+      title: "Projects",
+      src: "/brain.jpg",
+      content: <DevelopmentData/>,
+    },]
+    
+    const cyberCards = cyber.map((card, index) => (
+      <Card key={card.src} card={card} index={index} />
+    ));
+
+  const cloud = [
+      {
+        category: "My",
+        title: "Projects",
+        src: "/cube.jpg",
+        content: <DevelopmentData/>,
+      },]
+      
+    const cloudCards = cloud.map((card, index) => (
+        <Card key={card.src} card={card} index={index} />
+      ));
+
+  const quant = [
+        {
+          category: "My",
+          title: "Projects",
+          src: "/circle.jpg",
+          content: <DevelopmentData/>,
+        },]
+        
+    const quantCards = quant.map((card, index) => (
+          <Card key={card.src} card={card} index={index} />
+        ));
+
+  const dsa = [
+          {
+            category: "My",
+            title: "Projects",
+            src: "/lamp.jpg",
+            content: <DevelopmentData/>,
+          },]
+          
+    const dsaCards = dsa.map((card, index) => (
+            <Card key={card.src} card={card} index={index} />
+          ));
+  
+  const ai = [
+            {
+              category: "My",
+              title: "Projects",
+              src: "/phone.jpg",
+              content: <DevelopmentData/>,
+            },]
+            
+    const aiCards = ai.map((card, index) => (
+              <Card key={card.src} card={card} index={index} />
+            ));
+
+            
 const content = [
   {
-    title: "Collaborative Editing",
+    title: "Development",
     description:
-      "Work together in real time with your team, clients, and stakeholders. Collaborate on documents, share ideas, and make decisions quickly. With our platform, you can streamline your workflow and increase productivity.",
+      "Leveraging cutting-edge technologies to craft robust solutions. My work spans full-stack development, containerization, and scalable architectures, all designed to optimize performance and drive innovation. Explore detailed insights under specific projects.",
     content: (
+        <>
       <div className="h-full w-full bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] flex items-center justify-center text-black">
-        <Carousel items={cards}/>
+        <Carousel items={devcards}/>
       </div>
+        </>
     ),
   },
   {
-    title: "Real time changes",
+    title: "Cyber Security",
     description:
-      "See changes as they happen. With our platform, you can track every modification in real time. No more confusion about the latest version of your project. Say goodbye to the chaos of version control and embrace the simplicity of real-time updates.",
+      "Enhancing security protocols with a focus on performance and resilience. My approach involves optimizing cryptographic operations and fortifying systems against breaches.",
     content: (
       <div className="h-full w-full  flex items-center justify-center text-white">
-        <Image
-          src="/cube.jpg"
-          width={300}
-          height={400}
-          className="h-full w-full object-cover"
-          alt="linear board demo"
-        />
+        <Carousel items={cyberCards}/>
       </div>
     ),
   },
   {
-    title: "Version control",
+    title: "Cloud",
     description:
-      "Experience real-time updates and never stress about version control again. Our platform ensures that you're always working on the most recent version of your project, eliminating the need for constant manual updates. Stay in the loop, keep your team aligned, and maintain the flow of your work without any interruptions.",
+      "Architecting scalable and resilient cloud solutions with a focus on efficiency. From autoscaling environments to cloud-native applications, my work is geared toward maximizing uptime and performance.",
     content: (
       <div className="h-full w-full bg-[linear-gradient(to_bottom_right,var(--orange-500),var(--yellow-500))] flex items-center justify-center text-white">
-        <Image
-          src="/arrow.jpg"
-          width={300}
-          height={400}
-          className="h-full w-full object-cover"
-          alt="linear board demo"
-        />
+        <Carousel items={cloudCards}/>
       </div>
     ),
   },
   {
-    title: "Running out of content",
+    title: "Quant",
     description:
-      "Experience real-time updates and never stress about version control again. Our platform ensures that you're always working on the most recent version of your project, eliminating the need for constant manual updates. Stay in the loop, keep your team aligned, and maintain the flow of your work without any interruptions.",
+      "Applying algorithmic precision to solve complex financial challenges. My projects emphasize accuracy, speed, and innovative techniques in quantitative analysis. For detailed methodologies and results.",
     content: (
       <div className="h-full w-full bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] flex items-center justify-center text-white">
-        <Image
-          src="/project.jpg"
-          width={300}
-          height={400}
-          className="h-full w-full object-cover"
-          alt="linear board demo"
-        />
+        <Carousel items={quantCards}/>
+      </div>
+    ),
+  },
+  {
+    title: "Data Structures & Algorithm",
+    description:
+      "Building efficient and optimized solutions through a deep understanding of data structures and algorithms. My work in DSA is focused on solving complex problems with innovative approaches.",
+    content: (
+      <div className="h-full w-full bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] flex items-center justify-center text-white">
+        <Carousel items={dsaCards}/>
+      </div>
+    ),
+  },
+  {
+    title: "AI & Miscelaneous",
+    description:
+      "Creating intelligent systems that learn and adapt. My AI projects involve machine learning, data analytics, and advanced modeling techniques, driving smart decision-making processes.",
+    content: (
+      <div className="h-full w-full bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] flex items-center justify-center text-white">
+        <Carousel items={aiCards}/>
       </div>
     ),
   },
 ];
+
+
 export function StickyScrollRevealDemo() {
   return (
     <div className="p-10 w-full py-28">
-      <StickyScroll content={content} />
+      <StickyScroll content={content}/>
     </div>
   );
 }
