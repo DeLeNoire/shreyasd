@@ -1,13 +1,24 @@
-import type { Config } from "tailwindcss"
 
-const config = {
+
+import type { Config } from "tailwindcss";
+
+function flattenColorPalette(colors: any): any {
+  return Object.entries(colors).reduce((acc: any, [key, value]: [string, any]) => {
+    if (typeof value === "object") {
+      return { ...acc, ...flattenColorPalette(value) };
+    }
+    return { ...acc, [key]: value };
+  }, {});
+}
+
+const config: Config = {
   darkMode: ["class"],
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
-	],
+  ],
   prefix: "",
   theme: {
     container: {
@@ -67,23 +78,28 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(calc(-100% - var(--gap)))" },
+        },
+        "marquee-vertical": {
+          from: { transform: "translateY(0)" },
+          to: { transform: "translateY(calc(-100% - var(--gap)))" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        marquee: "marquee var(--duration) linear infinite",
+        "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), (require("tailwindcss/lib/util/flattenColorPalette"))],
-} satisfies Config
+  plugins: [
+    require("tailwindcss-animate"),
+    flattenColorPalette,
+    require('@tailwindcss/typography')
+  ],
+};
 
-export default config
-
-function flattenColorPalette(colors: any): any {
-  return Object.entries(colors).reduce((acc: any, [key, value]: [string, any]) => {
-    if (typeof value === "object") {
-      return { ...acc, ...flattenColorPalette(value) };
-    }
-    return { ...acc, [key]: value };
-  }, {});
-}
+export default config;

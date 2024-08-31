@@ -67,3 +67,37 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes dotPattern {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.animate-dotPattern {
+  animation: dotPattern 2s infinite ease-in-out;
+}
+
+/* styles/globals.css */
+.algorithm-slider {
+  display: flex;
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+
+.cards-container {
+  display: flex;
+}
+
+.algorithm-card {
+  display: inline-block;
+  padding: 20px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}

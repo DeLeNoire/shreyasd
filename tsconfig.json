@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.jsx" ,"**/*.tsx", ".next/types/**/*.ts", "components/Band.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.jsx" ,"**/*.tsx", ".next/types/**/*.ts", "components/Band.jsx", "app/api/compile/route.ts"],
   "exclude": ["node_modules"]
 }
