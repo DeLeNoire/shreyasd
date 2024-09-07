@@ -1,14 +1,126 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "postgresql" // or your database provider
   url      = env("DATABASE_URL")
+}
+
+model Project {
+  id         Int             @id @default(autoincrement())
+  name       String
+  category   ProjectCategory
+  websites   Website[]
+  ai         AI[]
+  quant      Quant[]
+  blockchain BlockChain[]
+  collabs    Collab[]
+  misc       Miscellaneous[]
+}
+
+model Website {
+  id         Int      @id @default(autoincrement())
+  name       String
+  images     Json // Array of images (img1, img2, img3, ...)
+  techs      Json // Array of techs [{name: "name1", description: ""}]
+  liveLink   String? // Optional live link
+  githubLink String? // Optional GitHub link
+  hooks      Hook[] // Hooks
+  Project    Project? @relation(fields: [projectId], references: [id])
+  projectId  Int?
+}
+
+model AI {
+  id         Int      @id @default(autoincrement())
+  name       String
+  images     Json // Array of images
+  techs      Json // Array of techs [{name: "name1", description: ""}]
+  liveLink   String? // Optional live link
+  githubLink String? // Optional GitHub link
+  hooks      Hook[] // Hooks
+  Project    Project? @relation(fields: [projectId], references: [id])
+  projectId  Int?
+}
+
+model Quant {
+  id         Int      @id @default(autoincrement())
+  name       String
+  images     Json // Array of images
+  techs      Json // Array of techs [{name: "name1", description: ""}]
+  liveLink   String? // Optional live link
+  githubLink String? // Optional GitHub link
+  hooks      Hook[] // Hooks
+  Project    Project? @relation(fields: [projectId], references: [id])
+  projectId  Int?
+}
+
+model BlockChain {
+  id         Int      @id @default(autoincrement())
+  name       String
+  images     Json // Array of images
+  techs      Json // Array of techs [{name: "name1", description: ""}]
+  liveLink   String? // Optional live link
+  githubLink String? // Optional GitHub link
+  hooks      Hook[] // Hooks
+  Project    Project? @relation(fields: [projectId], references: [id])
+  projectId  Int?
+}
+
+model Collab {
+  id         Int      @id @default(autoincrement())
+  name       String
+  images     Json // Array of images
+  techs      Json // Array of techs [{name: "name1", description: ""}]
+  liveLink   String? // Optional live link
+  githubLink String? // Optional GitHub link
+  hooks      Hook[] // Hooks
+  Project    Project? @relation(fields: [projectId], references: [id])
+  projectId  Int?
+}
+
+model Miscellaneous {
+  id         Int      @id @default(autoincrement())
+  name       String
+  images     Json // Array of images
+  techs      Json // Array of techs [{name: "name1", description: ""}]
+  liveLink   String? // Optional live link
+  githubLink String? // Optional GitHub link
+  hooks      Hook[] // Hooks
+  Project    Project? @relation(fields: [projectId], references: [id])
+  projectId  Int?
+}
+
+model Hook {
+  id           Int    @id @default(autoincrement())
+  title        String
+  description  String
+  websiteId    Int? // Foreign key to Website
+  aiId         Int? // Foreign key to AI
+  quantId      Int? // Foreign key to Quant
+  blockchainId Int? // Foreign key to BlockChain
+  collabId     Int? // Foreign key to Collab
+  miscId       Int? // Foreign key to Miscellaneous
+
+  Website       Website?       @relation(fields: [websiteId], references: [id])
+  AI            AI?            @relation(fields: [aiId], references: [id])
+  Quant         Quant?         @relation(fields: [quantId], references: [id])
+  BlockChain    BlockChain?    @relation(fields: [blockchainId], references: [id])
+  Collab        Collab?        @relation(fields: [collabId], references: [id])
+  Miscellaneous Miscellaneous? @relation(fields: [miscId], references: [id])
+}
+
+enum ProjectCategory {
+  Websites
+  AI
+  Quant
+  BlockChain
+  Collabs
+  Miscellaneous
+}
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String
+  icon String // Filename or URL for the icon image
 }
