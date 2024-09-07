@@ -57,7 +57,7 @@ export default function Home() {
         <Hero />
       </div>
 
-      <div className="w-[78rem] h-10 bg-gradient-to-r from-black via-transparent to-black rounded-full flex items-end justify-center mt-20">
+      <div className="w-[80rem] h-10 bg-gradient-to-r from-black via-transparent to-black rounded-full flex items-end justify-center mt-20">
         <div className={"w-full h-9 bg-white  rounded-full"}>
           <div className="w-full h-20 relative flex items-center justify-center rounded-full ">
             <div className="absolute top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-[2px] w-3/4 blur-sm " />

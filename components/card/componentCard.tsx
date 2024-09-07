@@ -44,7 +44,7 @@ export const CardStuff: React.FC<CardStuffProps> = ({ projects }) => {
   const data = [
     ...projects
       .map((project) =>
-        project.techs.map((tech) => ({
+        projects[currentProjectIndex].techs.map((tech) => ({
           title: tech.name,
           content: tech.description,
         }))
