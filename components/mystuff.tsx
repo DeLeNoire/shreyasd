@@ -1,7 +1,9 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { CardStuff } from "./card/componentCard";
+import Skeleton from "./card/skeletonCard";
 
 interface Category {
   id: number;
@@ -16,12 +18,16 @@ interface Project {
   techs: { name: string; description: string }[];
   liveLink?: string;
   githubLink?: string;
-  //hooks: Hook[];
 }
 
 const Projects = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [projects, setProjects] = useState<Project[] | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [cachedProjects, setCachedProjects] = useState<
+    Record<string, Project[]>
+  >({});
+  const [loading, setLoading] = useState<boolean>(false);
 
   // Fetch categories from the database
   useEffect(() => {
@@ -33,6 +39,11 @@ const Projects = () => {
         }
         const data = await response.json();
         setCategories(data);
+
+        // Automatically fetch the first category's projects
+        if (data.length > 0) {
+          handleCategorySelect(data[0].name); // Preload first category
+        }
       } catch (error) {
         console.error("Failed to fetch categories:", error);
       }
@@ -43,6 +54,13 @@ const Projects = () => {
 
   // Fetch category details (including projects)
   const handleCategorySelect = async (categoryName: string) => {
+    if (cachedProjects[categoryName]) {
+      // If already cached, load from cache
+      setProjects(cachedProjects[categoryName]);
+      return;
+    }
+
+    setLoading(true); // Show loading indicator
     try {
       const response = await fetch(`/api/projects/${categoryName}`);
 
@@ -51,12 +69,19 @@ const Projects = () => {
       }
 
       const categoryData = await response.json();
-
       setProjects(categoryData);
 
-      categoryData.projects(0); // Reset project index to 0
+      // Cache the fetched projects
+      setCachedProjects((prevCache) => ({
+        ...prevCache,
+        [categoryName]: categoryData,
+      }));
+
+      setSelectedCategory(categoryName);
     } catch (error) {
       console.error("Failed to fetch category data:", error);
+    } finally {
+      setLoading(false); // Hide loading indicator
     }
   };
 
@@ -71,10 +96,10 @@ const Projects = () => {
             <Button
               variant={"gradient"}
               size={"icon"}
-              className="p-5 hover:bg-slate-50"
-              onClick={() => {
-                handleCategorySelect(category.name);
-              }}
+              className={`p-5 hover:bg-slate-50 ${
+                selectedCategory === category.name ? "bg-gray-200" : ""
+              }`}
+              onClick={() => handleCategorySelect(category.name)}
             >
               <img src={`/${category.icon}.png`} alt={category.name} />
             </Button>
@@ -84,7 +109,11 @@ const Projects = () => {
       </div>
 
       <div className="mt-10 ml-16">
-        {projects && <CardStuff projects={projects} />}
+        {loading ? (
+          <Skeleton /> // You can replace this with a spinner or loading animation
+        ) : (
+          projects && <CardStuff projects={projects} />
+        )}
       </div>
     </>
   );

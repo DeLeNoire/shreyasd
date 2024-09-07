@@ -15,19 +15,24 @@ async function main() {
     ],
   });
 
-  console.log('Categories seeding completed!');
+  console.log('Categories seeding completed 🌱');
+
   
   // Seed data for Website projects
   await prisma.website.create({
     data: {
       name: 'E-commerce Admin',
-      images: ['img1.jpg', 'img2.jpg', 'img3.jpg'],
+      images: ['ecommerce.png', 'ecommerce1.png'],
       techs: [
-        { name: 'React', description: 'Frontend framework' },
-        { name: 'Node.js', description: 'Backend runtime' },
+        { name: 'React', description: 'Managed the dynamic and interactive components of the admin interface.' },
+        { name: 'Next.js', description: 'Used for server-side rendering and building the frontend and backend of the e-commerce admin panel.' },
+        { name: 'Postgres', description: 'Used as the relational database to store product details, user information, and transactions.' },
+        { name: 'Node.js', description: 'Provided authentication, real-time data handling, and API routes for managing user and product data.' },
+        { name: 'Prisma ORM', description: 'Interacted with the Postgres database to manage and query data through a simplified, type-safe API.' },
+        { name: 'Tailwind CSS', description: 'Handled the styling and responsive design of the website with utility-first CSS classes.' },
       ],
-      liveLink: 'https://ecommerce.com',
-      githubLink: 'https://github.com/ecommerce-admin',
+      liveLink: 'https://ecommerce-admin-khaki-one.vercel.app/',
+      githubLink: 'https://github.com/DeLeNoire/ecommerceAdmin',
       hooks: {
         create: [
           {
@@ -36,20 +41,24 @@ async function main() {
           },
         ],
       },
+
     },
+    
   });
 
   // Seed data for AI projects
   await prisma.aI.create({
     data: {
       name: 'ML Trading Bot',
-      images: ['bot1.jpg', 'bot2.jpg'],
+      images: ['mlbot.png'],
       techs: [
         { name: 'Python', description: 'Programming language' },
         { name: 'TensorFlow', description: 'Machine learning framework' },
+        { name: 'Pandas', description: 'Data manipulation library' },
+        { name: 'Alpaca API', description: 'Stock trading API' },
       ],
-      liveLink: 'https://mltradingbot.com',
-      githubLink: 'https://github.com/ml-trading-bot',
+      liveLink: '',
+      githubLink: 'https://github.com/DeLeNoire/MLTradingBot',
       hooks: {
         create: [
           {
@@ -65,18 +74,19 @@ async function main() {
   await prisma.quant.create({
     data: {
       name: 'Multitype Orderbook',
-      images: ['orderbook1.jpg'],
+      images: ['orderbook1.jpg', 'orderbook.jpg'],
       techs: [
         { name: 'C++', description: 'High-performance language' },
         { name: 'SQL', description: 'Database query language' },
+        { name: 'Boost', description: 'Library for C++' },
       ],
-      liveLink: 'https://multitypeorderbook.com',
-      githubLink: 'https://github.com/multitype-orderbook',
+      liveLink: '',
+      githubLink: 'https://github.com/DeLeNoire/MultiTypeOrderBook',
       hooks: {
         create: [
           {
             title: 'Order Matching Engine',
-            description: 'Matches buy and sell orders in real time.',
+            description: 'Matches buy and sell orders for multiple asset types.',
           },
         ],
       },
@@ -87,13 +97,16 @@ async function main() {
   await prisma.blockChain.create({
     data: {
       name: 'DCEX',
-      images: ['dcex1.jpg'],
+      images: ['dcex.jpg', 'dcex1.jpg','dcex2.jpg','dcex3.jpg'],
       techs: [
+        { name: 'JavaScript', description: 'Programming language for web development' },
+        { name: 'Web3.js', description: 'Library for Ethereum development' },
+        { name: 'React', description: 'JavaScript library for building user interfaces' },
         { name: 'Solidity', description: 'Smart contract programming' },
         { name: 'Ethereum', description: 'Blockchain platform' },
       ],
-      liveLink: 'https://dcex.com',
-      githubLink: 'https://github.com/dcex',
+      liveLink: 'https://dcex-alpha.vercel.app/',
+      githubLink: 'https://github.com/DeLeNoire/dcex',
       hooks: {
         create: [
           {
@@ -131,18 +144,19 @@ async function main() {
   await prisma.miscellaneous.create({
     data: {
       name: 'Fractals',
-      images: ['fractals1.jpg'],
+      images: ['fractals.png'],
       techs: [
         { name: 'JavaScript', description: 'Scripting language for graphics' },
         { name: 'Canvas API', description: 'Graphics rendering API' },
+        
       ],
-      liveLink: 'https://fractals.com',
-      githubLink: 'https://github.com/fractals',
+      liveLink: 'https://fractals-trees.vercel.app/',
+      githubLink: 'https://github.com/DeLeNoire/FRACTALS_TREE-RECURSION',
       hooks: {
         create: [
           {
             title: 'Fractal Generation',
-            description: 'Generates complex fractal patterns.',
+            description: 'Generates complex fractal patterns using recursion.',
           },
         ],
       },

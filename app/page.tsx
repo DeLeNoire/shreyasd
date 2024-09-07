@@ -5,6 +5,7 @@ import InfiniteSlider from "@/components/InfiniteScroll/slider";
 import Image from "next/image";
 import Link from "next/link";
 import Projects from "@/components/mystuff";
+import Skeleton from "@/components/card/skeletonCard";
 
 export default function Home() {
   return (
