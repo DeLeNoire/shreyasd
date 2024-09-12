@@ -79,8 +79,6 @@ export default function Home() {
         <Projects />
       </>
 
-      <TracingBeam />
-
       <div className="mt-64">
         <InfiniteSlider />
       </div>
