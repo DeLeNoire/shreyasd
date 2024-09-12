@@ -1,10 +1,5 @@
 "use client";
-import {
-  useMotionValueEvent,
-  useScroll,
-  useTransform,
-  motion,
-} from "framer-motion";
+import { useScroll, useTransform, motion } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
 
 interface TimelineEntry {
@@ -13,8 +8,9 @@ interface TimelineEntry {
 }
 
 export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null); // Reference for the black div
+  const scrollableRef = useRef<HTMLDivElement>(null); // Reference for the scrollable container
+
   const [height, setHeight] = useState(0);
 
   useEffect(() => {
@@ -24,9 +20,11 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
     }
   }, [ref]);
 
+  // Adjust the target to the scrollable container
   const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start 0%", "end 10%"],
+    container: scrollableRef, // Now target the scrollable container for the animation
+    target: ref, // The black div where the timeline is shown
+    offset: ["start start", "end end"], // Animation starts and ends based on the container scroll
   });
 
   const heightTransform = useTransform(scrollYProgress, [0, 1], [0, height]);
@@ -34,36 +32,28 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
 
   return (
     <div
-      className="w-full bg-transperent dark:bg-neutral-950 font-sans "
-      ref={containerRef}
+      ref={scrollableRef}
+      className="h-[30rem] overflow-scroll scrollbar-hide"
     >
-      <div className="max-w-5xl mx-auto py-10 overflow-scroll">
-        <h2 className="text-lg md:text-4xl mb-4 text-black dark:text-white max-w-4xl">
-          Changelog from my journey
-        </h2>
-        <p className="text-neutral-700 dark:text-neutral-300 text-sm md:text-base max-w-sm">
-          I&apos;ve been working on Aceternity for the past 2 years. Here&apos;s
-          a timeline of my journey.
-        </p>
-      </div>
-
       <div ref={ref} className="relative max-w-7xl mx-auto pb-20">
         {data.map((item, index) => (
           <div
             key={index}
             className="flex flex-col justify-start pt-10 md:pt-40 md:gap-10"
           >
-            <div className="sticky flex flex-col z-10 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
+            <div className="sticky flex flex-col z-10 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full ">
               <div className="h-10 absolute left-3 md:left-3 w-10 rounded-full bg-white dark:bg-black flex items-center justify-center">
                 <div className="h-4 w-4 rounded-full bg-neutral-200 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 p-2"></div>
               </div>
               <h3 className="hidden md:block text-xl md:pl-10 md:text-5xl font-bold text-neutral-500 dark:text-neutral-500 ">
                 {item.title}
               </h3>
-              <div className=" pl-20 w-full mt-2 ">{item.content} </div>
+              <div className="pl-20 w-full mt-2">{item.content}</div>
             </div>
           </div>
         ))}
+
+        {/* This div controls the timeline animation */}
         <div
           style={{
             height: height + "px",
@@ -75,7 +65,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
               height: heightTransform,
               opacity: opacityTransform,
             }}
-            className="absolute inset-x-0 top-0  w-[2px] bg-gradient-to-t from-purple-500 via-blue-500 to-transparent from-[0%] via-[10%] rounded-full"
+            className="absolute inset-x-0 top-0 w-[2px] bg-gradient-to-t from-purple-500 via-blue-500 to-transparent from-[0%] via-[10%] rounded-full"
           />
         </div>
       </div>

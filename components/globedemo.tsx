@@ -4,9 +4,12 @@ import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { SparklesCore } from "./ui/sparkles";
 
-const World = dynamic(() => import("@/components/ui/globe").then((m) => m.World), {
-  ssr: false,
-});
+const World = dynamic(
+  () => import("@/components/ui/globe").then((m) => m.World),
+  {
+    ssr: false,
+  }
+);
 
 export function GlobeDemo() {
   const globeConfig = {
@@ -423,37 +426,32 @@ export function GlobeDemo() {
           className="div"
         >
           <h2 className="text-center text-2xl md:text-4xl font-bold text-black dark:text-white">
-            We sell soap worldwide
+            Connect with me and explore the world.
           </h2>
           <p className="text-center text-base md:text-lg font-normal text-neutral-700 dark:text-neutral-200 max-w-md mt-2 mx-auto">
-            This globe is interactive and customizable. Have fun with it, and
-            don&apos;t forget to share it. :)
+            This globe is interactive. Have fun with it.
           </p>
         </motion.div>
         <div className="absolute w-full bottom-0 inset-x-0 h-40 bg-gradient-to-b pointer-events-none select-none from-transparent dark:to-black to-white z-40" />
         <div className="absolute w-full -bottom-20 h-full z-10 p-5 md:p-0">
-          {showHero && 
-          
-          <div className="h-[40rem] relative w-full bg-white flex flex-col items-center justify-center overflow-hidden rounded-md mt-10">
-          <div className="w-full absolute inset-0 h-screen">
-          <SparklesCore
-          id="tsparticlesfullpage"
-          background="transparent"
-          minSize={0.7}
-          maxSize={1.4}
-          particleDensity={120}
-          className="w-full h-full"
-          particleColor="#000000"
-          />
-          </div>
-          <div className="w-full h-4/6 md:h-screen p-3 md:p-0">
-          <World data={sampleArcs} globeConfig={globeConfig} />
-          </div>
-          </div>
-
-
-          }
-          
+          {showHero && (
+            <div className="h-[40rem] relative w-full bg-white flex flex-col items-center justify-center overflow-hidden rounded-md mt-10">
+              <div className="w-full absolute inset-0 h-screen">
+                <SparklesCore
+                  id="tsparticlesfullpage"
+                  background="transparent"
+                  minSize={0.7}
+                  maxSize={1.4}
+                  particleDensity={120}
+                  className="w-full h-full"
+                  particleColor="#000000"
+                />
+              </div>
+              <div className="w-full h-4/6 md:h-screen p-3 md:p-0">
+                <World data={sampleArcs} globeConfig={globeConfig} />
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
