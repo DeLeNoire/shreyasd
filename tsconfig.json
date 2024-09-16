@@ -33,7 +33,7 @@
     "**/*.jsx",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "components/Band.jsx",
+    "components/Idcards/BandMnnit.jsx",
     "app/api/compile/route.ts",
     "app/api/categories.js"
   ],

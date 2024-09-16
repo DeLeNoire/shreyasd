@@ -23,17 +23,8 @@ const Skeleton = () => {
           </CardTitle>
         </CardHeader>
         <div className="h-px w-full bg-gradient-to-r from-white via-black to-white"></div>
-        <CardContent className="animate-none">
-          <div className="-ml-24 mt-4 flex">
-            <ContainerScroll>
-              <div className="w-full h-full bg-gray-100 rounded-lg animate-pulse"></div>
-            </ContainerScroll>
-            <div className="h-[30rem] overflow-scroll scrollbar-hide mt-5 ml-16">
-              <div className="space-y-4">
-                <div className="w-[27rem] h-[32rem] bg-gray-100 rounded-lg animate-pulse"></div>
-              </div>
-            </div>
-          </div>
+        <CardContent className="animate-none flex items-center justify-center mt-32">
+          <img src="/load.gif" alt="Loading" className="w-64 h-64 mx-auto" />
         </CardContent>
       </Card>
     </>

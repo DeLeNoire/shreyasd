@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import { CardStuff } from "./card/componentCard";
 import Skeleton from "./card/skeletonCard";
 
+// Interface definitions
 interface Category {
   id: number;
   name: string;
@@ -27,67 +28,65 @@ const Projects = () => {
   const [cachedProjects, setCachedProjects] = useState<
     Record<string, Project[]>
   >({});
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  // Fetch categories from the database
+  // GIF display duration in milliseconds (6 seconds)
+  const gifDuration = 6000;
+
+  // Fetch categories and preload data
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchCategoriesAndProjects = async () => {
       try {
-        const response = await fetch("/api/categories");
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setCategories(data);
+        // Parallel fetching of categories and projects
+        const categoriesResponse = await fetch("/api/categories");
+        const categoriesData = await categoriesResponse.json();
+        setCategories(categoriesData);
 
-        // Automatically fetch the first category's projects
-        if (data.length > 0) {
-          handleCategorySelect(data[0].name); // Preload first category
+        // Fetch all project data in parallel
+        const projectPromises = categoriesData.map(
+          async (category: Category) => {
+            const response = await fetch(`/api/projects/${category.name}`);
+            return { category: category.name, data: await response.json() };
+          }
+        );
+
+        const projectsData = await Promise.all(projectPromises);
+
+        // Cache all fetched projects
+        const newCache: Record<string, Project[]> = {};
+        projectsData.forEach(({ category, data }) => {
+          newCache[category] = data;
+        });
+
+        setCachedProjects(newCache);
+
+        // Automatically select the first category
+        if (categoriesData.length > 0) {
+          setSelectedCategory(categoriesData[0].name);
+          setProjects(newCache[categoriesData[0].name]);
         }
       } catch (error) {
-        console.error("Failed to fetch categories:", error);
+        console.error("Failed to fetch data:", error);
+      } finally {
+        // Set a timeout for the loading state based on GIF duration
+        setTimeout(() => setLoading(false), gifDuration);
       }
     };
 
-    fetchCategories();
+    fetchCategoriesAndProjects();
   }, []);
 
-  // Fetch category details (including projects)
-  const handleCategorySelect = async (categoryName: string) => {
+  // Handle category selection, using preloaded cached data
+  const handleCategorySelect = (categoryName: string) => {
+    setSelectedCategory(categoryName);
     if (cachedProjects[categoryName]) {
-      // If already cached, load from cache
       setProjects(cachedProjects[categoryName]);
-      return;
-    }
-
-    setLoading(true); // Show loading indicator
-    try {
-      const response = await fetch(`/api/projects/${categoryName}`);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const categoryData = await response.json();
-      setProjects(categoryData);
-
-      // Cache the fetched projects
-      setCachedProjects((prevCache) => ({
-        ...prevCache,
-        [categoryName]: categoryData,
-      }));
-
-      setSelectedCategory(categoryName);
-    } catch (error) {
-      console.error("Failed to fetch category data:", error);
-    } finally {
-      setLoading(false); // Hide loading indicator
     }
   };
 
   return (
     <>
-      <div className="flex space-x-20 mt-6">
+      <div className="flex space-x-20 mt-6 items-center justify-center">
         {categories.map((category) => (
           <div
             key={category.id}
@@ -109,11 +108,7 @@ const Projects = () => {
       </div>
 
       <div className="mt-10 ml-16">
-        {loading ? (
-          <Skeleton /> // You can replace this with a spinner or loading animation
-        ) : (
-          projects && <CardStuff projects={projects} />
-        )}
+        {loading ? <Skeleton /> : projects && <CardStuff projects={projects} />}
       </div>
     </>
   );
