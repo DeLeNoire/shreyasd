@@ -86,9 +86,24 @@ export default function HorizontalExpandingLayout() {
                   <h2 className="font-bold text-xl sm:text-2xl mb-4">
                     {section.title}
                   </h2>
-                  <p className="text-sm sm:text-base text-gray-600">
-                    Banglore is tourism city of the India .
-                  </p>
+                  {section.id === 1 ? (
+                    <p className="text-sm md:text-3xl text-gray-600 font-bold pl-4">
+                      Motilal Nehru National Institute of Technology <br />
+                      <p className="text-xl pt-4">
+                        Bachelor of Technology <br />
+                        Information Technology (CSE) <br />
+                        Batch of 2024
+                      </p>
+                    </p>
+                  ) : (
+                    <p className="text-sm md:text-3xl text-gray-600 font-bold pl-4">
+                      INFINERA <br />
+                      <p className="text-xl pt-4">
+                        Software Developer Engineeer - 1 <br />
+                        Since 11/09/2024
+                      </p>
+                    </p>
+                  )}
                 </div>
                 <div className="col-span-1 -mt-8 z-20">{section.content}</div>
               </div>
