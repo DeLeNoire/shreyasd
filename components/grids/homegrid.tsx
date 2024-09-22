@@ -84,23 +84,22 @@ export default function HorizontalExpandingLayout() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full h-full p-6">
                 <div className="col-span-1 flex flex-col justify-center">
                   <h2 className="font-bold text-xl sm:text-2xl mb-4">
-                    {section.title}
+                    {expanded ? "" : section.title}
                   </h2>
                   {section.id === 1 ? (
-                    <p className="text-sm md:text-3xl text-gray-600 font-bold pl-4">
+                    <p className="text-sm md:text-3xl font-bold pl-4">
                       Motilal Nehru National Institute of Technology <br />
-                      <p className="text-xl pt-4">
-                        Bachelor of Technology <br />
-                        Information Technology (CSE) <br />
-                        Batch of 2024
+                      <p className="text-xl pt-4 text-slate-400">
+                        Bachelor of Technology IT @2014
+                        
                       </p>
                     </p>
                   ) : (
-                    <p className="text-sm md:text-3xl text-gray-600 font-bold pl-4">
+                    <p className="text-sm md:text-3xl font-bold pl-4">
                       INFINERA <br />
-                      <p className="text-xl pt-4">
-                        Software Developer Engineeer - 1 <br />
-                        Since 11/09/2024
+                      <p className="text-xl pt-4 text-slate-400">
+                        Software Developer Engineeer - 1 <br/> #11/09/2024 
+                        
                       </p>
                     </p>
                   )}

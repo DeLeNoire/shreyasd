@@ -78,7 +78,7 @@ export default function Home() {
           <Projects />
         </div>
 
-        <div className="mt-64">
+        <div className="mt-64 mb-24">
           <InfiniteSlider />
         </div>
 

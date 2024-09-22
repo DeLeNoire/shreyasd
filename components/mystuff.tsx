@@ -107,7 +107,7 @@ const Projects = () => {
         ))}
       </div>
 
-      <div className="mt-10 ml-16">
+      <div className="mt-10 ml-24">
         {loading ? <Skeleton /> : projects && <CardStuff projects={projects} />}
       </div>
     </>

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { SparklesCore } from "./ui/sparkles";
+import { Button } from "./ui/button";
 
 const World = dynamic(
   () => import("@/components/ui/globe").then((m) => m.World),
@@ -425,12 +426,21 @@ export function GlobeDemo() {
           }}
           className="div"
         >
-          <h2 className="text-center text-2xl md:text-4xl font-bold text-black dark:text-white">
-            Connect with me and explore the world.
-          </h2>
-          <p className="text-center text-base md:text-lg font-normal text-neutral-700 dark:text-neutral-200 max-w-md mt-2 mx-auto">
-            This globe is interactive. Have fun with it.
-          </p>
+          <div className="text-slate-400 flex justify-center items-center  text-sm "> Email me @
+            <div className="ml-24 gap-x-10 flex justify-center items-center">
+
+            <input 
+            className="border w-96 h-12 p-6"
+            placeholder="YourEmail@domain.com"
+            />
+            <input 
+            className="border w-96 h-12 p-6 "
+            placeholder="Leave me your Message"
+            />
+            </div>
+            
+            </div>
+          
         </motion.div>
         <div className="absolute w-full bottom-0 inset-x-0 h-40 bg-gradient-to-b pointer-events-none select-none from-transparent dark:to-black to-white z-40" />
         <div className="absolute w-full -bottom-20 h-full z-10 p-5 md:p-0">
@@ -447,7 +457,7 @@ export function GlobeDemo() {
                   particleColor="#000000"
                 />
               </div>
-              <div className="w-full h-4/6 md:h-screen p-3 md:p-0">
+              <div className="w-full h-4/6 md:h-screen p-3 md:p-0 ">
                 <World data={sampleArcs} globeConfig={globeConfig} />
               </div>
             </div>
