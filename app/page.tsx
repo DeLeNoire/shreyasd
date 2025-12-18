@@ -1,13 +1,9 @@
 "use client";
 import { useEffect, useState, useMemo } from "react";
-import { MarqueeDemo } from "@/components/carousel/carouselCards";
-import { GlobeDemo } from "@/components/globedemo";
-import InfiniteSlider from "@/components/InfiniteScroll/slider";
 import Image from "next/image";
 import Link from "next/link";
 import ExpandingLayout from "@/components/grids/homegrid";
-import Projects from "@/components/mystuff";
-import Skeleton from "@/components/card/skeletonCard";
+import PortfolioClone from "@/components/Project/rest";
 
 export default function Home() {
   const [isGifVisible, setIsGifVisible] = useState(true);
@@ -43,10 +39,16 @@ export default function Home() {
 
       {isLayoutVisible && cachedExpandingLayout}
 
-      <main className="flex min-h-screen flex-col items-center justify-between lg:pr-28 lg:pl-28">
-        <div className="sticky z-50 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
+
+      {/* Portfolio Clone Section - Full Width */}
+      <section className="w-full min-h-screen">
+        <PortfolioClone />
+      </section>
+
+      {/* <main className="flex min-h-screen flex-col items-center justify-between lg:pr-28 lg:pl-28">
+        <div className="sticky z-50 w-screen items-center justify-between font-mono text-sm lg:flex pl-28 pr-28 hidden">
           <div className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 p-5 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit">
-            Don&apos;t be shy, say hi!&nbsp;
+            Say hi here! &nbsp;
             <code className="font-mono font-bold hidden lg:block">
               <Link href="https://www.linkedin.com/in/shreyasd19/">
                 /in/shreyasd19,
@@ -74,16 +76,8 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="h-full w-full mt-48">
-          <Projects />
-        </div>
+      </main> */}
 
-        <div className="mt-64 mb-24">
-          <InfiniteSlider />
-        </div>
-
-        <GlobeDemo />
-      </main>
     </>
   );
 }

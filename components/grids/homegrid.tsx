@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 // Lazy loading the content components to improve performance
 const MnnitId = lazy(() => import("../Idcards/BandMnnit"));
 const InfineraId = lazy(() => import("../Idcards/BandInfinera"));
+const NokiaId = lazy(() => import("../Idcards/BandNokia"));
 
 interface Section {
   id: number;
@@ -41,7 +42,7 @@ export default function HorizontalExpandingLayout() {
         id: 1,
         title: "1. Education",
         content: (
-          <div className="w-full h-full flex items-center justify-center">
+          <div className="w-screen h-full flex items-center justify-center">
             <MnnitId />
           </div>
         ),
@@ -57,6 +58,17 @@ export default function HorizontalExpandingLayout() {
           </div>
         ),
       },
+        {
+          id: 3,
+          title: "3. Nokia",
+          content: (
+            <div className="w-full h-full flex items-center justify-center">
+              <Suspense fallback={<div>Loading...</div>}>
+                <NokiaId />
+              </Suspense>
+            </div>
+          ),
+        },
     ],
     []
   );
@@ -82,28 +94,6 @@ export default function HorizontalExpandingLayout() {
           >
             {expanded === section.id ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full h-full p-6">
-                <div className="col-span-1 flex flex-col justify-center">
-                  <h2 className="font-bold text-xl sm:text-2xl mb-4">
-                    {expanded ? "" : section.title}
-                  </h2>
-                  {section.id === 1 ? (
-                    <p className="text-sm md:text-3xl font-bold pl-4">
-                      Motilal Nehru National Institute of Technology <br />
-                      <p className="text-xl pt-4 text-slate-400">
-                        Bachelor of Technology IT @2014
-                        
-                      </p>
-                    </p>
-                  ) : (
-                    <p className="text-sm md:text-3xl font-bold pl-4">
-                      INFINERA <br />
-                      <p className="text-xl pt-4 text-slate-400">
-                        Software Developer Engineeer - 1 <br/> #11/09/2024 
-                        
-                      </p>
-                    </p>
-                  )}
-                </div>
                 <div className="col-span-1 -mt-8 z-20">{section.content}</div>
               </div>
             ) : (

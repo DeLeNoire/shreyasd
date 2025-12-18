@@ -1,6 +1,6 @@
 
 import { Canvas, extend} from "@react-three/fiber";
-import {SpotLight, useGLTF,useTexture,} from "@react-three/drei";
+import {SpotLight, useGLTF,useTexture, ContactShadows} from "@react-three/drei";
 import {Physics,} from "@react-three/rapier";
 import { MeshLineGeometry, MeshLineMaterial } from "meshline";
 import * as THREE from 'three'
@@ -14,11 +14,24 @@ useTexture.preload("/InfineraTag.png");
 
 export default function InfineraId() {
   return (
-    <Canvas camera={{ position: [0, 0, 13], fov: 25 }}>
-      <ambientLight intensity={7} />
+    <Canvas
+      shadows
+      camera={{ position: [0, 0, 13], fov: 25 }}
+      dpr={[1, 2]}
+      style={{ background: 'transparent' }}
+      gl={{ alpha: true, toneMapping: THREE.ACESFilmicToneMapping, outputEncoding: THREE.sRGBEncoding }}
+    >
+      {/* subtle ambient for visibility */}
+      <ambientLight intensity={0.45} />
+      {/* warm key light */}
+      <directionalLight color={0xfff1e0} position={[3, 5, 3]} intensity={7.8} castShadow shadow-mapSize-width={1024} shadow-mapSize-height={1024} />
+      {/* cool rim */}
+      <directionalLight color={0x8fbfff} position={[9, 10, 35]} intensity={0.3} />
+      <hemisphereLight skyColor={0xffffff} groundColor={0xddddff} intensity={0.08} />
       <Physics interpolate gravity={[0, -40, 0]} timeStep={1 / 60}>
         <Band />
       </Physics>
+      <ContactShadows position={[0, -3.2, 0]} opacity={0.35} scale={4} blur={2} far={4} />
     </Canvas>
   );
 }
@@ -101,11 +114,11 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
               onPointerOut={() => hover(false)}
               onPointerUp={(e) => (e.target.releasePointerCapture(e.pointerId), drag(false))}
               onPointerDown={(e) => (e.target.setPointerCapture(e.pointerId), drag(new THREE.Vector3().copy(e.point).sub(vec.copy(card.current.translation()))))}>
-              <mesh geometry={nodes.card.geometry}>
+              <mesh geometry={nodes.card.geometry} castShadow receiveShadow>
                 <meshPhysicalMaterial map={materials.base.map} map-anisotropy={16} clearcoat={1} clearcoatRoughness={0.15} roughness={0.3} metalness={0.5} />
               </mesh>
-              <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.3} />
-              <mesh geometry={nodes.clamp.geometry} material={materials.metal} />
+              <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.3} castShadow receiveShadow />
+              <mesh geometry={nodes.clamp.geometry} material={materials.metal} castShadow receiveShadow />
             </group>
           </RigidBody>
         </group>

@@ -6,18 +6,19 @@ import { CardStuff } from "./card/componentCard";
 import Skeleton from "./card/skeletonCard";
 
 // Interface definitions
+// ?: --> optional 
 interface Category {
-  id: number;
+  id  : number;
   name: string;
   icon: string;
 }
 
 interface Project {
-  id: number;
-  name: string;
-  images: string[];
-  techs: { name: string; description: string }[];
-  liveLink?: string;
+  id         : number;
+  name       : string;
+  images     : string[];
+  techs      : { name: string; description: string }[];
+  liveLink  ?: string;
   githubLink?: string;
 }
 

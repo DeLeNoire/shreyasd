@@ -60,8 +60,8 @@ export function Band({ maxSpeed = 50, minSpeed = 10 }) {
     texture.wrapS = texture.wrapT = THREE.RepeatWrapping
   
     return (
-      <>
-        <group position={[0, 4, 0]}>
+        <>
+          <group position={[0, 4, 0]}>
           <RigidBody ref={fixed} {...segmentProps} type="fixed" />
           <RigidBody position={[0.5, 0, 0]} ref={j1} {...segmentProps}>
             <BallCollider args={[0.1]} />
@@ -81,11 +81,11 @@ export function Band({ maxSpeed = 50, minSpeed = 10 }) {
               onPointerOut={() => hover(false)}
               onPointerUp={(e) => (e.target.releasePointerCapture(e.pointerId), drag(false))}
               onPointerDown={(e) => (e.target.setPointerCapture(e.pointerId), drag(new THREE.Vector3().copy(e.point).sub(vec.copy(card.current.translation()))))}>
-              <mesh geometry={nodes.card.geometry}>
+              <mesh geometry={nodes.card.geometry} castShadow receiveShadow>
                 <meshPhysicalMaterial map={materials.base.map} map-anisotropy={16} clearcoat={1} clearcoatRoughness={0.15} roughness={0.3} metalness={0.5} />
               </mesh>
-              <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.3} />
-              <mesh geometry={nodes.clamp.geometry} material={materials.metal} />
+              <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.3} castShadow receiveShadow />
+              <mesh geometry={nodes.clamp.geometry} material={materials.metal} castShadow receiveShadow />
             </group>
           </RigidBody>
         </group>
@@ -93,6 +93,7 @@ export function Band({ maxSpeed = 50, minSpeed = 10 }) {
           <meshLineGeometry />
           <meshLineMaterial color="white" depthTest={false} resolution={[width, height]} useMap map={texture} repeat={[-3, 1]} lineWidth={1} />
         </mesh>
+        {/* original file: no extra ground plane */}
       </>
     )
   }
