@@ -4,6 +4,7 @@ import { Canvas, extend, useThree, useFrame } from '@react-three/fiber'
 import { useGLTF, useTexture, Environment, Lightformer, ContactShadows } from '@react-three/drei'
 import { BallCollider, CuboidCollider, Physics, RigidBody, useRopeJoint, useSphericalJoint } from '@react-three/rapier'
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline'
+import { DotsBackground } from '../magicui/DotsBackground'
 import InfineraId from './BandInfinera'
 import { Band } from './Band'
 
@@ -12,14 +13,41 @@ useGLTF.preload('/shreyastest.glb')
 useTexture.preload('/tag/mnnit.png')
 
 export default function MnnitId({ onNext, onPrev }: { onNext?: (() => void) | null; onPrev?: (() => void) | null }) {
+  // Cube component
+  const Cube = ({ variant = 'default', label = '', className = '' }: any) => {
+    return (
+      <div className={`relative bg-[#f9f9f9] rounded-lg overflow-hidden ${className}`}>
+        {variant === 'grid-9' && (
+          <div className="absolute inset-0 grid grid-cols-3 grid-rows-3 p-1 gap-0.5">
+            {[...Array(9)].map((_, i) => (
+              <div key={i} className={`rounded-sm ${i === 7 ? 'bg-[#e75532] animate-pulse' : 'bg-[#ececec]'}`} />
+            ))}
+          </div>
+        )}
+        {variant === 'dots-17' && (
+          <div className="absolute inset-0 grid grid-cols-4 grid-rows-4 p-2 gap-1">
+            {[...Array(17)].map((_, i) => (
+              <div key={i} className={`rounded-full ${i === 8 ? 'bg-[#e75532] animate-rotate' : 'bg-[#ececec]'}`} style={{ width: '6px', height: '6px', margin: 'auto' }} />
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  };
+  
   return (
     <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <div style={{ width: '100%', height: '100%' }}>
+      {/* Main content area with left cube, canvas, right cube */}
+      <div style={{ width: '100%', height: 'calc(100% - 140px)', display: 'flex', gap: '1rem', padding: '1rem', alignItems: 'stretch' }}>
+        
+        {/* Canvas in center */}
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div style={{ width: '100%', height: '100%' }}>
         <Canvas
           shadows
           camera={{ position: [0, 0, 13], fov: 25 }}
           dpr={[1, 2]}
-          style={{ background: '', width: '100%', height: '100%' }}
+          style={{ background: 'linear-gradient(to bottom, #f0f0f0, #ffffff)', width: '100%', height: '100%' }}
           gl={{ alpha: true }}
         >
           {/* Lights */}
@@ -28,6 +56,9 @@ export default function MnnitId({ onNext, onPrev }: { onNext?: (() => void) | nu
           <directionalLight position={[5, 2, 6]} intensity={0.35} />
           <hemisphereLight intensity={0.12} />
 
+          {/* Dots Background */}
+          <DotsBackground />
+
           {/* 3D world */}
           <Physics interpolate gravity={[0, -40, 0]}>
             <Band />
@@ -35,7 +66,11 @@ export default function MnnitId({ onNext, onPrev }: { onNext?: (() => void) | nu
 
           <ContactShadows position={[0, -3.2, 0]} />
         </Canvas>
+        </div>
+        </div>
+        
       </div>
+
 
       {/* Navigation + Text below the canvas */}
       <div

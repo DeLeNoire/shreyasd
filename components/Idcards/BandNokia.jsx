@@ -5,6 +5,7 @@ import { useGLTF, useTexture, ContactShadows } from '@react-three/drei'
 import { BallCollider, CuboidCollider, Physics, RigidBody, useRopeJoint, useSphericalJoint } from '@react-three/rapier'
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline'
 import { Environment } from '@react-three/drei'
+import { DotsBackground } from '../magicui/DotsBackground'
 
 extend({ MeshLineGeometry, MeshLineMaterial })
 useGLTF.preload('/Nokia/NokiaId.glb')
@@ -13,14 +14,41 @@ useGLTF.preload('/Nokia/NokiaId.glb')
 useTexture.preload('/NokiaTag.png')
 
 export default function NokiaId({ onNext, onPrev }) {
+  // Cube component
+  const Cube = ({ variant = 'default', label = '', className = '' }) => {
+    return (
+      <div className={`relative bg-[#f9f9f9] rounded-lg overflow-hidden ${className}`}>
+        {variant === 'grid-9' && (
+          <div className="absolute inset-0 grid grid-cols-3 grid-rows-3 p-1 gap-0.5">
+            {[...Array(9)].map((_, i) => (
+              <div key={i} className={`rounded-sm ${i === 7 ? 'bg-[#e75532] animate-pulse' : 'bg-[#ececec]'}`} />
+            ))}
+          </div>
+        )}
+        {variant === 'dots-17' && (
+          <div className="absolute inset-0 grid grid-cols-4 grid-rows-4 p-2 gap-1">
+            {[...Array(17)].map((_, i) => (
+              <div key={i} className={`rounded-full ${i === 8 ? 'bg-[#e75532] animate-rotate' : 'bg-[#ececec]'}`} style={{ width: '6px', height: '6px', margin: 'auto' }} />
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  };
+  
   return (
     <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <div style={{ width: '100%', height: '100%' }}>
+      {/* Main content area with left cube, canvas, right cube */}
+      <div style={{ width: '100%', height: 'calc(100% - 140px)', display: 'flex', gap: '1rem', padding: '1rem', alignItems: 'stretch' }}>
+        
+        {/* Canvas in center */}
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div style={{ width: '100%', height: '100%' }}>
         <Canvas
           shadows
           camera={{ position: [0, 0, 13], fov: 25 }}
           dpr={[1, 2]}
-          style={{ background: 'transparent', width: '100%', height: '100%' }}
+          style={{ background: 'linear-gradient(to bottom, #f0f0f0, #ffffff)', width: '100%', height: '100%' }}
           gl={{
             alpha: true,
             toneMapping: THREE.NoToneMapping,
@@ -61,12 +89,18 @@ export default function NokiaId({ onNext, onPrev }) {
             intensity={0.15}
           />
 
+          {/* Dots Background */}
+          <DotsBackground />
+
           <Physics interpolate gravity={[0, -40, 0]} timeStep={1 / 60}>
             <BandNokia />
           </Physics>
 
           <Environment preset="studio" />
         </Canvas>
+          </div>
+        </div>
+        
       </div>
 
       {/* Navigation + Text below the canvas */}
@@ -86,7 +120,7 @@ export default function NokiaId({ onNext, onPrev }) {
         <div>
           <h1
             style={{
-              fontSize: '2.5rem',
+              fontSize: 'clamp(1.25rem, 4.5vw, 2.25rem)',
               fontWeight: 700,
               color: '#b62222ff',
               letterSpacing: '0.05em',
@@ -97,8 +131,8 @@ export default function NokiaId({ onNext, onPrev }) {
             Nokia
           </h1>
 
-          <p style={{ fontSize: '1.1rem', opacity: 0.7 }}>
-            Product Design Internship
+          <p style={{ fontSize: 'clamp(0.9rem, 2.2vw, 1.05rem)', opacity: 0.7 }}>
+            From silicon to signals • Packets • PullRequests
           </p>
         </div>
       </div>

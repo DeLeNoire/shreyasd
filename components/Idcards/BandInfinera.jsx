@@ -7,20 +7,48 @@ import * as THREE from 'three'
 import { useEffect, useRef, useState } from 'react'
 import { useThree, useFrame } from '@react-three/fiber'
 import { BallCollider, CuboidCollider, RigidBody, useRopeJoint, useSphericalJoint } from '@react-three/rapier'
+import { DotsBackground } from '../magicui/DotsBackground'
 
 extend({ MeshLineGeometry, MeshLineMaterial });
 useGLTF.preload("/InfineraCard.glb");
 useTexture.preload("/InfineraTag.png");
 
 export default function InfineraId({ onNext, onPrev }) {
+  // Cube component
+  const Cube = ({ variant = 'default', label = '', className = '' }) => {
+    return (
+      <div className={`relative bg-[#f9f9f9] rounded-lg overflow-hidden ${className}`}>
+        {variant === 'grid-9' && (
+          <div className="absolute inset-0 grid grid-cols-3 grid-rows-3 p-1 gap-0.5">
+            {[...Array(9)].map((_, i) => (
+              <div key={i} className={`rounded-sm ${i === 7 ? 'bg-[#e75532] animate-pulse' : 'bg-[#ececec]'}`} />
+            ))}
+          </div>
+        )}
+        {variant === 'dots-17' && (
+          <div className="absolute inset-0 grid grid-cols-4 grid-rows-4 p-2 gap-1">
+            {[...Array(17)].map((_, i) => (
+              <div key={i} className={`rounded-full ${i === 8 ? 'bg-[#e75532] animate-rotate' : 'bg-[#ececec]'}`} style={{ width: '6px', height: '6px', margin: 'auto' }} />
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  };
+  
   return (
     <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <div style={{ width: '100%', height: '100%' }}>
+      {/* Main content area with left cube, canvas, right cube */}
+      <div style={{ width: '100%', height: 'calc(100% - 140px)', display: 'flex', gap: '1rem', padding: '1rem', alignItems: 'stretch' }}>
+        
+        {/* Canvas in center */}
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div style={{ width: '100%', height: '100%' }}>
         <Canvas
           shadows
           camera={{ position: [0, 0, 13], fov: 25 }}
           dpr={[1, 2]}
-          style={{ background: 'transparent', width: '100%', height: '100%' }}
+          style={{ background: 'linear-gradient(to bottom, #f0f0f0, #ffffff)', width: '100%', height: '100%' }}
           gl={{ alpha: true, toneMapping: THREE.ACESFilmicToneMapping, outputColorSpace: THREE.SRGBColorSpace }}
         >
           {/* subtle ambient for visibility */}
@@ -30,12 +58,20 @@ export default function InfineraId({ onNext, onPrev }) {
           {/* cool rim */}
           <directionalLight color={0x8fbfff} position={[9, 10, 35]} intensity={0.3} />
           <hemisphereLight skyColor={0xffffff} groundColor={0xddddff} intensity={0.08} />
+          
+          {/* Dots Background */}
+          <DotsBackground />
+          
           <Physics interpolate gravity={[0, -40, 0]} timeStep={1 / 60}>
             <Band />
           </Physics>
           <ContactShadows position={[0, -3.2, 0]} opacity={0.35} scale={4} blur={2} far={4} />
         </Canvas>
+        </div>
+        </div>
+        
       </div>
+      
 
       {/* Navigation + Text below the canvas */}
       <div
@@ -66,7 +102,7 @@ export default function InfineraId({ onNext, onPrev }) {
           </h1>
 
           <p style={{ fontSize: '1.1rem', opacity: 0.7 }}>
-            Senior Product Designer
+            Software Developer <br/> Working on the management plane for their network devices
           </p>
         </div>
       </div>

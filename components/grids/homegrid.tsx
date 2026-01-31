@@ -77,9 +77,16 @@ export default function HorizontalExpandingLayout() {
 
   // Render the actual layout after GIF is fully loaded
   return (
-    <div className="relative min-h-screen flex flex-col sm:flex-row mt-16 pt-1">
+    <>
+
+    {/* subtle top bar: full width, 50px height, thin border matching site accent */}
+    <div className="w-full h-[50px] border border-gray-300 m-3 flex items-center px-4">
+      
+    </div>
+    <div className="relative min-h-screen flex flex-col sm:flex-row m-2 rounded-lg">
+
       {/* Background Dot Pattern - positioned absolutely behind everything */}
-      <div className="fixed inset-0 pointer-events-none z-0 top-0 left-0">
+      <div className="fixed inset-0 pointer-events-none z-0 top-0 left-0 hidden md:block">
         <DotPattern
           className={cn(
             "[mask-image:radial-gradient(650px_circle_at_center,black,transparent)]"
@@ -148,5 +155,6 @@ export default function HorizontalExpandingLayout() {
         </>
       )}
     </div>
+  </>
   );
 }
