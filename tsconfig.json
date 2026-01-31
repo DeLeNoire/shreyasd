@@ -32,10 +32,7 @@
     "**/*.ts",
     "**/*.jsx",
     "**/*.tsx",
-    ".next/types/**/*.ts",
-    "components/Idcards/BandMnnit.tsx",
-    "app/api/compile/route.ts",
-    "app/api/categories.js"
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"
