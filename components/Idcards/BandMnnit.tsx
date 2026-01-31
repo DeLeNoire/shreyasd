@@ -11,7 +11,7 @@ extend({ MeshLineGeometry, MeshLineMaterial })
 useGLTF.preload('/shreyastest.glb')
 useTexture.preload('/tag/mnnit.png')
 
-function CanvasTextHUD({ title, subtitle }) {
+function CanvasTextHUD({ title, subtitle }: { title: string; subtitle: string }) {
   return (
     <Html
       center

@@ -19,7 +19,7 @@ export default function InfineraId() {
       camera={{ position: [0, 0, 13], fov: 25 }}
       dpr={[1, 2]}
       style={{ background: 'transparent' }}
-      gl={{ alpha: true, toneMapping: THREE.ACESFilmicToneMapping, outputEncoding: THREE.sRGBEncoding }}
+      gl={{ alpha: true, toneMapping: THREE.ACESFilmicToneMapping, outputColorSpace: THREE.SRGBColorSpace }}
     >
       {/* subtle ambient for visibility */}
       <ambientLight intensity={0.45} />

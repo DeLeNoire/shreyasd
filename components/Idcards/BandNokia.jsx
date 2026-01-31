@@ -22,7 +22,7 @@ export default function NokiaId() {
       gl={{
         alpha: true,
         toneMapping: THREE.NoToneMapping,
-        outputEncoding: THREE.sRGBEncoding,
+        outputColorSpace: THREE.SRGBColorSpace,
       }}
       onCreated={(state) => {
         state.gl.toneMappingExposure = 1
