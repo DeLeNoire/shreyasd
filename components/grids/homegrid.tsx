@@ -1,5 +1,5 @@
 "use client";
-import { useState, useMemo, lazy, Suspense, useEffect } from "react";
+import { useState, useMemo, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import DotPattern from "../magicui/dot-pattern";
 import { cn } from "@/lib/utils";
@@ -15,25 +15,8 @@ interface Section {
   content: React.ReactNode;
 }
 
-// Default component to render when no section is selected
-const DefaultComponent = () => (
-  <div className="w-full h-full flex items-center justify-center bg-gray-200">
-    <h2 className="text-xl font-semibold text-gray-700">
-      Select a section to view content
-    </h2>
-  </div>
-);
-
 export default function HorizontalExpandingLayout() {
   const [expanded, setExpanded] = useState<number | null>(1);
-  const [gifLoaded, setGifLoaded] = useState(false);
-
-  // Preload the GIF and set the state when it's loaded
-  useEffect(() => {
-    const img = new Image();
-    img.src = "/load.gif"; // Path to the GIF in the public folder
-    img.onload = () => setGifLoaded(true);
-  }, []);
 
   // Memoizing the sections data to prevent re-creation on every render
   const sections = useMemo<Section[]>(
@@ -103,9 +86,6 @@ export default function HorizontalExpandingLayout() {
             )}
           </motion.div>
         ))}
-
-        {/* Render default component when no section is selected */}
-        {!expanded && <DefaultComponent />}
       </div>
 
       {/* Background Dot Pattern */}

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import NokiaId from '../Idcards/BandNokia';
 
 export default function PortfolioClone() {
   const [selectedCompany, setSelectedCompany] = useState('Sureify');
@@ -69,10 +68,7 @@ export default function PortfolioClone() {
             {[...Array(9)].map((_, i) => (
               <div 
                 key={i} 
-                className={`rounded-sm ${i === 7 ? 'bg-[#e75532]' : 'bg-[#ececec]'}`}
-                style={{
-                  animation: i === 7 ? 'pulse 2s ease-in-out infinite' : 'none'
-                }}
+                className={`rounded-sm ${i === 7 ? 'bg-[#e75532] animate-pulse' : 'bg-[#ececec]'}`}
               />
             ))}
           </div>
@@ -100,7 +96,7 @@ export default function PortfolioClone() {
           <div className="absolute inset-0 flex items-center justify-center gap-1 p-2">
             <div className="w-4 h-6 border-2 border-[#ececec] rounded" />
             <div className="w-4 h-6 border-2 border-[#ececec] rounded" />
-            <div className="w-3 h-3 bg-[#e75532] rounded-sm" style={{ animation: 'pulse 2s ease-in-out infinite' }} />
+            <div className="w-3 h-3 bg-[#e75532] rounded-sm animate-pulse" />
           </div>
         )}
 
@@ -109,9 +105,8 @@ export default function PortfolioClone() {
             {[...Array(17)].map((_, i) => (
               <div
                 key={i}
-                className={`rounded-full ${i === 8 ? 'bg-[#e75532]' : 'bg-[#ececec]'}`}
+                className={`rounded-full ${i === 8 ? 'bg-[#e75532] animate-rotate' : 'bg-[#ececec]'}`}
                 style={{
-                  animation: i === 8 ? 'rotate 3s linear infinite' : 'none',
                   width: '6px',
                   height: '6px',
                   margin: 'auto'
@@ -149,6 +144,9 @@ export default function PortfolioClone() {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-5px); }
         }
+        .animate-pulse { animation: pulse 2s ease-in-out infinite; }
+        .animate-rotate { animation: rotate 3s linear infinite; }
+        .animate-float { animation: float 2s ease-in-out infinite; }
       `}</style>
 
       {/* Main Grid Layout - Now Horizontal */}
@@ -238,7 +236,7 @@ export default function PortfolioClone() {
             </div>
             
             <h2 className="text-2xl font-medium text-[#292524] tracking-wide">
-              I'm a Product Designer from India
+              I&apos;m a Product Designer from India
             </h2>
             
             <div className="max-w-2xl mx-auto space-y-2 text-[#79716b]">
@@ -326,45 +324,45 @@ export default function PortfolioClone() {
                     <div className="text-[#a9a29d]">[</div>
                     <div className="text-[#a9a29d]">  {'{'}</div>
                     <div>
-                      <span className="text-[#a9a29d]">    "</span>
+                      <span className="text-[#a9a29d]">    &quot;</span>
                       <span className="text-[#44403c]">company</span>
-                      <span className="text-[#a9a29d]">": </span>
+                      <span className="text-[#a9a29d]">&quot;: </span>
                       <span className="text-[#e75532]">Sureify</span>
                     </div>
                     <div>
-                      <span className="text-[#a9a29d]">    "</span>
+                      <span className="text-[#a9a29d]">    &quot;</span>
                       <span className="text-[#44403c]">type</span>
-                      <span className="text-[#a9a29d]">": </span>
+                      <span className="text-[#a9a29d]">&quot;: </span>
                       <span className="text-[#e75532]">Full-time</span>
                     </div>
                     <div>
-                      <span className="text-[#a9a29d]">    "</span>
+                      <span className="text-[#a9a29d]">    &quot;</span>
                       <span className="text-[#44403c]">title</span>
-                      <span className="text-[#a9a29d]">": </span>
+                      <span className="text-[#a9a29d]">&quot;: </span>
                       <span className="text-[#e75532]">Product Designer II</span>
                     </div>
                     <div>
-                      <span className="text-[#a9a29d]">    "</span>
+                      <span className="text-[#a9a29d]">    &quot;</span>
                       <span className="text-[#44403c]">start date</span>
-                      <span className="text-[#a9a29d]">": </span>
+                      <span className="text-[#a9a29d]">&quot;: </span>
                       <span className="text-[#e75532]">January 2024</span>
                     </div>
                     <div>
-                      <span className="text-[#a9a29d]">    "</span>
+                      <span className="text-[#a9a29d]">    &quot;</span>
                       <span className="text-[#44403c]">end date</span>
-                      <span className="text-[#a9a29d]">": </span>
+                      <span className="text-[#a9a29d]">&quot;: </span>
                       <span className="text-[#e75532]">Present</span>
                     </div>
                     <div>
-                      <span className="text-[#a9a29d]">    "</span>
+                      <span className="text-[#a9a29d]">    &quot;</span>
                       <span className="text-[#44403c]">industry</span>
-                      <span className="text-[#a9a29d]">": </span>
+                      <span className="text-[#a9a29d]">&quot;: </span>
                       <span className="text-[#e75532]">Insurance SaaS</span>
                     </div>
                     <div>
-                      <span className="text-[#a9a29d]">    "</span>
+                      <span className="text-[#a9a29d]">    &quot;</span>
                       <span className="text-[#44403c]">task</span>
-                      <span className="text-[#a9a29d]">": </span>
+                      <span className="text-[#a9a29d]">&quot;: </span>
                       <span className="text-[#e75532]">Product, Design Sys</span>
                     </div>
                     <div className="text-[#a9a29d]">  {'}'}</div>
@@ -460,45 +458,45 @@ export default function PortfolioClone() {
                     <div className="text-[#a9a29d]">[</div>
                     <div className="text-[#a9a29d]">  {'{'}</div>
                     <div>
-                      <span className="text-[#a9a29d]">    "</span>
+                      <span className="text-[#a9a29d]">    &quot;</span>
                       <span className="text-[#44403c]">company</span>
-                      <span className="text-[#a9a29d]">": </span>
+                      <span className="text-[#a9a29d]">&quot;: </span>
                       <span className="text-[#e75532]">Sureify</span>
                     </div>
                     <div>
-                      <span className="text-[#a9a29d]">    "</span>
+                      <span className="text-[#a9a29d]">    &quot;</span>
                       <span className="text-[#44403c]">type</span>
-                      <span className="text-[#a9a29d]">": </span>
+                      <span className="text-[#a9a29d]">&quot;: </span>
                       <span className="text-[#e75532]">Full-time</span>
                     </div>
                     <div>
-                      <span className="text-[#a9a29d]">    "</span>
+                      <span className="text-[#a9a29d]">    &quot;</span>
                       <span className="text-[#44403c]">title</span>
-                      <span className="text-[#a9a29d]">": </span>
+                      <span className="text-[#a9a29d]">&quot;: </span>
                       <span className="text-[#e75532]">Product Designer II</span>
                     </div>
                     <div>
-                      <span className="text-[#a9a29d]">    "</span>
+                      <span className="text-[#a9a29d]">    &quot;</span>
                       <span className="text-[#44403c]">start date</span>
-                      <span className="text-[#a9a29d]">": </span>
+                      <span className="text-[#a9a29d]">&quot;: </span>
                       <span className="text-[#e75532]">January 2024</span>
                     </div>
                     <div>
-                      <span className="text-[#a9a29d]">    "</span>
+                      <span className="text-[#a9a29d]">    &quot;</span>
                       <span className="text-[#44403c]">end date</span>
-                      <span className="text-[#a9a29d]">": </span>
+                      <span className="text-[#a9a29d]">&quot;: </span>
                       <span className="text-[#e75532]">Present</span>
                     </div>
                     <div>
-                      <span className="text-[#a9a29d]">    "</span>
+                      <span className="text-[#a9a29d]">    &quot;</span>
                       <span className="text-[#44403c]">industry</span>
-                      <span className="text-[#a9a29d]">": </span>
+                      <span className="text-[#a9a29d]">&quot;: </span>
                       <span className="text-[#e75532]">Insurance SaaS</span>
                     </div>
                     <div>
-                      <span className="text-[#a9a29d]">    "</span>
+                      <span className="text-[#a9a29d]">    &quot;</span>
                       <span className="text-[#44403c]">task</span>
-                      <span className="text-[#a9a29d]">": </span>
+                      <span className="text-[#a9a29d]">&quot;: </span>
                       <span className="text-[#e75532]">Product, Design Sys</span>
                     </div>
                     <div className="text-[#a9a29d]">  {'}'}</div>
@@ -641,7 +639,7 @@ export default function PortfolioClone() {
           <div className="bg-[#f9f9f9] rounded-lg h-[100px] flex items-center justify-between px-8">
             <button className="bg-gradient-to-r from-[#f9f9f9] to-[#f5f5f5] hover:from-[#f5f5f5] hover:to-[#efefef] px-6 py-3 rounded-lg transition-all hover:shadow-md">
               <span className="text-xs font-mono text-[#292524]">Got a project in mind? </span>
-              <span className="text-xs font-mono text-[#e75532]">Let's talk</span>
+              <span className="text-xs font-mono text-[#e75532]">Let&apos;s talk</span>
             </button>
             <p className="text-[11px] font-mono text-[#a9a29d]">
               [updated/September.2025]

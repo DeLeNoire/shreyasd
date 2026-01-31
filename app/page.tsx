@@ -1,7 +1,5 @@
 "use client";
-import { useEffect, useState, useMemo } from "react";
-import Image from "next/image";
-import Link from "next/link";
+import { useEffect, useState } from "react";
 import ExpandingLayout from "@/components/grids/homegrid";
 import PortfolioClone from "@/components/Project/rest";
 
@@ -20,11 +18,6 @@ export default function Home() {
     return () => clearTimeout(timer); // Cleanup on unmount
   }, []);
 
-  // Use useMemo to cache the ExpandingLayout component
-  const cachedExpandingLayout = useMemo(() => {
-    return <ExpandingLayout />;
-  }, []);
-
   return (
     <>
       {isGifVisible && (
@@ -37,46 +30,13 @@ export default function Home() {
         </div>
       )}
 
-      {isLayoutVisible && cachedExpandingLayout}
+      {isLayoutVisible && <ExpandingLayout />}
 
 
       {/* Portfolio Clone Section - Full Width */}
       <section className="w-full min-h-screen">
         <PortfolioClone />
       </section>
-
-      {/* <main className="flex min-h-screen flex-col items-center justify-between lg:pr-28 lg:pl-28">
-        <div className="sticky z-50 w-screen items-center justify-between font-mono text-sm lg:flex pl-28 pr-28 hidden">
-          <div className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 p-5 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit">
-            Say hi here! &nbsp;
-            <code className="font-mono font-bold hidden lg:block">
-              <Link href="https://www.linkedin.com/in/shreyasd19/">
-                /in/shreyasd19,
-              </Link>
-            </code>
-            <div className="font-mono font-bold block lg:hidden">
-              <Link href="https://www.linkedin.com/in/shreyasd19/">
-                <Image
-                  src="/linked.png"
-                  alt="LinkedIn Icon"
-                  width={24}
-                  height={24}
-                />
-              </Link>
-            </div>
-            <code className="font-mono font-bold hidden lg:block">
-              <Link href="https://drive.google.com/file/d/1TsS2DaWk7OUzwS8qeypHCGs7Bwfa1KbO/view?usp=drive_link">
-                /Resume.pdf
-              </Link>
-            </code>
-            <div className="font-mono font-bold block lg:hidden">
-              <Link href="https://drive.google.com/file/d/1TsS2DaWk7OUzwS8qeypHCGs7Bwfa1KbO/view?usp=drive_link">
-                <Image src="/cv.png" alt="CV Icon" width={24} height={24} />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </main> */}
 
     </>
   );
