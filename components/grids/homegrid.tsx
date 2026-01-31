@@ -75,13 +75,11 @@ export default function HorizontalExpandingLayout() {
             style={{ width: expanded === section.id ? "100%" : "180px" }}
             onClick={() => toggleExpand(section.id)}
           >
-            {expanded === section.id && section.id === 1 ? (
-              <div className="w-full h-full flex items-center justify-center p-6">
-                {section.content}
-              </div>
-            ) : expanded === section.id ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full h-full p-6">
-                <div className="col-span-1 -mt-8 z-20">{section.content}</div>
+            {expanded === section.id ? (
+              <div className="w-full h-full flex flex-col items-center justify-start overflow-y-auto">
+                <div className="w-full" style={{ height: '150px' }}>
+                  {section.content}
+                </div>
               </div>
             ) : (
               <div className="absolute top-6 left-6 text-lg font-semibold">
