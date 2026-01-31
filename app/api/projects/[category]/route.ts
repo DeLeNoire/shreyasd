@@ -2,6 +2,7 @@ import prisma from '@/app/db/db';
 import { NextResponse } from 'next/server';
 import { NextRequest } from 'next/server';
 
+export const dynamic = 'force-dynamic';
 export const revalidate = 3600; // Revalidate every hour
 
 export async function GET(request: NextRequest, { params }: { params: { category: string } , response:NextResponse }) {
