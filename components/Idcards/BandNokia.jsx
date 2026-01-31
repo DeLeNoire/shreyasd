@@ -12,59 +12,97 @@ useGLTF.preload('/Nokia/NokiaId.glb')
 // Placeholder tag texture; you can replace with the Nokia tag when available
 useTexture.preload('/NokiaTag.png')
 
-export default function NokiaId() {
+export default function NokiaId({ onNext, onPrev }) {
   return (
-    <Canvas
-      shadows
-      camera={{ position: [0, 0, 13], fov: 25 }}
-      dpr={[1, 2]}
-      style={{ background: 'transparent' }}
-      gl={{
-        alpha: true,
-        toneMapping: THREE.NoToneMapping,
-        outputColorSpace: THREE.SRGBColorSpace,
-      }}
-      onCreated={(state) => {
-        state.gl.toneMappingExposure = 1
-      }}
-    >
-      {/* Ambient base */}
- <ambientLight intensity={0.045} />
+    <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <div style={{ width: '100%', height: '100%' }}>
+        <Canvas
+          shadows
+          camera={{ position: [0, 0, 13], fov: 25 }}
+          dpr={[1, 2]}
+          style={{ background: 'transparent', width: '100%', height: '100%' }}
+          gl={{
+            alpha: true,
+            toneMapping: THREE.NoToneMapping,
+            outputColorSpace: THREE.SRGBColorSpace,
+          }}
+          onCreated={(state) => {
+            state.gl.toneMappingExposure = 1
+          }}
+        >
+          {/* Ambient base */}
+          <ambientLight intensity={0.045} />
 
-{/* Key light */}
-<directionalLight
-  castShadow
-  position={[4, 6, 6]}
-  intensity={0.1}
-  color={0xffffff}
-/>
+          {/* Key light */}
+          <directionalLight
+            castShadow
+            position={[4, 6, 6]}
+            intensity={0.1}
+            color={0xffffff}
+          />
 
-{/* Soft fill */}
-<directionalLight
-  position={[4, 3, 3]}
-  intensity={0.35}
-  color={0xffffff}
-/>
+          {/* Soft fill */}
+          <directionalLight
+            position={[4, 3, 3]}
+            intensity={0.35}
+            color={0xffffff}
+          />
 
-{/* Rim light (subtle!) */}
-<directionalLight
-  position={[0, 4, -8]}
-  intensity={1.4}
-  color={0xbfd9ff}
-/>
+          {/* Rim light (subtle!) */}
+          <directionalLight
+            position={[0, 4, -8]}
+            intensity={1.4}
+            color={0xbfd9ff}
+          />
 
-<hemisphereLight
-  skyColor={0xffffff}
-  groundColor={0xf0f0ff}
-  intensity={0.15}
-/>
+          <hemisphereLight
+            skyColor={0xffffff}
+            groundColor={0xf0f0ff}
+            intensity={0.15}
+          />
 
-      <Physics interpolate gravity={[0, -40, 0]} timeStep={1 / 60}>
-        <BandNokia />
-      </Physics>
+          <Physics interpolate gravity={[0, -40, 0]} timeStep={1 / 60}>
+            <BandNokia />
+          </Physics>
 
-      <Environment preset="studio" />
-    </Canvas>
+          <Environment preset="studio" />
+        </Canvas>
+      </div>
+
+      {/* Navigation + Text below the canvas */}
+      <div
+        style={{
+          textAlign: 'center',
+          fontFamily: 'system-ui, -apple-system, sans-serif',
+          marginTop: '1.5rem',
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '2rem',
+        }}
+      >
+        {/* Text */}
+        <div>
+          <h1
+            style={{
+              fontSize: '2.5rem',
+              fontWeight: 700,
+              color: '#b62222ff',
+              letterSpacing: '0.05em',
+              textTransform: 'uppercase',
+              marginBottom: '0.4rem',
+            }}
+          >
+            Nokia
+          </h1>
+
+          <p style={{ fontSize: '1.1rem', opacity: 0.7 }}>
+            Product Design Internship
+          </p>
+        </div>
+      </div>
+    </div>
   )
 }
 

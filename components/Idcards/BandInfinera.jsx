@@ -12,27 +12,65 @@ extend({ MeshLineGeometry, MeshLineMaterial });
 useGLTF.preload("/InfineraCard.glb");
 useTexture.preload("/InfineraTag.png");
 
-export default function InfineraId() {
+export default function InfineraId({ onNext, onPrev }) {
   return (
-    <Canvas
-      shadows
-      camera={{ position: [0, 0, 13], fov: 25 }}
-      dpr={[1, 2]}
-      style={{ background: 'transparent' }}
-      gl={{ alpha: true, toneMapping: THREE.ACESFilmicToneMapping, outputColorSpace: THREE.SRGBColorSpace }}
-    >
-      {/* subtle ambient for visibility */}
-      <ambientLight intensity={0.45} />
-      {/* warm key light */}
-      <directionalLight color={0xfff1e0} position={[3, 5, 3]} intensity={7.8} castShadow shadow-mapSize-width={1024} shadow-mapSize-height={1024} />
-      {/* cool rim */}
-      <directionalLight color={0x8fbfff} position={[9, 10, 35]} intensity={0.3} />
-      <hemisphereLight skyColor={0xffffff} groundColor={0xddddff} intensity={0.08} />
-      <Physics interpolate gravity={[0, -40, 0]} timeStep={1 / 60}>
-        <Band />
-      </Physics>
-      <ContactShadows position={[0, -3.2, 0]} opacity={0.35} scale={4} blur={2} far={4} />
-    </Canvas>
+    <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <div style={{ width: '100%', height: '100%' }}>
+        <Canvas
+          shadows
+          camera={{ position: [0, 0, 13], fov: 25 }}
+          dpr={[1, 2]}
+          style={{ background: 'transparent', width: '100%', height: '100%' }}
+          gl={{ alpha: true, toneMapping: THREE.ACESFilmicToneMapping, outputColorSpace: THREE.SRGBColorSpace }}
+        >
+          {/* subtle ambient for visibility */}
+          <ambientLight intensity={0.45} />
+          {/* warm key light */}
+          <directionalLight color={0xfff1e0} position={[3, 5, 3]} intensity={7.8} castShadow shadow-mapSize-width={1024} shadow-mapSize-height={1024} />
+          {/* cool rim */}
+          <directionalLight color={0x8fbfff} position={[9, 10, 35]} intensity={0.3} />
+          <hemisphereLight skyColor={0xffffff} groundColor={0xddddff} intensity={0.08} />
+          <Physics interpolate gravity={[0, -40, 0]} timeStep={1 / 60}>
+            <Band />
+          </Physics>
+          <ContactShadows position={[0, -3.2, 0]} opacity={0.35} scale={4} blur={2} far={4} />
+        </Canvas>
+      </div>
+
+      {/* Navigation + Text below the canvas */}
+      <div
+        style={{
+          textAlign: 'center',
+          fontFamily: 'system-ui, -apple-system, sans-serif',
+          marginTop: '1.5rem',
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '2rem',
+        }}
+      >
+        {/* Text */}
+        <div>
+          <h1
+            style={{
+              fontSize: '2.5rem',
+              fontWeight: 700,
+              color: '#b62222ff',
+              letterSpacing: '0.05em',
+              textTransform: 'uppercase',
+              marginBottom: '0.4rem',
+            }}
+          >
+            Infinera
+          </h1>
+
+          <p style={{ fontSize: '1.1rem', opacity: 0.7 }}>
+            Senior Product Designer
+          </p>
+        </div>
+      </div>
+    </div>
   );
 }
 

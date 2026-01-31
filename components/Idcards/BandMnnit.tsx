@@ -11,15 +11,15 @@ extend({ MeshLineGeometry, MeshLineMaterial })
 useGLTF.preload('/shreyastest.glb')
 useTexture.preload('/tag/mnnit.png')
 
-export default function MnnitId() {
+export default function MnnitId({ onNext, onPrev }: { onNext?: (() => void) | null; onPrev?: (() => void) | null }) {
   return (
-    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <div style={{ width: '100%', height: '100%' }}>
         <Canvas
           shadows
           camera={{ position: [0, 0, 13], fov: 25 }}
           dpr={[1, 2]}
-          style={{ background: 'transparent' }}
+          style={{ background: '', width: '100%', height: '100%' }}
           gl={{ alpha: true }}
         >
           {/* Lights */}
@@ -37,30 +37,38 @@ export default function MnnitId() {
         </Canvas>
       </div>
 
-      {/* Text below the canvas */}
+      {/* Navigation + Text below the canvas */}
       <div
         style={{
           textAlign: 'center',
           fontFamily: 'system-ui, -apple-system, sans-serif',
           marginTop: '1.5rem',
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '2rem',
         }}
       >
-        <h1
-          style={{
-            fontSize: '2.5rem',
-            fontWeight: 700,
-            color: '#b62222ff',
-            letterSpacing: '0.05em',
-            textTransform: 'uppercase',
-            marginBottom: '0.4rem',
-          }}
-        >
-          National Institute of Technology - Allahabad
-        </h1>
+        {/* Text */}
+        <div>
+          <h1
+            style={{
+              fontSize: '2.5rem',
+              fontWeight: 700,
+              color: '#b62222ff',
+              letterSpacing: '0.05em',
+              textTransform: 'uppercase',
+              marginBottom: '0.4rem',
+            }}
+          >
+            National Institute of Technology - Allahabad
+          </h1>
 
-        <p style={{ fontSize: '1.1rem', opacity: 0.7 }}>
-          Bachelor of Technology • Information Technology
-        </p>
+          <p style={{ fontSize: '1.1rem', opacity: 0.7 }}>
+            Bachelor of Technology • Information Technology
+          </p>
+        </div>
       </div>
     </div>
   )
