@@ -3,6 +3,7 @@ import { useState, useMemo, lazy, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import DotPattern from "../magicui/dot-pattern";
 import { cn } from "@/lib/utils";
+import Cube from "@/components/magicui/cube";
 
 // Lazy loading the content components to improve performance
 const MnnitId = lazy(() => import("../Idcards/BandMnnit"));
@@ -80,9 +81,51 @@ export default function HorizontalExpandingLayout() {
     <>
 
     {/* subtle top bar: full width, 50px height, thin border matching site accent */}
-    {/* <div className="w-fit h-[50px] border border-gray-300 m-3 flex items-center px-4">
-      Shreyas D
-    </div> */}
+
+        {/* Navigation Section */}
+        <div className="grid grid-cols-[100px_100px_1fr_100px_100px] gap-[2px] mb-[2px]">
+          <Cube className="h-[80px]" />
+          <Cube className="h-[80px]" label="[8px]" />
+          
+          {/* Center Navigation */}
+          <div className="bg-[#f9f9f9] rounded-lg px-6 py-3 h-[80px]">
+            <div className="flex items-center justify-between h-full">
+              <div className="flex items-center gap-4">
+                <div className="relative w-12 h-12 bg-[#e75532] rounded-lg flex items-center justify-center overflow-hidden">
+                  <div className="absolute inset-0">
+                    {[...Array(28)].map((_, i) => (
+                      <div
+                        key={i}
+                        className="absolute w-1 h-1 bg-[#f9f9f9] rounded-full"
+                        style={{
+                          left: `${(i % 7) * 14 + 10}%`,
+                          top: `${Math.floor(i / 7) * 25 + 10}%`,
+                          opacity: Math.random() > 0.5 ? 1 : 0.2,
+                          animation: `float ${2 + Math.random()}s ease-in-out infinite`,
+                          animationDelay: `${Math.random()}s`
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <p className="text-[11px] text-[#79716b] font-mono">Open for new projects</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-6 text-xs font-mono text-[#79716b]">
+                <a href="#" className="hover:text-[#e75532] transition-colors">Work</a>
+                <a href="#about" className="hover:text-[#e75532] transition-colors">About</a>
+                <a href="#recommendations" className="hover:text-[#e75532] transition-colors">Recommendations</a>
+                <a href="mailto:info.sujitsen@gmail.com" className="hover:text-[#e75532] transition-colors">Email</a>
+                <a href="https://www.linkedin.com/in/shreyasd19/" target="_blank" rel="noopener" className="hover:text-[#e75532] transition-colors">LinkedIn</a>
+              </div>
+            </div>
+          </div>
+          
+          <Cube className="h-[80px]" label="[100px]" />
+          <Cube className="h-[80px]" />
+        </div>
     <div className="relative min-h-screen flex flex-col sm:flex-row m-2 rounded-lg">
 
       {/* Background Dot Pattern - positioned absolutely behind everything */}

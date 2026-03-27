@@ -77,7 +77,7 @@ export default function MnnitId({ onNext, onPrev }: { onNext?: (() => void) | nu
         style={{
           textAlign: 'center',
           fontFamily: 'system-ui, -apple-system, sans-serif',
-          marginTop: '1.5rem',
+          // marginTop: '1.5rem',
           width: '100%',
           display: 'flex',
           alignItems: 'center',
@@ -89,7 +89,7 @@ export default function MnnitId({ onNext, onPrev }: { onNext?: (() => void) | nu
         <div>
           <h1
             style={{
-              fontSize: '2.5rem',
+              fontSize: '1.5rem',
               fontWeight: 700,
               color: '#b62222ff',
               letterSpacing: '0.05em',

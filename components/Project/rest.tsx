@@ -203,76 +203,32 @@ export default function PortfolioClone() {
       {/* Main Grid Layout - Now Horizontal */}
       <main className="w-full px-4 py-4">
         {/* Top Decorative Row */}
-        <div className="grid grid-cols-[100px_100px_1fr_100px_100px] gap-[2px] mb-[2px]">
+        {/* <div className="grid grid-cols-[100px_100px_1fr_100px_100px] gap-[2px] mb-[2px]">
           <Cube className="h-[100px]" />
           <Cube className="h-[100px]" label="[Product]" />
           <Cube className="h-[100px]" />
           <Cube className="h-[100px]" label="[Figma]" />
           <Cube className="h-[100px]" />
-        </div>
+        </div> */}
 
         {/* Second Decorative Row */}
-        <div className="grid grid-cols-[100px_100px_1fr_100px_100px] gap-[2px] mb-[2px]">
-          <Cube className="h-[100px]" />
-          <Cube variant="grid-9" className="h-[100px]" />
-          <div className="grid grid-cols-7 gap-[2px]">
-            <Cube className="h-[100px]" />
-            <Cube className="h-[100px]" label="[Framer]" />
-            <Cube variant="circles-7" className="h-[100px]" />
-            <Cube className="h-[100px]" />
-            <Cube className="h-[100px]" />
-            <Cube className="h-[100px]" />
-            <Cube variant="rectangles" className="h-[100px]" />
-          </div>
-          <Cube className="h-[100px]" />
-          <Cube variant="dots-17" className="h-[100px]" />
-        </div>
-
-        {/* Navigation Section */}
-        <div className="grid grid-cols-[100px_100px_1fr_100px_100px] gap-[2px] mb-[2px]">
-          <Cube className="h-[80px]" />
-          <Cube className="h-[80px]" label="[8px]" />
-          
-          {/* Center Navigation */}
-          <div className="bg-[#f9f9f9] rounded-lg px-6 py-3 h-[80px]">
-            <div className="flex items-center justify-between h-full">
-              <div className="flex items-center gap-4">
-                <div className="relative w-12 h-12 bg-[#e75532] rounded-lg flex items-center justify-center overflow-hidden">
-                  <div className="absolute inset-0">
-                    {[...Array(28)].map((_, i) => (
-                      <div
-                        key={i}
-                        className="absolute w-1 h-1 bg-[#f9f9f9] rounded-full"
-                        style={{
-                          left: `${(i % 7) * 14 + 10}%`,
-                          top: `${Math.floor(i / 7) * 25 + 10}%`,
-                          opacity: Math.random() > 0.5 ? 1 : 0.2,
-                          animation: `float ${2 + Math.random()}s ease-in-out infinite`,
-                          animationDelay: `${Math.random()}s`
-                        }}
-                      />
-                    ))}
+                <div className="grid grid-cols-[100px_100px_1fr_100px_100px] gap-[2px] mb-[2px]">
+                  <Cube className="h-[100px]" />
+                  <Cube variant="grid-9" className="h-[100px]" />
+                  <div className="grid grid-cols-7 gap-[2px]">
+                    <Cube className="h-[100px]" />
+                    <Cube className="h-[100px]" label="[Framer]" />
+                    <Cube variant="circles-7" className="h-[100px]" />
+                    <Cube className="h-[100px]" />
+                    <Cube className="h-[100px]" />
+                    <Cube className="h-[100px]" />
+                    <Cube variant="rectangles" className="h-[100px]" />
                   </div>
+                  <Cube className="h-[100px]" />
+                  <Cube variant="dots-17" className="h-[100px]" />
                 </div>
-                <div>
-                  <h1 className="text-base font-medium text-[#292524]">Shreyas D</h1>
-                  <p className="text-[11px] text-[#79716b] font-mono">Open for new projects</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-6 text-xs font-mono text-[#79716b]">
-                <a href="#" className="hover:text-[#e75532] transition-colors">Work</a>
-                <a href="#about" className="hover:text-[#e75532] transition-colors">About</a>
-                <a href="#recommendations" className="hover:text-[#e75532] transition-colors">Recommendations</a>
-                <a href="mailto:info.sujitsen@gmail.com" className="hover:text-[#e75532] transition-colors">Email</a>
-                <a href="https://www.linkedin.com/in/shreyasd19/" target="_blank" rel="noopener" className="hover:text-[#e75532] transition-colors">LinkedIn</a>
-              </div>
-            </div>
-          </div>
-          
-          <Cube className="h-[80px]" label="[100px]" />
-          <Cube className="h-[80px]" />
-        </div>
+
+        
 
         {/* Hero Section with Side Cubes */}
         <div className="grid grid-cols-[100px_100px_1fr_100px_100px] gap-[2px] mb-[2px]">
@@ -471,101 +427,235 @@ export default function PortfolioClone() {
         </div>
 
         {/* Projects List */}
-        {projects.map((project, index) => (
-          <div key={project.id}>
-            <div className="grid grid-cols-[100px_100px_1fr_100px_100px] gap-[2px] mb-[2px]">
-              <Cube className="h-[350px]" />
-              <Cube className="h-[350px]" />
-              
-              <div className="bg-[#f9f9f9] rounded-lg p-8 hover:shadow-lg transition-shadow h-[350px]">
-                <div className="grid grid-cols-5 gap-6 h-full">
-                  <div className="col-span-1 bg-[#e7e5e4] rounded-lg flex items-center justify-center">
-                    <motion.div
-                      layoutId={`project-card-${project.id}`}
-                      className="cursor-pointer"
-                      onClick={() =>
-                        openViewer({
-                          id: project.id,
-                          title: project.title,
-                          mode: project.mode,
-                          previewUrl: project.previewUrl,
-                          slides: project.slides,
-                          description: project.description
-                        })
-                      }
-                    >
-                      <button
-                        className="text-3xl font-bold text-[#d7d3d0] focus:outline-none"
-                      >
-                        {project.number}
-                      </button>
-                    </motion.div>
-                  </div>
+        {projects.map((project, index) => {
+          const isAlternateLeft = index % 2 === 0;
 
-                  <div className="col-span-4 space-y-3 overflow-auto">
-                    <h3 className="text-lg font-medium text-[#292524] leading-relaxed">
-                      {project.title}
-                    </h3>
-                    <p className="text-sm text-[#79716b] leading-relaxed">
-                      {project.description}
-                    </p>
-                    
-                    {project.link && (
-                      <a 
-                        href={project.link} 
-                        target="_blank" 
-                        rel="noopener"
-                        className="text-sm text-[#e75532] hover:underline inline-block"
-                      >
-                        Visit the website &gt;
-                      </a>
-                    )}
+          return (
+            <div key={project.id}>
+              <div
+                className={`grid gap-[2px] mb-[2px] ${
+                  isAlternateLeft
+                    ? 'grid-cols-[100px_1fr_100px_100px]'
+                    : 'grid-cols-[100px_100px_1fr_100px]'
+                }`}
+              >
+                <Cube className="h-[350px]" />
 
-                    <div className="flex flex-wrap gap-2 pt-2">
-                      {project.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-3 py-1.5 bg-white border border-[#e7e5e4] rounded-lg text-xs text-[#79716b]"
+                {isAlternateLeft ? (
+                  <div className="bg-[#f9f9f9] rounded-lg p-8 hover:shadow-lg transition-shadow h-[350px]">
+                    <div className="grid grid-cols-5 gap-6 h-full">
+                      <div className="col-span-1 bg-[#e7e5e4] rounded-lg overflow-hidden">
+                        <motion.button
+                          layoutId={`project-card-${project.id}`}
+                          className="relative cursor-pointer w-full h-full focus:outline-none"
+                          onClick={() =>
+                            openViewer({
+                              id: project.id,
+                              title: project.title,
+                              mode: project.mode,
+                              previewUrl: project.previewUrl,
+                              slides: project.slides,
+                              description: project.description
+                            })
+                          }
+                          aria-label={`Open project ${project.number}`}
                         >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+                          {project.id === 1 ? (
+                            <img
+                              src="/animated-gifs-badminton-0031.gif.pagespeed.ce.V0JO1Yg-u1.gif"
+                              alt="Badminton animation"
+                              className="w-full h-full object-contain bg-white"
+                            />
+                          ) : project.id === 2 ? (
+                            <img
+                              src="/guitar-hand.gif"
+                              alt="Guitar hand animation"
+                              className="w-full h-full object-contain bg-white"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center">
+                              <span className="text-3xl font-bold text-[#d7d3d0]">{project.number}</span>
+                            </div>
+                          )}
+                          <span className="absolute top-3 left-3 text-[11px] font-mono text-[#7b6f62] bg-[#f4f1ec]/85 px-2 py-1 rounded-md border border-[#d5cec3]">
+                            [{project.number}]
+                          </span>
+                        </motion.button>
+                      </div>
 
-                    <div className="text-right pt-2">
-                      <p className="text-xs font-mono text-[#a9a29d]">
-                        [.{project.year}] <span className="text-[#e75532]">{project.company}</span>
+                      <div className="col-span-4 space-y-3 overflow-auto">
+                        <h3 className="text-lg font-medium text-[#292524] leading-relaxed">
+                          {project.title}
+                        </h3>
+                        <p className="text-sm text-[#79716b] leading-relaxed">
+                          {project.description}
+                        </p>
+
+                        {project.link && (
+                          <a
+                            href={project.link}
+                            target="_blank"
+                            rel="noopener"
+                            className="text-sm text-[#e75532] hover:underline inline-block"
+                          >
+                            Visit the website &gt;
+                          </a>
+                        )}
+
+                        <div className="flex flex-wrap gap-2 pt-2">
+                          {project.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="px-3 py-1.5 bg-white border border-[#e7e5e4] rounded-lg text-xs text-[#79716b]"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+
+                        <div className="text-right pt-2">
+                          <p className="text-xs font-mono text-[#a9a29d]">
+                            [.{project.year}] <span className="text-[#e75532]">{project.company}</span>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <Cube className="h-[350px]" />
+                    <div className="bg-[#f9f9f9] rounded-lg p-8 hover:shadow-lg transition-shadow h-[350px]">
+                      <div className="grid grid-cols-5 gap-6 h-full">
+                        <div className="col-span-1 bg-[#e7e5e4] rounded-lg overflow-hidden">
+                          <motion.button
+                            layoutId={`project-card-${project.id}`}
+                            className="relative cursor-pointer w-full h-full focus:outline-none"
+                            onClick={() =>
+                              openViewer({
+                                id: project.id,
+                                title: project.title,
+                                mode: project.mode,
+                                previewUrl: project.previewUrl,
+                                slides: project.slides,
+                                description: project.description
+                              })
+                            }
+                            aria-label={`Open project ${project.number}`}
+                          >
+                            {project.id === 1 ? (
+                              <img
+                                src="/animated-gifs-badminton-0031.gif.pagespeed.ce.V0JO1Yg-u1.gif"
+                                alt="Badminton animation"
+                                className="w-full h-full object-contain bg-white"
+                              />
+                            ) : project.id === 2 ? (
+                              <img
+                                src="/guitar-hand.gif"
+                                alt="Guitar hand animation"
+                                className="w-full h-full object-contain bg-white"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center">
+                                <span className="text-3xl font-bold text-[#d7d3d0]">{project.number}</span>
+                              </div>
+                            )}
+                            <span className="absolute top-3 left-3 text-[11px] font-mono text-[#7b6f62] bg-[#f4f1ec]/85 px-2 py-1 rounded-md border border-[#d5cec3]">
+                              [{project.number}]
+                            </span>
+                          </motion.button>
+                        </div>
+
+                        <div className="col-span-4 space-y-3 overflow-auto">
+                          <h3 className="text-lg font-medium text-[#292524] leading-relaxed">
+                            {project.title}
+                          </h3>
+                          <p className="text-sm text-[#79716b] leading-relaxed">
+                            {project.description}
+                          </p>
+
+                          {project.link && (
+                            <a
+                              href={project.link}
+                              target="_blank"
+                              rel="noopener"
+                              className="text-sm text-[#e75532] hover:underline inline-block"
+                            >
+                              Visit the website &gt;
+                            </a>
+                          )}
+
+                          <div className="flex flex-wrap gap-2 pt-2">
+                            {project.tags.map((tag) => (
+                              <span
+                                key={tag}
+                                className="px-3 py-1.5 bg-white border border-[#e7e5e4] rounded-lg text-xs text-[#79716b]"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+
+                          <div className="text-right pt-2">
+                            <p className="text-xs font-mono text-[#a9a29d]">
+                              [.{project.year}] <span className="text-[#e75532]">{project.company}</span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                <Cube className="h-[350px]" />
+                {isAlternateLeft && <Cube className="h-[350px]" />}
+              </div>
+
+              {index < projects.length - 1 && (
+                <div
+                  className={`grid gap-[2px] mb-[2px] ${
+                    isAlternateLeft
+                      ? 'grid-cols-[100px_1fr_100px_100px]'
+                      : 'grid-cols-[100px_100px_1fr_100px]'
+                  }`}
+                >
+                  <Cube className="h-[60px]" />
+
+                  {isAlternateLeft ? (
+                    <div className="bg-[#f9f9f9] rounded-lg h-[60px] flex items-center justify-between px-8">
+                      <p className="text-xs font-mono text-[#aaa39f]/75">
+                        {index === 0 && 'Contact me for a detailed overview of the project.'}
+                        {index === 1 && "Let's grab coffee to discuss these projects in details."}
+                        {index === 2 && "Detailed case studies are 'coming soon'. I promise."}
+                        {index === 3 && "Don't forget to come back after visiting Servme's website!"}
+                      </p>
+                      <p className="text-[11px] font-mono text-[#a9a29d]">
+                        <span className="text-[#e8583a]">0{index + 2}</span>/05
                       </p>
                     </div>
-                  </div>
-                </div>
-              </div>
-              
-              <Cube className="h-[350px]" />
-              <Cube className="h-[350px]" />
-            </div>
+                  ) : (
+                    <>
+                      <Cube className="h-[60px]" />
+                      <div className="bg-[#f9f9f9] rounded-lg h-[60px] flex items-center justify-between px-8">
+                        <p className="text-xs font-mono text-[#aaa39f]/75">
+                          {index === 0 && 'Contact me for a detailed overview of the project.'}
+                          {index === 1 && "Let's grab coffee to discuss these projects in details."}
+                          {index === 2 && "Detailed case studies are 'coming soon'. I promise."}
+                          {index === 3 && "Don't forget to come back after visiting Servme's website!"}
+                        </p>
+                        <p className="text-[11px] font-mono text-[#a9a29d]">
+                          <span className="text-[#e8583a]">0{index + 2}</span>/05
+                        </p>
+                      </div>
+                    </>
+                  )}
 
-            {index < projects.length - 1 && (
-              <div className="grid grid-cols-[100px_100px_1fr_100px_100px] gap-[2px] mb-[2px]">
-                <Cube className="h-[60px]" />
-                <Cube className="h-[60px]" />
-                <div className="bg-[#f9f9f9] rounded-lg h-[60px] flex items-center justify-between px-8">
-                  <p className="text-xs font-mono text-[#aaa39f]/75">
-                    {index === 0 && "Contact me for a detailed overview of the project."}
-                    {index === 1 && "Let's grab coffee to discuss these projects in details."}
-                    {index === 2 && "Detailed case studies are 'coming soon'. I promise."}
-                    {index === 3 && "Don't forget to come back after visiting Servme's website!"}
-                  </p>
-                  <p className="text-[11px] font-mono text-[#a9a29d]">
-                    <span className="text-[#e8583a]">0{index + 2}</span>/05
-                  </p>
+                  <Cube className="h-[60px]" />
+                  {isAlternateLeft && <Cube className="h-[60px]" />}
                 </div>
-                <Cube className="h-[60px]" />
-                <Cube className="h-[60px]" />
-              </div>
-            )}
-          </div>
-        ))}
+              )}
+            </div>
+          );
+        })}
 
         {/* Footer */}
         <div className="grid grid-cols-[100px_100px_1fr_100px_100px] gap-[2px] mb-[2px]">
