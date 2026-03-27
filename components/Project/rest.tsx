@@ -1,7 +1,17 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import ProjectExperienceViewer, { ProjectConfig } from '../ProjectViewer/ProjectExperienceViewer';
 
 export default function PortfolioClone() {
   const [selectedCompany, setSelectedCompany] = useState('Sureify');
+  const [viewerOpen, setViewerOpen] = useState(false);
+  const [viewerConfig, setViewerConfig] = useState<ProjectConfig | null>(null);
+
+  const openViewer = (config: ProjectConfig) => {
+    setViewerConfig(config);
+    setViewerOpen(true);
+  };
+  const closeViewer = () => setViewerOpen(false);
 
   const companies = [
     { name: 'Sureify', logo: 'S' },
@@ -10,7 +20,17 @@ export default function PortfolioClone() {
     { name: 'GrowthSchool', logo: 'G' }
   ];
 
-  const projects = [
+  type ProjectItem = ProjectConfig & {
+    id: number;
+    tags: string[];
+    year: string;
+    company: string;
+    number: string;
+    description: string;
+    link?: string;
+  };
+
+  const projects: ProjectItem[] = [
     {
       id: 1,
       title: 'Configuring Overflow Fields in our Studio Form Builder',
@@ -18,7 +38,14 @@ export default function PortfolioClone() {
       tags: ['Product Design', 'Compliance', 'Onboarding'],
       year: '2025',
       company: 'Sureify',
-      number: '01'
+      number: '01',
+      mode: 'carousel',
+      previewUrl: 'https://3d-multiwindows.vercel.app/',
+      slides: [
+        { type: 'preview', content: '' },
+        { type: 'text', content: 'In‑depth writeup about overflow fields.' },
+        { type: 'architecture', content: '<diagram or code here>' }
+      ]
     },
     {
       id: 2,
@@ -27,7 +54,13 @@ export default function PortfolioClone() {
       tags: ['Cross Platform', 'Reports', 'UX Research', 'iOS'],
       year: '2024',
       company: 'SerVme',
-      number: '02'
+      number: '02',
+      mode: 'floating',
+      previewUrl: 'https://example.com/servme',
+      slides: [
+        { type: 'preview', content: '' },
+        { type: 'text', content: 'Overview of the iOS redesign process.' }
+      ]
     },
     {
       id: 3,
@@ -36,7 +69,13 @@ export default function PortfolioClone() {
       tags: ['Transparency', 'User Journeys', 'Payments'],
       year: '2022',
       company: 'Skill-Lync',
-      number: '03'
+      number: '03',
+      mode: 'stack',
+      previewUrl: 'https://example.com/transparency',
+      slides: [
+        { type: 'preview', content: '' },
+        { type: 'text', content: 'How we mapped user journeys to cut refunds.' }
+      ]
     },
     {
       id: 4,
@@ -45,7 +84,13 @@ export default function PortfolioClone() {
       tags: ['Privacy', 'Configurations', 'Design Systems'],
       year: '2024',
       company: 'Sureify',
-      number: '04'
+      number: '04',
+      mode: 'holo',
+      previewUrl: 'https://example.com/roleswitch',
+      slides: [
+        { type: 'preview', content: '' },
+        { type: 'text', content: 'Design considerations for role switching.' }
+      ]
     },
     {
       id: 5,
@@ -55,7 +100,13 @@ export default function PortfolioClone() {
       year: '2024',
       company: 'SerVme',
       number: '05',
-      link: 'https://www.servmeco.com/'
+      link: 'https://www.servmeco.com/',
+      mode: 'lab',
+      previewUrl: 'https://example.com/browsing',
+      slides: [
+        { type: 'preview', content: '' },
+        { type: 'text', content: 'Experimenting with global browsing UI.' }
+      ]
     }
   ];
 
@@ -126,7 +177,7 @@ export default function PortfolioClone() {
   };
 
   return (
-    <div className="min-h-screen w-screen bg-[#ededed] font-sans overflow-x-hidden">
+    <div className="min-h-screen w-fit bg-[#ededed] bg-none font-sans overflow-x-hidden">
       <style jsx>{`
         @keyframes pulse {
           0%, 100% { opacity: 1; transform: scale(1); }
@@ -429,7 +480,26 @@ export default function PortfolioClone() {
               <div className="bg-[#f9f9f9] rounded-lg p-8 hover:shadow-lg transition-shadow h-[350px]">
                 <div className="grid grid-cols-5 gap-6 h-full">
                   <div className="col-span-1 bg-[#e7e5e4] rounded-lg flex items-center justify-center">
-                    <div className="text-3xl font-bold text-[#d7d3d0]">{project.number}</div>
+                    <motion.div
+                      layoutId={`project-card-${project.id}`}
+                      className="cursor-pointer"
+                      onClick={() =>
+                        openViewer({
+                          id: project.id,
+                          title: project.title,
+                          mode: project.mode,
+                          previewUrl: project.previewUrl,
+                          slides: project.slides,
+                          description: project.description
+                        })
+                      }
+                    >
+                      <button
+                        className="text-3xl font-bold text-[#d7d3d0] focus:outline-none"
+                      >
+                        {project.number}
+                      </button>
+                    </motion.div>
                   </div>
 
                   <div className="col-span-4 space-y-3 overflow-auto">
@@ -523,6 +593,12 @@ export default function PortfolioClone() {
           <Cube className="h-[100px]" />
         </div>
       </main>
+
+      <ProjectExperienceViewer
+        isOpen={viewerOpen}
+        config={viewerConfig}
+        onClose={closeViewer}
+      />
     </div>
   );
 }

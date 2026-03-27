@@ -131,9 +131,13 @@ export default function NokiaId({ onNext, onPrev }) {
             Nokia
           </h1>
 
-          <p style={{ fontSize: 'clamp(0.9rem, 2.2vw, 1.05rem)', opacity: 0.7 }}>
-            From silicon to signals • Packets • PullRequests
+          <p style={{ fontSize: 'clamp(0.9rem, 2.2vw, 1.05rem)', opacity: 0.7, fontWeight: 700, color: '#000000', margin: 0, marginBottom: '0.5rem' }}>
+            The hell is : "NI ON PSE PlfEmbSW GX L1 Platform 1D (L07)"
           </p>
+          <em style={{ fontSize: '0.9rem', display: 'block', marginTop: '0.75rem', lineHeight: '1.5' }}>
+            Works in mine •
+            Still broken •  blah blah blah to ugh to urgh to aaaaaaaaahhh real fast
+          </em>
         </div>
       </div>
     </div>

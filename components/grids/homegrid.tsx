@@ -80,19 +80,19 @@ export default function HorizontalExpandingLayout() {
     <>
 
     {/* subtle top bar: full width, 50px height, thin border matching site accent */}
-    <div className="w-full h-[50px] border border-gray-300 m-3 flex items-center px-4">
-      
-    </div>
+    {/* <div className="w-fit h-[50px] border border-gray-300 m-3 flex items-center px-4">
+      Shreyas D
+    </div> */}
     <div className="relative min-h-screen flex flex-col sm:flex-row m-2 rounded-lg">
 
       {/* Background Dot Pattern - positioned absolutely behind everything */}
-      <div className="fixed inset-0 pointer-events-none z-0 top-0 left-0 hidden md:block">
+      {/* <div className="fixed inset-0 pointer-events-none z-0 top-0 left-0 hidden md:block">
         <DotPattern
           className={cn(
             "[mask-image:radial-gradient(650px_circle_at_center,black,transparent)]"
           )}
         />
-      </div>
+      </div> */}
 
       <div className="relative z-10 flex-1 flex flex-col sm:flex-row">
         <AnimatePresence mode="wait">
@@ -116,7 +116,7 @@ export default function HorizontalExpandingLayout() {
               >
                 {expanded === section.id ? (
                   <div className="w-full h-full flex flex-col items-center justify-start overflow-y-auto">
-                    <div className="w-full" style={{ height: 'calc(100vh - 140px)' }}>
+                    <div className="w-full" style={{ height: 'calc(100vh - 80px)' }}>
                       {section.content}
                     </div>
                   </div>
@@ -140,7 +140,7 @@ export default function HorizontalExpandingLayout() {
               className="absolute left-4 top-1/2 -translate-y-1/2 z-30 text-4xl font-bold text-red-600 hover:opacity-80 transition-opacity"
               style={{ color: '#b62222ff' }}
             >
-              &lt;
+              {'{'}
             </button>
           )}
           {expanded < 3 && (
@@ -149,7 +149,7 @@ export default function HorizontalExpandingLayout() {
               className="absolute right-4 top-1/2 -translate-y-1/2 z-30 text-4xl font-bold text-red-600 hover:opacity-80 transition-opacity"
               style={{ color: '#b62222ff' }}
             >
-              &gt;
+              {'}'}
             </button>
           )}
         </>

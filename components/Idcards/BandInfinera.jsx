@@ -101,9 +101,12 @@ export default function InfineraId({ onNext, onPrev }) {
             Infinera
           </h1>
 
-          <p style={{ fontSize: '1.1rem', opacity: 0.7 }}>
-            Software Developer <br/> Working on the management plane for their network devices
+          <p style={{ fontSize: '1.1rem', opacity: 0.7, margin: 0, marginBottom: '0.5rem' }}>
+            Software Developer
           </p>
+          <em style={{ fontSize: '0.9rem', display: 'block', marginTop: '0.5rem', lineHeight: '1.5' }}>
+            I worked on the "easy" part of the system
+          </em>
         </div>
       </div>
     </div>

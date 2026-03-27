@@ -100,9 +100,12 @@ export default function MnnitId({ onNext, onPrev }: { onNext?: (() => void) | nu
             National Institute of Technology - Allahabad
           </h1>
 
-          <p style={{ fontSize: '1.1rem', opacity: 0.7 }}>
+          <p style={{ fontSize: '1.1rem', opacity: 0.7, margin: 0, marginBottom: '0.5rem' }}>
             Bachelor of Technology • Information Technology
           </p>
+          <em style={{ fontSize: '0.9rem', display: 'block', marginTop: '0.5rem', lineHeight: '1.5' }}>
+            Powered by poor sleep • curiosity • and caffeine in my veins
+          </em>
         </div>
       </div>
     </div>
