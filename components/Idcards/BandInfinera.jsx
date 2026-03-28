@@ -105,7 +105,7 @@ export default function InfineraId({ onNext, onPrev }) {
             Software Developer
           </p>
           <em style={{ fontSize: '0.9rem', display: 'block', marginTop: '0.5rem', lineHeight: '1.5' }}>
-            I worked on the "easy" part of the system
+            I worked on the &quot;easy&quot; part of the system
           </em>
         </div>
       </div>

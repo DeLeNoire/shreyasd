@@ -1,5 +1,5 @@
 "use client";
-import { useState, useMemo, lazy, Suspense } from "react";
+import { useState, useMemo, useCallback, lazy, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import DotPattern from "../magicui/dot-pattern";
 import { cn } from "@/lib/utils";
@@ -21,10 +21,13 @@ export default function HorizontalExpandingLayout() {
   const [direction, setDirection] = useState<'next' | 'prev'>(
 'next');
 
-  const handleNavigate = (id: number) => {
-    setDirection(id > (expanded || 1) ? 'next' : 'prev');
-    setExpanded(id);
-  };
+  const handleNavigate = useCallback((id: number) => {
+    setExpanded((prev) => {
+      const previous = prev ?? 1;
+      setDirection(id > previous ? 'next' : 'prev');
+      return id;
+    });
+  }, []);
 
   // Memoizing the sections data to prevent re-creation on every render
   const sections = useMemo<Section[]>(
@@ -61,7 +64,7 @@ export default function HorizontalExpandingLayout() {
           ),
         },
     ],
-    []
+    [handleNavigate]
   );
 
   const toggleExpand = (id: number) => {
