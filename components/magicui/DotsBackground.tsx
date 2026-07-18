@@ -39,12 +39,12 @@ export function DotsBackground() {
         
         float opacity = smoothstep(dotSize + 0.01, dotSize - 0.01, dist);
         
-        // Radial gradient fade from center
-        vec2 centerDist = uv - 0.6;
-        float radialFade = 1.0 - length(centerDist) * 1.2;
+        // Radial gradient fade from center to the edges
+        vec2 centerDist = uv - vec2(0.5);
+        float radialFade = 1.0 - smoothstep(0.0, 0.8, length(centerDist));
         radialFade = clamp(radialFade, 0.0, 1.0);
         
-        opacity *= radialFade * 0.45;
+        opacity *= radialFade * 0.55;
         
         vec3 dotColor = vec3(0.90, 0.89, 0.87);
         gl_FragColor = vec4(dotColor, opacity);

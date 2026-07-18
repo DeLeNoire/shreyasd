@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import ProjectExperienceViewer, { ProjectConfig } from '../ProjectViewer/ProjectExperienceViewer';
 
@@ -259,33 +260,137 @@ export default function PortfolioClone() {
           <Cube className="h-[400px]" />
           <Cube className="h-[400px]" />
           
-          <div className="bg-[#161616] border border-[#2a2a2a] rounded-lg p-8 h-[400px] flex flex-col justify-between">
-            <div className="space-y-5">
-              <p className="text-[11px] uppercase tracking-[0.35em] text-[#8a8784] font-mono">
-                selected experience
-              </p>
-              <div className="space-y-4 text-[12px] leading-relaxed text-[#e6e4df]">
-                <div className="border-b border-[#2a2a2a] pb-3">
-                  <p className="font-medium text-[#ff3b3b]">Systems software engineer — Infinera / ThanOS</p>
-                  <p className="mt-1 text-[#b4b2ad]">Platform software across ZTP, FTS, simulation and the integration/test layer for the GX chassis family.</p>
-                </div>
-                <div className="border-b border-[#2a2a2a] pb-3">
-                  <p className="font-medium text-[#ff3b3b]">ZTP and remote provisioning</p>
-                  <p className="mt-1 text-[#b4b2ad]">Built and hardened the provisioning path for factory-reset nodes, including ZTP-over-OSC and DHCP/OSPF-driven self-configure flows.</p>
-                </div>
-                <div className="border-b border-[#2a2a2a] pb-3">
-                  <p className="font-medium text-[#ff3b3b]">FTS transfer reliability</p>
-                  <p className="mt-1 text-[#b4b2ad]">Introduced throttled progress updates and stronger transfer-state handling so large file moves stayed observable without flooding the DB.</p>
-                </div>
+          <div className="bg-[#161616] border border-[#2a2a2a] rounded-lg p-8 min-h-[400px] flex flex-col justify-between">
+            <div className="space-y-6">
+              <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
                 <div>
-                  <p className="font-medium text-[#ff3b3b]">AI-assisted test infrastructure</p>
-                  <p className="mt-1 text-[#b4b2ad]">Scaffolded and expanded unit-test and coverage work with AI-DLC, improving confidence for ZTP and release validation.</p>
+                  <p className="text-[11px] uppercase tracking-[0.35em] text-[#8a8784] font-mono">
+                    selected experience
+                  </p>
+                  <h3 className="mt-2 text-xl font-medium text-[#e6e4df] leading-snug">
+                    Systems software built for reliability, automation, and real-world network complexity.
+                  </h3>
+                </div>
+                <p className="text-[11px] font-mono text-[#8a8784] leading-relaxed">
+                  18 months · 173 commits · 8 repos · ~70 JIRAs · ~50K LOC
+                </p>
+              </div>
+
+              <div className="space-y-4">
+
+                <div className="border-t border-[#2a2a2a] pt-4">
+                  <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+                    <div className="space-y-2 lg:pr-6">
+                      <p className="text-[11px] uppercase tracking-[0.28em] text-[#8a8784] font-mono">01 · File-transfer service</p>
+                      <p className="font-medium text-[#ff3b3b]">Reliable transfers with live progress</p>
+                      <p className="text-sm leading-relaxed text-[#b4b2ad]">
+                        Rebuilt the FTS path to report live progress (bytes, %, state) for large image and config transfers, then added a 5%/5s throttled coalescer that cut ~44% of DB write churn without dropping useful updates. Result: less log noise and transfer state you can actually trust in production.
+                      </p>
+
+                      <div className="mt-3 flex gap-3 items-center">
+                        <span className="text-[11px] text-[#ffb0a6]">FTS</span>
+                        <span className="text-[11px] text-[#ffb0a6]">C++</span>
+                        <span className="text-[11px] text-[#ffb0a6]">DBI</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border-t border-[#2a2a2a] pt-4">
+                  <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+                    <div className="space-y-2 lg:pr-6">
+                      <p className="text-[11px] uppercase tracking-[0.28em] text-[#8a8784] font-mono">02 · Zero-touch provisioning</p>
+                      <p className="font-medium text-[#ff3b3b]">Nodes that configure themselves</p>
+                      <p className="text-sm leading-relaxed text-[#b4b2ad]">
+                        Built ZTP so a factory-reset node discovers and applies its config over DHCP with no operator, then extended it to ZTP-over-OSC so remote nodes (SNE) provision through a relay with no direct management link. Also added HTTP image/config downloads via DHCP option 43.
+                      </p>
+
+                      <div className="mt-3 flex gap-3 items-center">
+                        <span className="text-[11px] text-[#ffb0a6]">ZTP</span>
+                        <span className="text-[11px] text-[#ffb0a6]">DHCP</span>
+                        <span className="text-[11px] text-[#ffb0a6]">OSPF</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border-t border-[#2a2a2a] pt-4">
+                  <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+                    <div className="space-y-2 lg:pr-6">
+                      <p className="text-[11px] uppercase tracking-[0.28em] text-[#8a8784] font-mono">03 · Customer escalations</p>
+                      <p className="font-medium text-[#ff3b3b]">Tier-4 fixes on live networks</p>
+                      <p className="text-sm leading-relaxed text-[#b4b2ad]">
+                        Closed named customer escalations in production: a Tier-4 case for Ellalink (missing 24h PM data), an HSC OLS control-plane management-IP recovery, and G30 single- and multi-chassis upgrade failures. Root-caused across ZTP, DHCP, and file-transfer, then shipped verified fixes on R8.1/R9 release branches.
+                      </p>
+
+                      <div className="mt-3 flex gap-3 items-center">
+                        <span className="text-[11px] text-[#ffb0a6]">Ellalink</span>
+                        <span className="text-[11px] text-[#ffb0a6]">Tier-4</span>
+                        <span className="text-[11px] text-[#ffb0a6]">R8.1 / R9</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border-t border-[#2a2a2a] pt-4">
+                  <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+                    <div className="space-y-2 lg:pr-6">
+                      <p className="text-[11px] uppercase tracking-[0.28em] text-[#8a8784] font-mono">04 · AI-assisted test infrastructure</p>
+                      <p className="font-medium text-[#ff3b3b]">Coverage from near-zero</p>
+                      <p className="text-sm leading-relaxed text-[#b4b2ad]">
+                        Scaffolded a large ZTP unit-test suite with AI-DLC (~19K LOC) and built the CTC coverage path to measure it — from ~0 to a real regression harness used in nightly and release validation. The AI produced volume; I owned the structure, boundaries, and correctness.
+                      </p>
+
+                      <div className="mt-3 flex gap-3 items-center">
+                        <span className="text-[11px] text-[#ffb0a6]">AI-DLC</span>
+                        <span className="text-[11px] text-[#ffb0a6]">CTC</span>
+                        <span className="text-[11px] text-[#ffb0a6]">CI</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border-t border-[#2a2a2a] pt-4">
+                  <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+                    <div className="space-y-2 lg:pr-6">
+                      <p className="text-[11px] uppercase tracking-[0.28em] text-[#8a8784] font-mono">05 · DSIM</p>
+                      <p className="font-medium text-[#ff3b3b]">Modeling the chassis in software</p>
+                      <p className="text-sm leading-relaxed text-[#b4b2ad]">
+                        Contributed to DSIM, the Docker-based simulator that recreates real chassis topologies (multi-card, redundant, multi-node) on a Linux build server — no hardware needed. Wrote topology bring-up (bridges, veths, VRF wiring) so ZTP and FTS could be built, debugged, and reproduced deterministically.
+                      </p>
+
+                      <div className="mt-3 flex gap-3 items-center">
+                        <span className="text-[11px] text-[#ffb0a6]">DSIM</span>
+                        <span className="text-[11px] text-[#ffb0a6]">Docker</span>
+                        <span className="text-[11px] text-[#ffb0a6]">VRF</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border-t border-[#2a2a2a] pt-4">
+                  <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+                    <div className="space-y-2 lg:pr-6">
+                      <p className="text-[11px] uppercase tracking-[0.28em] text-[#8a8784] font-mono">06 · State &amp; equipment management</p>
+                      <p className="font-medium text-[#ff3b3b]">Quieter, coherent system state</p>
+                      <p className="text-sm leading-relaxed text-[#b4b2ad]">
+                        Narrowed EQM&apos;s ZTP-mode callback to fire only on real state changes, killing a major log-spam source after ZTP shipped, and extended SSM&apos;s central state model (a JSON dependency graph) so subsystem readiness is represented and propagated coherently across the platform.
+                      </p>
+
+                      <div className="mt-3 flex gap-3 items-center">
+                        <span className="text-[11px] text-[#ffb0a6]">EQM</span>
+                        <span className="text-[11px] text-[#ffb0a6]">SSM</span>
+                        <span className="text-[11px] text-[#ffb0a6]">DBF</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+
             <div className="flex items-center justify-between border-t border-[#2a2a2a] pt-4 mt-4">
               <p className="text-[11px] font-mono text-[#8a8784]">
-                18 months · 173 commits · 8 repos · ~70 JIRAs · ~50K LOC
+                Focused on protocols, DSIM-style architecture, environment orchestration, simulation flows, Docker networking, and SSM-backed central state management.
               </p>
               <a
                 href="https://drive.google.com/file/d/1wVZdJzEcGpmC2Wn9HNTyJpLSrHkcszea/view"
@@ -427,6 +532,13 @@ export default function PortfolioClone() {
               <p className="text-sm leading-relaxed text-[#b4b2ad]">
                 C++ and Python across the stack — platform, provisioning, file-transfer, simulation, and the test infra that keeps nightly green.
               </p>
+              <Image
+                src="/ShreyasProfileCard.jpg"
+                alt="Shreyas profile card"
+                width={500}
+                height={200}
+                className="rounded-lg border border-[#2a2a2a] object-cover"
+              />
             </div>
             <div className="space-y-2">
               <p className="text-[11px] uppercase tracking-[0.35em] text-[#8a8784] font-mono">contact me</p>
