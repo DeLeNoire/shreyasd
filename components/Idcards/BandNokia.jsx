@@ -17,18 +17,18 @@ export default function NokiaId({ onNext, onPrev }) {
   // Cube component
   const Cube = ({ variant = 'default', label = '', className = '' }) => {
     return (
-      <div className={`relative bg-[#f9f9f9] rounded-lg overflow-hidden ${className}`}>
+      <div className={`relative bg-[#151515] border border-[#2a2a2a] rounded-lg overflow-hidden ${className}`}>
         {variant === 'grid-9' && (
           <div className="absolute inset-0 grid grid-cols-3 grid-rows-3 p-1 gap-0.5">
             {[...Array(9)].map((_, i) => (
-              <div key={i} className={`rounded-sm ${i === 7 ? 'bg-[#e75532] animate-pulse' : 'bg-[#ececec]'}`} />
+              <div key={i} className={`rounded-sm ${i === 7 ? 'bg-[#ff3b3b] animate-pulse' : 'bg-[#1f1f1f]'}`} />
             ))}
           </div>
         )}
         {variant === 'dots-17' && (
           <div className="absolute inset-0 grid grid-cols-4 grid-rows-4 p-2 gap-1">
             {[...Array(17)].map((_, i) => (
-              <div key={i} className={`rounded-full ${i === 8 ? 'bg-[#e75532] animate-rotate' : 'bg-[#ececec]'}`} style={{ width: '6px', height: '6px', margin: 'auto' }} />
+              <div key={i} className={`rounded-full ${i === 8 ? 'bg-[#ff3b3b] animate-rotate' : 'bg-[#2a2a2a]'}`} style={{ width: '6px', height: '6px', margin: 'auto' }} />
             ))}
           </div>
         )}
@@ -48,7 +48,7 @@ export default function NokiaId({ onNext, onPrev }) {
           shadows
           camera={{ position: [0, 0, 13], fov: 25 }}
           dpr={[1, 2]}
-          style={{ background: 'linear-gradient(to bottom, #f0f0f0, #ffffff)', width: '100%', height: '100%' }}
+          style={{ background: 'radial-gradient(circle at top, rgba(255,59,59,0.16), transparent 40%), linear-gradient(to bottom, #0f0f0f, #161616)', width: '100%', height: '100%' }}
           gl={{
             alpha: true,
             toneMapping: THREE.NoToneMapping,
@@ -122,7 +122,7 @@ export default function NokiaId({ onNext, onPrev }) {
             style={{
               fontSize: 'clamp(1.25rem, 4.5vw, 1.5rem)',
               fontWeight: 700,
-              color: '#b62222ff',
+              color: '#ff3b3b',
               letterSpacing: '0.05em',
               textTransform: 'uppercase',
               marginBottom: '0.4rem',

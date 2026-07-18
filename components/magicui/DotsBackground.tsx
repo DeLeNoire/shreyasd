@@ -44,9 +44,10 @@ export function DotsBackground() {
         float radialFade = 1.0 - length(centerDist) * 1.2;
         radialFade = clamp(radialFade, 0.0, 1.0);
         
-        opacity *= radialFade * 0.3;
+        opacity *= radialFade * 0.45;
         
-        gl_FragColor = vec4(0.0, 0.0, 0.0, opacity);
+        vec3 dotColor = vec3(0.90, 0.89, 0.87);
+        gl_FragColor = vec4(dotColor, opacity);
       }
     `
 

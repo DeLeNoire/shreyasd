@@ -24,7 +24,7 @@ export default function ProjectSlide({ slide, isActive, previewUrl }: Props) {
         <div
           className={
             commonClasses +
-            ' flex items-center justify-center bg-white p-10 text-center text-xl text-[#292524]'
+            ' flex items-center justify-center bg-[#161616] border border-[#2a2a2a] p-10 text-center text-xl text-[#e6e4df]'
           }
         >
           {slide.content}
@@ -32,8 +32,8 @@ export default function ProjectSlide({ slide, isActive, previewUrl }: Props) {
       );
     case 'architecture':
       return (
-        <div className={commonClasses + ' bg-white p-6 overflow-auto'}>
-          <pre className="text-sm font-mono text-[#44403c]">{slide.content}</pre>
+        <div className={commonClasses + ' bg-[#161616] border border-[#2a2a2a] p-6 overflow-auto'}>
+          <pre className="text-sm font-mono text-[#b4b2ad]">{slide.content}</pre>
         </div>
       );
     case 'code':

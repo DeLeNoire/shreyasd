@@ -21,12 +21,10 @@ export default function Home() {
   return (
     <>
       {isGifVisible && (
-        <div className="flex justify-center items-center h-screen bg-slate-50">
-          <img
-            src="/coke.gif"
-            alt="Loading..."
-            className="w-1/2 md:h-2/3 bg-white"
-          />
+        <div className="flex justify-center items-center h-screen bg-[#111111]">
+          <div className="text-center text-sm font-mono text-[#b4b2ad]">
+            Loading portfolio…
+          </div>
         </div>
       )}
 

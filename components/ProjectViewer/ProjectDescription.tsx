@@ -6,7 +6,7 @@ interface Props {
 
 export default function ProjectDescription({ text }: Props) {
   return (
-    <p className="mt-6 text-center text-sm text-[#44403c] max-w-xl">
+    <p className="mt-6 text-center text-sm text-[#8a8784] max-w-xl">
       {text}
     </p>
   );

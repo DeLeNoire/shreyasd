@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import ProjectExperienceViewer, { ProjectConfig } from '../ProjectViewer/ProjectExperienceViewer';
 
 export default function PortfolioClone() {
-  const [selectedCompany, setSelectedCompany] = useState('Sureify');
   const [viewerOpen, setViewerOpen] = useState(false);
   const [viewerConfig, setViewerConfig] = useState<ProjectConfig | null>(null);
 
@@ -12,13 +11,6 @@ export default function PortfolioClone() {
     setViewerOpen(true);
   };
   const closeViewer = () => setViewerOpen(false);
-
-  const companies = [
-    { name: 'Sureify', logo: 'S' },
-    { name: 'SerVme', logo: 'V' },
-    { name: 'Skill-Lync', logo: 'K' },
-    { name: 'GrowthSchool', logo: 'G' }
-  ];
 
   type ProjectItem = ProjectConfig & {
     id: number;
@@ -33,79 +25,62 @@ export default function PortfolioClone() {
   const projects: ProjectItem[] = [
     {
       id: 1,
-      title: 'Configuring Overflow Fields in our Studio Form Builder',
-      description: 'Traditionally, applications are approved by US State\'s Dept of Insurance on actual paper form. Online application form fields however have limited digital space for those answers. To handle longer responses without going through the burdensome re-approval process for form changes, I have implemented an "overflow" section at the end of the application.',
-      tags: ['Product Design', 'Compliance', 'Onboarding'],
-      year: '2025',
-      company: 'Sureify',
+      title: 'Systems software engineer — Infinera / ThanOS platform',
+      description: 'Building the platform software behind the GX chassis family across zero-touch provisioning, file transfer, simulation, and the surrounding test infrastructure. Work spans C++ and Python at the Linux/VRF network boundary, with gRPC, systemd, DBF/DBI, OSPF, and Jenkins CI all in the loop.',
+      tags: ['Infinera', 'ThanOS', 'C++', 'Python'],
+      year: '2024–2026',
+      company: 'Infinera',
       number: '01',
       mode: 'carousel',
-      previewUrl: 'https://3d-multiwindows.vercel.app/',
+      previewUrl: 'https://example.com/fts',
       slides: [
         { type: 'preview', content: '' },
-        { type: 'text', content: 'In‑depth writeup about overflow fields.' },
-        { type: 'architecture', content: '<diagram or code here>' }
+        { type: 'text', content: 'ThanOS platform work across provisioning and integration.' }
       ]
     },
     {
       id: 2,
-      title: 'Redesigning the table management & reservation experience (iOS app)',
-      description: 'Servme helps restaurants and other hospitality businesses manage reservations, tables, and walk-ins more efficiently. The main goal of the redesign was to make it easier for staff to serve their guests, and do it faster.',
-      tags: ['Cross Platform', 'Reports', 'UX Research', 'iOS'],
-      year: '2024',
-      company: 'SerVme',
+      title: 'Zero-touch provisioning — self-provisioning remote nodes',
+      description: 'Delivered ZTP flows that let factory-reset nodes discover and apply target configs over the management path, and extended the same model to ZTP-over-OSC for SNE nodes without a direct management link. The work touched DHCP, OSPF, VRF-scoped Linux networking, and gRPC-based provisioning paths.',
+      tags: ['ZTP', 'gRPC', 'VRF', 'OSPF'],
+      year: '2024–2026',
+      company: 'ZTP',
       number: '02',
       mode: 'floating',
-      previewUrl: 'https://example.com/servme',
+      previewUrl: 'https://example.com/ztp',
       slides: [
         { type: 'preview', content: '' },
-        { type: 'text', content: 'Overview of the iOS redesign process.' }
+        { type: 'text', content: 'Remote provisioning and ZTP-over-OSC.' }
       ]
     },
     {
       id: 3,
-      title: 'Designing for transparency and reducing refund requests',
-      description: 'As Skill-Lync\'s sales grew, so did the number of support tickets and social media complaints from students, primarily regarding refund requests.',
-      tags: ['Transparency', 'User Journeys', 'Payments'],
-      year: '2022',
-      company: 'Skill-Lync',
+      title: 'File-transfer service — reliability and progress visibility',
+      description: 'Improved the FTS transfer path with a 5%/5s throttled progress coalescer, reducing DB callback churn while preserving meaningful transfer updates for large image and config moves. The change materially improved diagnostics and reduced the noise around rollout and upgrade operations.',
+      tags: ['FTS', 'C++', 'DBI', 'Reliability'],
+      year: '2025–2026',
+      company: 'FTS',
       number: '03',
       mode: 'stack',
-      previewUrl: 'https://example.com/transparency',
+      previewUrl: 'https://example.com/ztp-osc',
       slides: [
         { type: 'preview', content: '' },
-        { type: 'text', content: 'How we mapped user journeys to cut refunds.' }
+        { type: 'text', content: 'Transfer throttling and progress reporting.' }
       ]
     },
     {
       id: 4,
-      title: 'Solving for Privacy with User Role Switching',
-      description: 'Various personas launch Acquire during a policy application process. Role Switching refers to the functionality where the application is transferred from one user role to another.',
-      tags: ['Privacy', 'Configurations', 'Design Systems'],
-      year: '2024',
-      company: 'Sureify',
+      title: 'AI-assisted test infrastructure — coverage and regression trust',
+      description: 'Scaffolded a large unit-test suite for ZTP with AI-DLC and helped build the CTC/coverage path that made the work measurable. The result was a practical uplift from near-zero coverage to a real regression harness that supported nightly and release validation.',
+      tags: ['AI-DLC', 'CTC', 'Unit tests', 'CI'],
+      year: '2025–2026',
+      company: 'Infinera',
       number: '04',
       mode: 'holo',
-      previewUrl: 'https://example.com/roleswitch',
+      previewUrl: 'https://example.com/escalations',
       slides: [
         { type: 'preview', content: '' },
-        { type: 'text', content: 'Design considerations for role switching.' }
-      ]
-    },
-    {
-      id: 5,
-      title: 'Designing Servme\'s Browsing Experience',
-      description: 'With a goal of global expansion, Lebanon based Hospitality SaaS startup - Servme wanted to offer a fresh browsing experience.',
-      tags: ['Website', 'Built on Framer', 'Growth'],
-      year: '2024',
-      company: 'SerVme',
-      number: '05',
-      link: 'https://www.servmeco.com/',
-      mode: 'lab',
-      previewUrl: 'https://example.com/browsing',
-      slides: [
-        { type: 'preview', content: '' },
-        { type: 'text', content: 'Experimenting with global browsing UI.' }
+        { type: 'text', content: 'Coverage and automation progression.' }
       ]
     }
   ];
@@ -113,13 +88,13 @@ export default function PortfolioClone() {
   // Cube component with various animation patterns
   const Cube = ({ variant = 'default', label = '', className = '' }) => {
     return (
-      <div className={`relative bg-[#f9f9f9] rounded-lg overflow-hidden ${className}`}>
+      <div className={`relative bg-[#151515] border border-[#2a2a2a] rounded-lg overflow-hidden ${className}`}>
         {variant === 'grid-9' && (
           <div className="absolute inset-0 grid grid-cols-3 grid-rows-3 p-1 gap-0.5">
             {[...Array(9)].map((_, i) => (
               <div 
                 key={i} 
-                className={`rounded-sm ${i === 7 ? 'bg-[#e75532] animate-pulse' : 'bg-[#ececec]'}`}
+                className={`rounded-sm ${i === 7 ? 'bg-[#ff3b3b] animate-pulse' : 'bg-[#1f1f1f]'}`}
               />
             ))}
           </div>
@@ -130,7 +105,7 @@ export default function PortfolioClone() {
             {[...Array(7)].map((_, i) => (
               <div
                 key={i}
-                className="absolute w-2 h-2 bg-[#ececec] rounded-full"
+                className="absolute w-2 h-2 bg-[#3a3a3a] rounded-full"
                 style={{
                   left: `${20 + i * 10}%`,
                   top: '50%',
@@ -145,9 +120,9 @@ export default function PortfolioClone() {
         
         {variant === 'rectangles' && (
           <div className="absolute inset-0 flex items-center justify-center gap-1 p-2">
-            <div className="w-4 h-6 border-2 border-[#ececec] rounded" />
-            <div className="w-4 h-6 border-2 border-[#ececec] rounded" />
-            <div className="w-3 h-3 bg-[#e75532] rounded-sm animate-pulse" />
+            <div className="w-4 h-6 border-2 border-[#2a2a2a] rounded" />
+            <div className="w-4 h-6 border-2 border-[#2a2a2a] rounded" />
+            <div className="w-3 h-3 bg-[#ff3b3b] rounded-sm animate-pulse" />
           </div>
         )}
 
@@ -156,7 +131,7 @@ export default function PortfolioClone() {
             {[...Array(17)].map((_, i) => (
               <div
                 key={i}
-                className={`rounded-full ${i === 8 ? 'bg-[#e75532] animate-rotate' : 'bg-[#ececec]'}`}
+                className={`rounded-full ${i === 8 ? 'bg-[#ff3b3b] animate-rotate' : 'bg-[#2a2a2a]'}`}
                 style={{
                   width: '6px',
                   height: '6px',
@@ -169,7 +144,7 @@ export default function PortfolioClone() {
         
         {label && (
           <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-[10px] font-mono text-[#d7d4d2]">{label}</span>
+            <span className="text-[10px] font-mono text-[#8a8784]">{label}</span>
           </div>
         )}
       </div>
@@ -177,7 +152,7 @@ export default function PortfolioClone() {
   };
 
   return (
-    <div className="min-h-screen w-fit bg-[#ededed] bg-none font-sans overflow-x-hidden">
+    <div className="min-h-screen w-fit bg-[#111111] bg-none font-sans overflow-x-hidden text-[#e6e4df]">
       <style jsx>{`
         @keyframes pulse {
           0%, 100% { opacity: 1; transform: scale(1); }
@@ -235,32 +210,33 @@ export default function PortfolioClone() {
           <Cube className="h-[300px]" />
           <Cube className="h-[300px]" />
           
-          <div className="bg-transparent py-12 text-center space-y-6 h-[300px] flex flex-col justify-center">
+          <div className="bg-[#111111] border border-[#2a2a2a] rounded-lg py-12 text-center space-y-6 h-[300px] flex flex-col justify-center">
             <div className="flex items-center justify-center gap-2 mb-6">
-              <div className="w-3 h-3 rounded-full border-2 border-[#e7e5e4]" />
-              <div className="w-3 h-3 rounded-full border-2 border-[#e7e5e4]" />
-              <div className="w-3 h-3 rounded-full border-2 border-[#e7e5e4]" />
+              <div className="w-3 h-3 rounded-full border-2 border-[#2a2a2a]" />
+              <div className="w-3 h-3 rounded-full border-2 border-[#2a2a2a]" />
+              <div className="w-3 h-3 rounded-full border-2 border-[#2a2a2a]" />
             </div>
             
-            <h2 className="text-2xl font-medium text-[#292524] tracking-wide">
-              I&apos;m a Product Designer from India
+            <p className="text-[11px] uppercase tracking-[0.35em] text-[#8a8784] font-mono">
+              shreyas d · systems software engineer
+            </p>
+
+            <h2 className="text-2xl font-medium text-[#ff3b3b] tracking-wide">
+              Systems engineer from India.
             </h2>
             
-            <div className="max-w-2xl mx-auto space-y-2 text-[#79716b]">
-              <p>
-                Currently designing systems, compliance & onboarding products at{' '}
-                <a href="https://www.sureify.com/lifetimeacquire/" target="_blank" rel="noopener" className="text-[#e75532] hover:underline">
-                  Sureify
-                </a>
+            <div className="max-w-2xl mx-auto space-y-2 text-[#b4b2ad]">
+              <p className="text-sm leading-relaxed">
+                I build the platform software behind optical transport networks — currently at Infinera, on the GX chassis family (ThanOS), where I work on zero-touch provisioning, file-transfer, and the simulation &amp; test infrastructure that keeps those paths reliable.
               </p>
-              <p>I enjoy designing uncomplicated products that drive business growth</p>
+              <p className="text-sm leading-relaxed">
+                Most of my work is in C++ and Python, close to the metal on VRF-scoped networking, gRPC, systemd, and the build/test machinery that keeps releases moving. Lately I&apos;ve leaned hard into AI-assisted development (AI-DLC), scaffolding ~19K lines of unit tests and pushing real coverage into code that had none.
+              </p>
             </div>
 
-            <div className="flex items-center justify-center gap-3 text-[11px] text-[#a9a29d] font-mono pt-4">
-              <div className="bg-[#e7e5e4] rounded h-5 w-12" />
-              <span>https://www.figma.com/</span>
-              <span className="text-[#44403c]">workexperience</span>
-            </div>
+            <p className="text-[11px] text-[#8a8784] font-mono pt-2">
+              18 months · 173 commits · 8 repos · ~70 JIRAs · ~50K LOC
+            </p>
           </div>
           
           <Cube className="h-[300px]" label="[SaaS]" />
@@ -283,126 +259,42 @@ export default function PortfolioClone() {
           <Cube className="h-[400px]" />
           <Cube className="h-[400px]" />
           
-          <div className="bg-[#f9f9f9] rounded-lg p-8 h-[400px]">
-            <div className="grid grid-cols-5 gap-6 h-full">
-              {/* Left Section */}
-              <div className="col-span-1 space-y-4">
+          <div className="bg-[#161616] border border-[#2a2a2a] rounded-lg p-8 h-[400px] flex flex-col justify-between">
+            <div className="space-y-5">
+              <p className="text-[11px] uppercase tracking-[0.35em] text-[#8a8784] font-mono">
+                selected experience
+              </p>
+              <div className="space-y-4 text-[12px] leading-relaxed text-[#e6e4df]">
+                <div className="border-b border-[#2a2a2a] pb-3">
+                  <p className="font-medium text-[#ff3b3b]">Systems software engineer — Infinera / ThanOS</p>
+                  <p className="mt-1 text-[#b4b2ad]">Platform software across ZTP, FTS, simulation and the integration/test layer for the GX chassis family.</p>
+                </div>
+                <div className="border-b border-[#2a2a2a] pb-3">
+                  <p className="font-medium text-[#ff3b3b]">ZTP and remote provisioning</p>
+                  <p className="mt-1 text-[#b4b2ad]">Built and hardened the provisioning path for factory-reset nodes, including ZTP-over-OSC and DHCP/OSPF-driven self-configure flows.</p>
+                </div>
+                <div className="border-b border-[#2a2a2a] pb-3">
+                  <p className="font-medium text-[#ff3b3b]">FTS transfer reliability</p>
+                  <p className="mt-1 text-[#b4b2ad]">Introduced throttled progress updates and stronger transfer-state handling so large file moves stayed observable without flooding the DB.</p>
+                </div>
                 <div>
-                  <p className="text-[11px] text-[#a9a29d] font-mono mb-3">
-                    Experience <span className="text-[#e75532]">/4+ years</span>
-                  </p>
-                  <div className="flex flex-col gap-1.5">
-                    {[...Array(4)].map((_, i) => (
-                      <div key={i} className="w-full h-1 bg-[#e7e5e4] rounded" />
-                    ))}
-                  </div>
-                </div>
-
-                {/* Company Tabs */}
-                <div className="space-y-2">
-                  {companies.map((company) => (
-                    <button
-                      key={company.name}
-                      onClick={() => setSelectedCompany(company.name)}
-                      className={`w-full px-3 py-2 rounded-lg text-[11px] font-mono transition-colors text-left ${
-                        selectedCompany === company.name
-                          ? 'bg-[#f2f2f2] text-[#44403c]'
-                          : 'bg-[#f9f9f9] text-[#a9a29d] hover:bg-[#f2f2f2]'
-                      }`}
-                    >
-                      <div className="text-[#a9a29d] mb-1">#Frame</div>
-                      <div>{company.name}</div>
-                    </button>
-                  ))}
+                  <p className="font-medium text-[#ff3b3b]">AI-assisted test infrastructure</p>
+                  <p className="mt-1 text-[#b4b2ad]">Scaffolded and expanded unit-test and coverage work with AI-DLC, improving confidence for ZTP and release validation.</p>
                 </div>
               </div>
-
-              {/* Center - Code Display */}
-              <div className="col-span-3 bg-[#f9f9f9] rounded-lg p-6 overflow-auto">
-                <div className="flex gap-6">
-                  <div className="space-y-0.5 font-mono text-[11px] text-[#d7d3d0] text-right">
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(num => (
-                      <div key={num}>{num}</div>
-                    ))}
-                  </div>
-                  
-                  <div className="space-y-0.5 font-mono text-[11px] flex-1">
-                    <div className="text-[#a9a29d]">[</div>
-                    <div className="text-[#a9a29d]">  {'{'}</div>
-                    <div>
-                      <span className="text-[#a9a29d]">    &quot;</span>
-                      <span className="text-[#44403c]">company</span>
-                      <span className="text-[#a9a29d]">&quot;: </span>
-                      <span className="text-[#e75532]">Sureify</span>
-                    </div>
-                    <div>
-                      <span className="text-[#a9a29d]">    &quot;</span>
-                      <span className="text-[#44403c]">type</span>
-                      <span className="text-[#a9a29d]">&quot;: </span>
-                      <span className="text-[#e75532]">Full-time</span>
-                    </div>
-                    <div>
-                      <span className="text-[#a9a29d]">    &quot;</span>
-                      <span className="text-[#44403c]">title</span>
-                      <span className="text-[#a9a29d]">&quot;: </span>
-                      <span className="text-[#e75532]">Product Designer II</span>
-                    </div>
-                    <div>
-                      <span className="text-[#a9a29d]">    &quot;</span>
-                      <span className="text-[#44403c]">start date</span>
-                      <span className="text-[#a9a29d]">&quot;: </span>
-                      <span className="text-[#e75532]">January 2024</span>
-                    </div>
-                    <div>
-                      <span className="text-[#a9a29d]">    &quot;</span>
-                      <span className="text-[#44403c]">end date</span>
-                      <span className="text-[#a9a29d]">&quot;: </span>
-                      <span className="text-[#e75532]">Present</span>
-                    </div>
-                    <div>
-                      <span className="text-[#a9a29d]">    &quot;</span>
-                      <span className="text-[#44403c]">industry</span>
-                      <span className="text-[#a9a29d]">&quot;: </span>
-                      <span className="text-[#e75532]">Insurance SaaS</span>
-                    </div>
-                    <div>
-                      <span className="text-[#a9a29d]">    &quot;</span>
-                      <span className="text-[#44403c]">task</span>
-                      <span className="text-[#a9a29d]">&quot;: </span>
-                      <span className="text-[#e75532]">Product, Design Sys</span>
-                    </div>
-                    <div className="text-[#a9a29d]">  {'}'}</div>
-                    <div className="text-[#a9a29d]">]</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right - Resume Download */}
-              <div className="col-span-1 flex flex-col items-end gap-3">
-                <div className="bg-[#f9f9f9] rounded-lg px-3 py-2 text-[10px] font-mono text-[#4f4c49] whitespace-nowrap">
-                  [.download my resume]
-                </div>
-                <a 
-                  href="https://drive.google.com/file/d/1wVZdJzEcGpmC2Wn9HNTyJpLSrHkcszea/view"
-                  target="_blank"
-                  rel="noopener"
-                  className="relative w-14 h-14 bg-[#e75532] rounded-lg flex items-center justify-center overflow-hidden hover:scale-105 transition-transform group"
-                >
-                  {[...Array(28)].map((_, i) => (
-                    <div
-                      key={i}
-                      className="absolute w-1 h-1 bg-[#f9f9f9] rounded-full"
-                      style={{
-                        left: `${(i % 7) * 14 + 10}%`,
-                        top: `${Math.floor(i / 7) * 25 + 10}%`,
-                        opacity: [4, 8, 13, 16, 18, 21].includes(i) ? 1 : 0.2,
-                        animation: `float ${2 + Math.random()}s ease-in-out infinite`,
-                        animationDelay: `${Math.random()}s`
-                      }}
-                    />
-                  ))}
-                </a>
-              </div>
+            </div>
+            <div className="flex items-center justify-between border-t border-[#2a2a2a] pt-4 mt-4">
+              <p className="text-[11px] font-mono text-[#8a8784]">
+                18 months · 173 commits · 8 repos · ~70 JIRAs · ~50K LOC
+              </p>
+              <a
+                href="https://drive.google.com/file/d/1wVZdJzEcGpmC2Wn9HNTyJpLSrHkcszea/view"
+                target="_blank"
+                rel="noopener"
+                className="text-[11px] font-mono text-[#ff3b3b] hover:underline"
+              >
+                resume
+              </a>
             </div>
           </div>
           
@@ -414,12 +306,12 @@ export default function PortfolioClone() {
         <div className="grid grid-cols-[100px_100px_1fr_100px_100px] gap-[2px] mb-[2px]">
           <Cube className="h-[80px]" />
           <Cube className="h-[80px]" />
-          <div className="bg-[#f9f9f9] rounded-lg h-[80px] flex items-center justify-between px-8">
-            <p className="text-xs font-mono text-[#44403c]">
-              <span className="text-[#e75532]">[.scroll]</span> see featured works
+          <div className="bg-[#161616] border border-[#2a2a2a] rounded-lg h-[80px] flex items-center justify-between px-8">
+            <p className="text-xs font-mono text-[#e6e4df]">
+              <span className="text-[#ff3b3b]">[.scroll]</span> see featured works
             </p>
-            <p className="text-[11px] font-mono text-[#a9a29d]">
-              <span className="text-[#e8583a]">01</span>/05
+            <p className="text-[11px] font-mono text-[#8a8784]">
+              <span className="text-[#ff3b3b]">01</span>/05
             </p>
           </div>
           <Cube className="h-[80px]" />
@@ -427,248 +319,126 @@ export default function PortfolioClone() {
         </div>
 
         {/* Projects List */}
-        {projects.map((project, index) => {
-          const isAlternateLeft = index % 2 === 0;
+        {projects.map((project, index) => (
+          <div key={project.id}>
+            <div className="grid gap-[2px] mb-[2px] grid-cols-[100px_100px_1fr_100px_100px]">
+              <Cube className="h-[350px]" />
+              <Cube className="h-[350px]" />
 
-          return (
-            <div key={project.id}>
-              <div
-                className={`grid gap-[2px] mb-[2px] ${
-                  isAlternateLeft
-                    ? 'grid-cols-[100px_1fr_100px_100px]'
-                    : 'grid-cols-[100px_100px_1fr_100px]'
-                }`}
-              >
-                <Cube className="h-[350px]" />
+              <div className="bg-[#161616] border border-[#2a2a2a] rounded-lg p-8 hover:shadow-lg transition-shadow h-[350px]">
+                <div className="grid grid-cols-5 gap-6 h-full">
+                  <div className="col-span-1 bg-[#1f1f1f] rounded-lg overflow-hidden border border-[#2a2a2a]">
+                    <motion.button
+                      layoutId={`project-card-${project.id}`}
+                      className="relative cursor-pointer w-full h-full focus:outline-none"
+                      onClick={() =>
+                        openViewer({
+                          id: project.id,
+                          title: project.title,
+                          mode: project.mode,
+                          previewUrl: project.previewUrl,
+                          slides: project.slides,
+                          description: project.description
+                        })
+                      }
+                      aria-label={`Open project ${project.number}`}
+                    >
+                      <div className="w-full h-full flex items-center justify-center bg-[#111111]">
+                        <span className="text-3xl font-bold text-[#8a8784]">{project.number}</span>
+                      </div>
+                      <span className="absolute top-3 left-3 text-[11px] font-mono text-[#b4b2ad] bg-[#1a1a1a]/85 px-2 py-1 rounded-md border border-[#2a2a2a]">
+                        [{project.number}]
+                      </span>
+                    </motion.button>
+                  </div>
 
-                {isAlternateLeft ? (
-                  <div className="bg-[#f9f9f9] rounded-lg p-8 hover:shadow-lg transition-shadow h-[350px]">
-                    <div className="grid grid-cols-5 gap-6 h-full">
-                      <div className="col-span-1 bg-[#e7e5e4] rounded-lg overflow-hidden">
-                        <motion.button
-                          layoutId={`project-card-${project.id}`}
-                          className="relative cursor-pointer w-full h-full focus:outline-none"
-                          onClick={() =>
-                            openViewer({
-                              id: project.id,
-                              title: project.title,
-                              mode: project.mode,
-                              previewUrl: project.previewUrl,
-                              slides: project.slides,
-                              description: project.description
-                            })
-                          }
-                          aria-label={`Open project ${project.number}`}
+                  <div className="col-span-4 space-y-3 overflow-auto">
+                    <h3 className="text-lg font-medium text-[#e6e4df] leading-relaxed">
+                      {project.title}
+                    </h3>
+                    <p className="text-sm text-[#b4b2ad] leading-relaxed">
+                      {project.description}
+                    </p>
+
+                    {project.link && (
+                      <a
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener"
+                        className="text-sm text-[#e75532] hover:underline inline-block"
+                      >
+                        Visit the website &gt;
+                      </a>
+                    )}
+
+                    <div className="flex flex-wrap gap-2 pt-2">
+                      {project.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-3 py-1.5 bg-[#111111] border border-[#2a2a2a] rounded-lg text-xs text-[#b4b2ad]"
                         >
-                          {project.id === 1 ? (
-                            <img
-                              src="/animated-gifs-badminton-0031.gif.pagespeed.ce.V0JO1Yg-u1.gif"
-                              alt="Badminton animation"
-                              className="w-full h-full object-contain bg-white"
-                            />
-                          ) : project.id === 2 ? (
-                            <img
-                              src="/guitar-hand.gif"
-                              alt="Guitar hand animation"
-                              className="w-full h-full object-contain bg-white"
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center">
-                              <span className="text-3xl font-bold text-[#d7d3d0]">{project.number}</span>
-                            </div>
-                          )}
-                          <span className="absolute top-3 left-3 text-[11px] font-mono text-[#7b6f62] bg-[#f4f1ec]/85 px-2 py-1 rounded-md border border-[#d5cec3]">
-                            [{project.number}]
-                          </span>
-                        </motion.button>
-                      </div>
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
 
-                      <div className="col-span-4 space-y-3 overflow-auto">
-                        <h3 className="text-lg font-medium text-[#292524] leading-relaxed">
-                          {project.title}
-                        </h3>
-                        <p className="text-sm text-[#79716b] leading-relaxed">
-                          {project.description}
-                        </p>
-
-                        {project.link && (
-                          <a
-                            href={project.link}
-                            target="_blank"
-                            rel="noopener"
-                            className="text-sm text-[#e75532] hover:underline inline-block"
-                          >
-                            Visit the website &gt;
-                          </a>
-                        )}
-
-                        <div className="flex flex-wrap gap-2 pt-2">
-                          {project.tags.map((tag) => (
-                            <span
-                              key={tag}
-                              className="px-3 py-1.5 bg-white border border-[#e7e5e4] rounded-lg text-xs text-[#79716b]"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-
-                        <div className="text-right pt-2">
-                          <p className="text-xs font-mono text-[#a9a29d]">
-                            [.{project.year}] <span className="text-[#e75532]">{project.company}</span>
-                          </p>
-                        </div>
-                      </div>
+                    <div className="text-right pt-2">
+                      <p className="text-xs font-mono text-[#8a8784]">
+                        [.{project.year}] <span className="text-[#ff3b3b]">{project.company}</span>
+                      </p>
                     </div>
                   </div>
-                ) : (
-                  <>
-                    <Cube className="h-[350px]" />
-                    <div className="bg-[#f9f9f9] rounded-lg p-8 hover:shadow-lg transition-shadow h-[350px]">
-                      <div className="grid grid-cols-5 gap-6 h-full">
-                        <div className="col-span-1 bg-[#e7e5e4] rounded-lg overflow-hidden">
-                          <motion.button
-                            layoutId={`project-card-${project.id}`}
-                            className="relative cursor-pointer w-full h-full focus:outline-none"
-                            onClick={() =>
-                              openViewer({
-                                id: project.id,
-                                title: project.title,
-                                mode: project.mode,
-                                previewUrl: project.previewUrl,
-                                slides: project.slides,
-                                description: project.description
-                              })
-                            }
-                            aria-label={`Open project ${project.number}`}
-                          >
-                            {project.id === 1 ? (
-                              <img
-                                src="/animated-gifs-badminton-0031.gif.pagespeed.ce.V0JO1Yg-u1.gif"
-                                alt="Badminton animation"
-                                className="w-full h-full object-contain bg-white"
-                              />
-                            ) : project.id === 2 ? (
-                              <img
-                                src="/guitar-hand.gif"
-                                alt="Guitar hand animation"
-                                className="w-full h-full object-contain bg-white"
-                              />
-                            ) : (
-                              <div className="w-full h-full flex items-center justify-center">
-                                <span className="text-3xl font-bold text-[#d7d3d0]">{project.number}</span>
-                              </div>
-                            )}
-                            <span className="absolute top-3 left-3 text-[11px] font-mono text-[#7b6f62] bg-[#f4f1ec]/85 px-2 py-1 rounded-md border border-[#d5cec3]">
-                              [{project.number}]
-                            </span>
-                          </motion.button>
-                        </div>
-
-                        <div className="col-span-4 space-y-3 overflow-auto">
-                          <h3 className="text-lg font-medium text-[#292524] leading-relaxed">
-                            {project.title}
-                          </h3>
-                          <p className="text-sm text-[#79716b] leading-relaxed">
-                            {project.description}
-                          </p>
-
-                          {project.link && (
-                            <a
-                              href={project.link}
-                              target="_blank"
-                              rel="noopener"
-                              className="text-sm text-[#e75532] hover:underline inline-block"
-                            >
-                              Visit the website &gt;
-                            </a>
-                          )}
-
-                          <div className="flex flex-wrap gap-2 pt-2">
-                            {project.tags.map((tag) => (
-                              <span
-                                key={tag}
-                                className="px-3 py-1.5 bg-white border border-[#e7e5e4] rounded-lg text-xs text-[#79716b]"
-                              >
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-
-                          <div className="text-right pt-2">
-                            <p className="text-xs font-mono text-[#a9a29d]">
-                              [.{project.year}] <span className="text-[#e75532]">{project.company}</span>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                )}
-
-                <Cube className="h-[350px]" />
-                {isAlternateLeft && <Cube className="h-[350px]" />}
+                </div>
               </div>
 
-              {index < projects.length - 1 && (
-                <div
-                  className={`grid gap-[2px] mb-[2px] ${
-                    isAlternateLeft
-                      ? 'grid-cols-[100px_1fr_100px_100px]'
-                      : 'grid-cols-[100px_100px_1fr_100px]'
-                  }`}
-                >
-                  <Cube className="h-[60px]" />
-
-                  {isAlternateLeft ? (
-                    <div className="bg-[#f9f9f9] rounded-lg h-[60px] flex items-center justify-between px-8">
-                      <p className="text-xs font-mono text-[#aaa39f]/75">
-                        {index === 0 && 'Contact me for a detailed overview of the project.'}
-                        {index === 1 && "Let's grab coffee to discuss these projects in details."}
-                        {index === 2 && "Detailed case studies are 'coming soon'. I promise."}
-                        {index === 3 && "Don't forget to come back after visiting Servme's website!"}
-                      </p>
-                      <p className="text-[11px] font-mono text-[#a9a29d]">
-                        <span className="text-[#e8583a]">0{index + 2}</span>/05
-                      </p>
-                    </div>
-                  ) : (
-                    <>
-                      <Cube className="h-[60px]" />
-                      <div className="bg-[#f9f9f9] rounded-lg h-[60px] flex items-center justify-between px-8">
-                        <p className="text-xs font-mono text-[#aaa39f]/75">
-                          {index === 0 && 'Contact me for a detailed overview of the project.'}
-                          {index === 1 && "Let's grab coffee to discuss these projects in details."}
-                          {index === 2 && "Detailed case studies are 'coming soon'. I promise."}
-                          {index === 3 && "Don't forget to come back after visiting Servme's website!"}
-                        </p>
-                        <p className="text-[11px] font-mono text-[#a9a29d]">
-                          <span className="text-[#e8583a]">0{index + 2}</span>/05
-                        </p>
-                      </div>
-                    </>
-                  )}
-
-                  <Cube className="h-[60px]" />
-                  {isAlternateLeft && <Cube className="h-[60px]" />}
-                </div>
-              )}
+              <Cube className="h-[350px]" />
+              <Cube className="h-[350px]" />
             </div>
-          );
-        })}
+
+            {index < projects.length - 1 && (
+              <div className="grid gap-[2px] mb-[2px] grid-cols-[100px_100px_1fr_100px_100px]">
+                <Cube className="h-[60px]" />
+                <Cube className="h-[60px]" />
+                <div className="bg-[#161616] border border-[#2a2a2a] rounded-lg h-[60px] flex items-center justify-between px-8">
+                  <p className="text-xs font-mono text-[#b4b2ad]">
+                    {index === 0 && 'Zero-touch provisioning, file-transfer, and test infrastructure.'}
+                    {index === 1 && 'C++ and Python across the stack.'}
+                    {index === 2 && 'VRF-scoped networking, gRPC, systemd.'}
+                    {index === 3 && 'AI-DLC and day-two reliability work.'}
+                  </p>
+                  <p className="text-[11px] font-mono text-[#8a8784]">
+                    <span className="text-[#ff3b3b]">0{index + 2}</span>/04
+                  </p>
+                </div>
+                <Cube className="h-[60px]" />
+                <Cube className="h-[60px]" />
+              </div>
+            )}
+          </div>
+        ))}
 
         {/* Footer */}
         <div className="grid grid-cols-[100px_100px_1fr_100px_100px] gap-[2px] mb-[2px]">
           <Cube className="h-[100px]" />
           <Cube className="h-[100px]" />
-          <div className="bg-[#f9f9f9] rounded-lg h-[100px] flex items-center justify-between px-8">
-            <button className="bg-gradient-to-r from-[#f9f9f9] to-[#f5f5f5] hover:from-[#f5f5f5] hover:to-[#efefef] px-6 py-3 rounded-lg transition-all hover:shadow-md">
-              <span className="text-xs font-mono text-[#292524]">Got a project in mind? </span>
-              <span className="text-xs font-mono text-[#e75532]">Let&apos;s talk</span>
-            </button>
-            <p className="text-[11px] font-mono text-[#a9a29d]">
-              [updated/September.2025]
-            </p>
+          <div className="bg-[#161616] border border-[#2a2a2a] rounded-lg px-8 py-6 flex flex-col gap-4 md:flex-row md:justify-between md:items-start">
+            <div className="space-y-2">
+              <p className="text-[11px] uppercase tracking-[0.35em] text-[#8a8784] font-mono">Jack of many trades</p>
+              <p className="text-sm leading-relaxed text-[#b4b2ad]">
+                C++ and Python across the stack — platform, provisioning, file-transfer, simulation, and the test infra that keeps nightly green.
+              </p>
+            </div>
+            <div className="space-y-2">
+              <p className="text-[11px] uppercase tracking-[0.35em] text-[#8a8784] font-mono">contact me</p>
+              <p className="text-sm leading-relaxed text-[#b4b2ad]">
+                Open to systems, platform &amp; backend roles. Let&apos;s talk.
+              </p>
+              <div className="flex flex-wrap gap-2 pt-1">
+                <a href="https://github.com/DeLeNoire" target="_blank" rel="noopener" className="text-[11px] font-mono text-[#ff3b3b] hover:underline">github</a>
+                <a href="https://www.linkedin.com/in/shreyasd19/" target="_blank" rel="noopener" className="text-[11px] font-mono text-[#ff3b3b] hover:underline">linkedin</a>
+                <a href="https://drive.google.com/file/d/1wVZdJzEcGpmC2Wn9HNTyJpLSrHkcszea/view" target="_blank" rel="noopener" className="text-[11px] font-mono text-[#ff3b3b] hover:underline">resume</a>
+              </div>
+            </div>
           </div>
           <Cube className="h-[100px]" />
           <Cube className="h-[100px]" />

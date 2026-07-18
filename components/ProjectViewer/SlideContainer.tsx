@@ -107,10 +107,10 @@ export default function SlideContainer({
             };
             extraClass = 'shadow-xl';
           } else if (mode === 'holo') {
-            extraClass = 'border border-cyan-300 bg-white/10 backdrop-blur-sm';
+            extraClass = 'border border-[#2a2a2a] bg-[#161616]/80 backdrop-blur-sm';
             anim = {
               ...anim,
-              boxShadow: current === i ? '0 0 40px rgba(0,255,255,0.6)' : '0 0 10px rgba(0,255,255,0.2)',
+              boxShadow: current === i ? '0 0 40px rgba(255,59,59,0.25)' : '0 0 10px rgba(255,59,59,0.1)',
             };
           } else if (mode === 'lab') {
             anim = {

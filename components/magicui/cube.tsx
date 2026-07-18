@@ -8,11 +8,11 @@ type CubeProps = {
 
 export default function Cube({ variant = "default", label = "", className = "" }: CubeProps) {
   return (
-    <div className={`relative bg-[#f9f9f9] rounded-lg overflow-hidden ${className}`}>
+    <div className={`relative bg-[#151515] border border-[#2a2a2a] rounded-lg overflow-hidden ${className}`}>
       {variant === "grid-9" && (
         <div className="absolute inset-0 grid grid-cols-3 grid-rows-3 p-1 gap-0.5">
           {[...Array(9)].map((_, i) => (
-            <div key={i} className={`rounded-sm ${i === 7 ? "bg-[#e75532] animate-pulse" : "bg-[#ececec]"}`} />
+            <div key={i} className={`rounded-sm ${i === 7 ? "bg-[#ff3b3b] animate-pulse" : "bg-[#1f1f1f]"}`} />
           ))}
         </div>
       )}
@@ -22,7 +22,7 @@ export default function Cube({ variant = "default", label = "", className = "" }
           {[...Array(7)].map((_, i) => (
             <div
               key={i}
-              className="absolute w-2 h-2 bg-[#ececec] rounded-full"
+              className="absolute w-2 h-2 bg-[#3a3a3a] rounded-full"
               style={{
                 left: `${20 + i * 10}%`,
                 top: "50%",
@@ -36,9 +36,9 @@ export default function Cube({ variant = "default", label = "", className = "" }
 
       {variant === "rectangles" && (
         <div className="absolute inset-0 flex items-center justify-center gap-1 p-2">
-          <div className="w-4 h-6 border-2 border-[#ececec] rounded" />
-          <div className="w-4 h-6 border-2 border-[#ececec] rounded" />
-          <div className="w-3 h-3 bg-[#e75532] rounded-sm animate-pulse" />
+          <div className="w-4 h-6 border-2 border-[#2a2a2a] rounded" />
+          <div className="w-4 h-6 border-2 border-[#2a2a2a] rounded" />
+          <div className="w-3 h-3 bg-[#ff3b3b] rounded-sm animate-pulse" />
         </div>
       )}
 
@@ -47,7 +47,7 @@ export default function Cube({ variant = "default", label = "", className = "" }
           {[...Array(17)].map((_, i) => (
             <div
               key={i}
-              className={`rounded-full ${i === 8 ? "bg-[#e75532]" : "bg-[#ececec]"}`}
+              className={`rounded-full ${i === 8 ? "bg-[#ff3b3b]" : "bg-[#2a2a2a]"}`}
               style={{ width: "6px", height: "6px", margin: "auto" }}
             />
           ))}
@@ -56,7 +56,7 @@ export default function Cube({ variant = "default", label = "", className = "" }
 
       {label && (
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-[10px] font-mono text-[#d7d4d2]">{label}</span>
+          <span className="text-[10px] font-mono text-[#8a8784]">{label}</span>
         </div>
       )}
     </div>

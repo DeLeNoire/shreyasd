@@ -91,15 +91,15 @@ export default function HorizontalExpandingLayout() {
           <Cube className="h-[80px]" label="[8px]" />
           
           {/* Center Navigation */}
-          <div className="bg-[#f9f9f9] rounded-lg px-6 py-3 h-[80px]">
+          <div className="bg-[#161616] border border-[#2a2a2a] rounded-lg px-6 py-3 h-[80px]">
             <div className="flex items-center justify-between h-full">
               <div className="flex items-center gap-4">
-                <div className="relative w-12 h-12 bg-[#e75532] rounded-lg flex items-center justify-center overflow-hidden">
+                <div className="relative w-12 h-12 bg-[#ff3b3b] rounded-lg flex items-center justify-center overflow-hidden">
                   <div className="absolute inset-0">
                     {[...Array(28)].map((_, i) => (
                       <div
                         key={i}
-                        className="absolute w-1 h-1 bg-[#f9f9f9] rounded-full"
+                        className="absolute w-1 h-1 bg-[#e6e4df] rounded-full"
                         style={{
                           left: `${(i % 7) * 14 + 10}%`,
                           top: `${Math.floor(i / 7) * 25 + 10}%`,
@@ -112,16 +112,16 @@ export default function HorizontalExpandingLayout() {
                   </div>
                 </div>
                 <div>
-                  <p className="text-[11px] text-[#79716b] font-mono">Open for new projects</p>
+                  <p className="text-[11px] text-[#8a8784] font-mono">Open to new roles</p>
                 </div>
               </div>
               
-              <div className="flex items-center gap-6 text-xs font-mono text-[#79716b]">
-                <a href="#" className="hover:text-[#e75532] transition-colors">Work</a>
-                <a href="#about" className="hover:text-[#e75532] transition-colors">About</a>
-                <a href="#recommendations" className="hover:text-[#e75532] transition-colors">Recommendations</a>
-                <a href="mailto:info.sujitsen@gmail.com" className="hover:text-[#e75532] transition-colors">Email</a>
-                <a href="https://www.linkedin.com/in/shreyasd19/" target="_blank" rel="noopener" className="hover:text-[#e75532] transition-colors">LinkedIn</a>
+              <div className="flex items-center gap-6 text-xs font-mono text-[#b4b2ad]">
+                <a href="#" className="hover:text-[#ff3b3b] transition-colors">Work</a>
+                <a href="#about" className="hover:text-[#ff3b3b] transition-colors">About</a>
+                <a href="#recommendations" className="hover:text-[#ff3b3b] transition-colors">Recommendations</a>
+                <a href="https://github.com/DeLeNoire" target="_blank" rel="noopener" className="hover:text-[#ff3b3b] transition-colors">GitHub</a>
+                <a href="https://www.linkedin.com/in/shreyasd19/" target="_blank" rel="noopener" className="hover:text-[#ff3b3b] transition-colors">LinkedIn</a>
               </div>
             </div>
           </div>
@@ -152,10 +152,10 @@ export default function HorizontalExpandingLayout() {
                 exit="exit"
                 variants={slideVariants}
                 transition={{ duration: 0.5, ease: 'easeInOut' }}
-                className={`relative z-20 flex flex-col items-start justify-between overflow-hidden transition-all duration-500 ease-in-out border border-gray-300 ${
+                className={`relative z-20 flex flex-col items-start justify-between overflow-hidden transition-all duration-500 ease-in-out border border-[#2a2a2a] ${
                   expanded === section.id
-                    ? "bg-white text-black"
-                    : "bg-gray-50 text-gray-500"
+                    ? "bg-[#111111] text-[#e6e4df]"
+                    : "bg-[#161616] text-[#8a8784]"
                 }`}
                 style={{ width: expanded === section.id ? "100%" : "180px" }}
                 onClick={() => toggleExpand(section.id)}
@@ -183,8 +183,7 @@ export default function HorizontalExpandingLayout() {
           {expanded > 1 && (
             <button
               onClick={() => handleNavigate(expanded - 1)}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-30 text-4xl font-bold text-red-600 hover:opacity-80 transition-opacity"
-              style={{ color: '#b62222ff' }}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-30 text-4xl font-bold text-[#ff3b3b] hover:opacity-80 transition-opacity"
             >
               {'{'}
             </button>
@@ -192,8 +191,7 @@ export default function HorizontalExpandingLayout() {
           {expanded < 3 && (
             <button
               onClick={() => handleNavigate(expanded + 1)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-30 text-4xl font-bold text-red-600 hover:opacity-80 transition-opacity"
-              style={{ color: '#b62222ff' }}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-30 text-4xl font-bold text-[#ff3b3b] hover:opacity-80 transition-opacity"
             >
               {'}'}
             </button>

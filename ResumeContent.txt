@@ -1,0 +1,510 @@
+Part A — Bird's-eye numbers
+Time span: Dec 19, 2024 → Jun 09, 2026 (18 months of authored activity).
+Author: Shreyas D on both sd@infinera.com (BitBucket web merges) and sd@in-debbld40-pd.infinera.com (build-server terminals). No commits show up under shred or sd in any repo under this workspace.
+173 commits across 8 repos (main chassisx-g30 + 7 submodules).
+~70 unique JIRAs touched (all GX-*).
+Total lines moved (author-only): ~35K insertions + ~15K deletions ≈ 50K LOC net across all repos.
+55 Cursor chat sessions ranging from 3 lines (quick questions) to 280 lines (deep design discussions).
+Release branches touched: master, release/gx-r8.1.0, R9.0, R9.1 lines.
+Customer scenarios closed: at least 4 named ones — Ellalink (GX-223031, Tier 4), a G30 HSC OLS CP case (GX-282836), G30 HSC G34c chassis upgrade (GX-281131), G30 multi-chassis intra-release upgrade (GX-243105).
+Part B — Repos worked on, their design & feature purpose, and your contributions
+There are eight distinct repositories where you have authored commits. For each, I list (1) what the repo is / does — the design and feature purpose — and (2) exactly what you contributed inside it.
+
+B.1 chassisx-g30 (the main / top-level repo)
+What it is.
+Top-level ThanOS platform repo for the GX (G30/G32/G34c/G42) chassis family. This repo is the integration point: it aggregates every product subsystem as a git submodule under src/external-repos/ (174 submodules), owns the CMake presets (CMakePresets.json, cmake-presets/), the build orchestration scripts (build_sim_frcug3x/, build_hw_frcug3x/, CodeCoverageGeneration.py, ConsolidatedCoverageReportGen.py), the platform-level configuration files (nginx, etc/, install scripts), and CI Jenkins pipelines. It's what the customer image is ultimately built from.
+
+Design highlights.
+
+Submodule-per-service — each subsystem is version-pinned in .gitmodules.
+Two build flavors: sim (x86_64, DSIM-friendly) and hw (arm64, real chassis).
+CTC (Code Test Coverage) is a first-class build variant that produces .sym files (MON_hw_common_arm64.sym, MON_sim_common_x86_64.sym, etc.) that drive coverage reports.
+The docs/dt_fastpath_hw_and_fault.md you had open recently is one of the platform docs living here.
+Your contributions here (13 commits).
+Note the two commit patterns you'll see everywhere in this repo: (a) direct edits (JIRA prefix + concise summary) and (b) Automatic merge to master for PR N created by Shreyas D — these are BitBucket-triggered auto-merges of your submodule bumps.
+
+GX-243105 — nginx logging enhancement for multi-chassis upgrade diagnostics (R8.1.0 hotfix). 5 commits, 109 LOC across 10 files: 2aaa0be9 (branch created for TAAS run), 56574a8e (enhance nginx logging), 6ee89c82 (improved failure logging), 58169f36 (level warn→info→warn tuning), 5e33276d merge to release/gx-r8.1.0, 0b0e4846 auto-merge to master.
+GX-186925 — automatic merges of PRs #229, #1801, #1793 wiring the ZTP-in-DSIM Change-Ztp-Mode functionality across submodules.
+GX-184887 — automatic merge of PR #1697 for MON files in dsim scripts.
+GX-179920 — automatic merges of PRs #1628, #87, #86 for the initial SSM Dev Test UT infrastructure.
+B.2 src/external-repos/Ztp (Zero-Touch Provisioning subsystem)
+What it is.
+The subsystem that lets a factory-reset G30/G32/G34c/G42 NE self-configure. When the NE boots without any config, ZTP negotiates DHCP on the management port, discovers a provisioning server via DHCP options 43 / 66 / 67, downloads a target software image and a config file, applies them, and reboots into the customer-managed state. It also implements ZTP-over-OSC (Optical Supervisory Channel) so an SNE (Small-form Network Element) can be ZTP'd via a relay node when it has no direct management connectivity.
+
+Design highlights.
+
+Ztp/cpp/DbfAgent/ZtpAgent.cpp — the main C++ state machine driven by DBF (Database Framework) callbacks.
+Ztp/ztpmgr.py — Python orchestrator that runs the OS-level operations (dhclient, systemctl, ip vrf exec).
+Ztp/Dhcp/ — DHCP client integration.
+grpc/ — zgrpcclient for SNE-over-OSC provisioning: the SNE runs a gRPC client that talks to the relay NE over OSC to fetch its config.
+service/ + Ztp/service/ — systemd unit files.
+test/ut/cpp/ — unit tests (recently massively expanded).
+ai_docs/ — repo-specific AI context (OTS line-alignment feature docs, ZTP_CONTEXT.md, OSPF auto-assignment design).
+Uses ip vrf exec MGMT/CTRL heavily — many operations are VRF-scoped.
+Your contributions here (~78 commits). Grouped by JIRA:
+
+GX-268026 — 19,042 LOC UT scaffolding via AI-DLC + CTC integration. 15 commits (2942843 initial UT, 31e5dc2 more stubs, 88f9ec9 copy logic, eed0113 rename+cmake ctc, 2625e02 remove build artifacts, c69a9c3/b2e4e3e consolidate MDs, 0386568/5c7cedd renames, 2b633f2 delay+seg-fault removal, bb08965/367ed6b/c44266c link errors, 8c0ca20 ctc signature fix, fc65841 cmake changes).
+GX-274279 — HTTP downloads with DHCP option 43. 13 commits (d0ac061 initial allow http, 5c53525→ea2b93d protocol checks, d153f86/e1a50b2/ad59150/3bf0a69/2a3b933 console warning iterations, 8fc0a1f log when secure mode).
+GX-269439 — CFG_MGR_RESTART preventive soak (3 commits, 8 LOC): 803ed18/718c13b, aa60ef3 rework.
+GX-282836 — HSC OLS CP LO-MGMT IP missing (2 commits): acdef04 rework, 191ed0b dhclient cleanup before config apply.
+GX-282815 — zgrpc cleanup in ZTP-disabled mode (3 commits, 76 LOC): 050cd5b enhancements, a076e15/f410fde rework.
+GX-281131 — chassis upgrade partial fail (3 commits, 26 LOC): b812acc guard, e15374e/03b9c2e rework.
+GX-277725 — HTTP image/config download via DHCP config (2 commits, 3 LOC): ec4d765/8fc0a1f.
+GX-273852 — ZTP UT enhancements + audit files (2 commits, 1,048 LOC): 3c7eb6e/d7d0242.
+GX-257707 + GX-264468 — OTS same-line alignment (9 commits, 3,060 LOC): interface-line-specific ots_msg receive with length checks and rename ost_instance → osc_inst.
+GX-244910 — SNE-ZTP CC-jacked-out (4 commits, 9 LOC): e5cc460/c7e6006 OSPF wait + verify, db0435a/6788f9f shell-alias for dbi command.
+GX-243941 — Optional OSPF params for IPv4 ZTP-SNE-over-OSC (2 commits, 64 LOC): fd02195/179e278.
+GX-239631 — ZTP IPv4 SNE-over-OSC (merged as PR #287).
+GX-242078 — Retry plug-in during ZTP-enabled mode for DSIM (merged as PR #289).
+GX-226006 — SNE-ZTP 1G OSC HW failing in redundant CC when active CC jacked out (merged as PR #276).
+GX-220230 — Increase OSPF converge wait time (merged as PR #271).
+GX-257141 — change-ztp-mode disabled ~5-min slowdown (1 commit, 5 LOC): b287eaf interrupt check during OSPF verification.
+GX-186925 — ZTP dhclient path permission fix (PR #229) — earliest ZTP-in-DSIM work.
+B.3 src/external-repos/filetransferservice (FTS / ftsmgr)
+What it is.
+The chassis file-transfer daemon. Its single binary ftsmgr runs on every card that needs to move files (image, database, config, PM files, dbgxfr archives). It exposes an RPC surface (RpcHandler) that other subsystems (ZTP, SWM, dbf, PM collectors) invoke to put / get files, then does the actual transfer via libcurl for SCP / SFTP / FTP / HTTP / HTTPS. It maintains transfer state in the DB (ioa_network_element__transfer_status) via DBI so external observers (CLI, NBI, TNMS) can monitor progress in real time.
+
+Design highlights.
+
+src/FTSManager.cpp (3060 lines) — the central class; owns uploadToRemoteServer, downloadFromRemoteServer, setTransferStatus, and the throttler wiring.
+include/FTS.h (1028 lines) — the public interface + interfaceBasedPut/Get legacy shell-curl fallback path.
+include/RpcHandler.h — external RPC surface + setLastProgressValues / getLastTotalBytes / getLastBytesTransferred.
+util/ProgressIndicatorThrottle.h — the 5%/5s/slow-path coalescer you introduced.
+util/FtsThrottleConfig.h — DBI-tunable throttle configuration.
+listeners/ — DBF change listeners.
+aidlc-docs/, docs/, DOCS/ARCHITECTURE.md, DOCS/CONTEXT_NEW.md — the AI-workflow-aware documentation stack.
+Runs as ftsmgr.service systemd unit (ftsmgr.service, ftsmgr_start.sh).
+Supports --interface binding (LO-MGMT, MGMT, arbitrary VRF-scoped interfaces) — critical for multi-VRF chassis where the transfer must egress a specific interface.
+Two curl paths: in-process libcurl (Service::put / Service::get — full callback fidelity) and shell curl (interfaceBasedPut/Get — used when VRF L3-MDEV isn't available; no progress callbacks).
+Your contributions here (~50 commits).
+
+GX-272386 — DB update throttling for FTS transfers (11 commits, 62 files, 9,486 LOC): adc7c5f introduce 5% rule, a6bdf43 throttling logic, 3a14be0/3e733cc UT + cmake, f527834/647da65 log pruning, 941c2fa/6639c77 refactor + UI removal, d58bf38 remove CLI bar (later re-added in GX-272386 branch #2), db0b5d3/962e4dc add CLI UI during transfers.
+GX-265733 (with the typo'd GX-262733 commit 95513e4) — Software Download Progress Indicator FTS changes via AI-DLC (2+1 commits, 100 files, ~13K LOC combined): 95513e4 model changes, 53561f9/a0fb941 build-artifact cleanup, then merged as PR #350 + PR #351.
+GX-271524 — revert-and-restore of ReportProgress logic (5 commits, 162 LOC): 2fc8073/cca9c50/e1123b0/fde07fe/ef7852d the full revert-then-restore cycle with a percent-de-dupe guard.
+GX-288080 — update FTS logs for DB updates (7 commits, ongoing on r9.1 branch): 0ca1693/5692ef7 add logs, 99e8e30/ef25f59 rework, 3200e9d rename functions and variables for readability.
+GX-261604 — AI Context docs for FTS (1 commit, 2,013 LOC): 9fffe75 — the doc PR that made every subsequent AI-DLC contribution possible.
+GX-284305 — README for FTS integration tests + UTs (3 commits, 51 LOC): e1c2089/1574fba/2c719e9.
+GX-223031 — Ellalink Tier-4 24h PM missing (3 commits, 40 LOC): 7a43bdd two syncs before stat, 9cf144a/e22599d cleanup.
+GX-243105 — G30 multi-chassis upgrade FTS side (5 commits, 20 LOC): c9eeee5 sync after operation, 716b428/693d342/fdfe7ff review comments.
+GX-247174 — FTS sync after operation succeeds (2 commits, 3 LOC): 0b0d309/bfcb418.
+B.4 src/external-repos/dsim (Docker Simulator)
+What it is.
+The Docker-based simulation framework for ThanOS. It packages the same product binaries (ftsmgr, ZtpAgent, sysmgr, HAL stubs, etc.) into Docker containers wired via Linux bridges and veth pairs to model realistic chassis topologies on a Linux build server — no HW box required. Enables source-level GDB debugging, deterministic reproduction, and CI test farming.
+
+Design highlights.
+
+Container per card / per role (CC, LC, SNE relay, etc.).
+Topology bring-up shell scripts under scripts/ that create bridges, veths, and start containers with the right IP + VRF wiring.
+SSM test suite entry points; runs MON_ssmTest.txt for CTC.
+Supports single-CC, multi-CC (MC), redundant-CC, and multi-SNE topologies.
+Your contributions here (18 commits).
+
+GX-217540 — max-char fix for ZTP topology bridge names + README (PRs #2603, #2605).
+GX-215042 — ZTP topology bring-up scripts for 4 nodes with 2 SNEs (PR #2553).
+GX-210345 — Change-ZTP-mode API enhancements + topology bring-up scripts (PRs #2341, #2343).
+GX-186925 — ZTP-in-DSIM fullsys changes: Change-Ztp-Mode functionality in DSIM env (PRs #1793, #1801, #1927) — includes the "add then revert then re-introduce cleanly" cycle.
+GX-184887 — DSIM FARM on SSM + MON files (6 commits, 87 LOC): c9407c95 single-cc topology, c48593ef replaced absolute path, 9ed4ef61 main PR, 31df2875/0118259c/dee02ebb (revert)/96ee8381 mon file work, 4b81ed88 mon files in dsim scripts.
+GX-179920 — DSIM for testing SSM test suite (PR #1628).
+B.5 src/external-repos/eqm (Equipment Manager)
+What it is.
+"Equipment Manager" — the subsystem that tracks physical/logical equipment in the chassis: card presence detection, LC (Line Card) insertion/removal events, card provisioning, and the equipment-level state machines. Registers with DBF (Database Framework) for notifications on equipment-model changes, and translates hardware events into DB state transitions.
+
+Design highlights.
+
+Project-agnostic C++ code (repo README explicitly says "EQM project-agnostic code").
+SsmEventHandler.h, SsmNotifyActor.h, SsmModule.cpp — its interactions with SSM.
+Callback-heavy — registers many dbf*Callback functions.
+Unit tests only; runs as an executable inside chassis.
+Your contributions here (5 commits, 213 LOC).
+
+GX-270222 — narrow the dbfZtpModeCallback registration so it only fires on actual ztp_mode changes (not every DB change). This eliminated a huge log-spam issue after ZTP was introduced. 5 commits: 5b27fb58 initial ztp changes, 165e912e rework, a0a14933 astyle, 7f3cae38 treat non-error ztp states, f46d26bc added ztp state msk.
+B.6 src/external-repos/ssm (System State Manager)
+What it is.
+The subsystem that manages system-wide state transitions and top-level readiness signals. Owns the JSON-based dependency graph (Dependency.cpp/h, SsmJsonParser.cpp/h, example_json/) that expresses which subsystems must be up/healthy before others can start. Listens for state events and drives system-level "ready" or "not-ready" transitions.
+
+Design highlights.
+
+SsmModule.cpp/h — the core state machine.
+SsmJsonParser.cpp/h — parses declarative dependency graphs.
+SsmEventHandler.h, SsmNotifyActor.h — event propagation interfaces.
+test/ — unit tests.
+script/ — bootstrap and dev-test scripts.
+Your contributions here (2 commits).
+
+GX-179920 — foundational SSM Dev Test UT (Dec 2024). Two PRs: 3fdebda (PR #86) "SSM Dev Test UT" and 77a0e6c (PR #87) "added ssm dev test". This is the earliest work in the entire dataset and it directly unblocked the whole later chain of DSIM-based ZTP testing.
+B.7 src/external-repos/gx-integration-tests (integration & sanity test suite)
+What it is.
+Cross-repo integration test harness for the whole chassisx-g30 product. Contains nightly-sanity/, scripts/subsystem/fullsys/ (per-subsystem end-to-end tests), CTC test infrastructure, and coverage-report generation glue. This is the repo that gates whether a nightly build is considered "green".
+
+Design highlights.
+
+Organised by subsystem: fullsys/fts/, fullsys/ztp/, fullsys/dhcp/, etc.
+README explicitly labels itself a "placeholder for sanity scripts" — you added meaningful docs to it.
+Runs against DSIM (fast tier) and HW (nightly farm) both.
+Your contributions here (4 commits).
+
+GX-230455 — ZTP code coverage infrastructure (PR #37) — Sep 2025, foundational infra for later GX-268026.
+GX-235350 — E2E test case with a different route for the DHCP relay (PR #128).
+GX-248036 — sudo for SSM scripts + CTC compatibility (PR #331): 025f605e + merge.
+GX-284305 — FTS integ-test README (fa0f84af, 54 LOC).
+B.8 src/external-repos/dhcp-mfproxy (DHCP config → mf-service relay)
+What it is.
+A small relay daemon (README: "Relay Dhcp config requests to mf service") that sits between DHCP-flow subsystems and the multi-function (mf) service. When ZTP-flow receives DHCPv4 vendor options (option 43, etc), those need to be handed off to the mf service to program hardware; dhcp-mfproxy is that bridge.
+
+Design highlights.
+
+Single-purpose daemon; minimal surface.
+Called into the ZTP-SNE-over-OSC path.
+Your contributions here (1 commit).
+
+GX-186946 — ZTP-SNE-over-OSC: process DHCPv4 vendor options received from the server (PR #43, f5c0b8a). This is what makes the SNE-over-OSC provisioning end-to-end.
+Part C — Full JIRA-by-JIRA breakdown (verbose)
+I'm ordering by impact tier and, within each tier, roughly chronologically or thematically. For each JIRA I give: (i) what the problem was, (ii) what you actually did, (iii) files/commits/LOC, (iv) any related cursor chats, (v) release branches affected.
+
+Tier 1 — Headline / strategic features
+C.1 — GX-265733 → GX-272386 → GX-271524 → GX-288080 : the FTS Progress Indicator family
+Problem. The FTS transfer status in the DB was binary (Idle → Completed/Failed) — no progress. CLI users had no way to see how far a big swimage transfer had gone. TNMS wanted bytes_transferred / total_bytes / transfer_progress. But naively wiring the curl progress callback into DB writes would flood DBI (thousands of writes per file).
+
+What you did.
+
+GX-265733 (Feb–Mar 2026, ~13K LOC combined, PRs #350 + #351): The initial "progress indicator FTS changes via AI-DLC" — added the progress plumbing from curl callback → RpcHandler::setLastProgressValues → setTransferStatus(..., pct, currentB, totalB, "transfer") → DB. This is the model-level change. (One commit is mislabelled GX-262733 — belongs here.)
+GX-272386 (Mar–Apr 2026, ~9,500 LOC, PRs #352 + #357): Introduced the throttling discipline. util/ProgressIndicatorThrottle.h implements a 5%-step + 5-second cadence + slow-path detector; only if a callback crosses one of those gates does it write to DB. Also added the CLI progress bar for sync GET/PUT (db0b5d3).
+GX-271524 (Apr 2026): Revert-and-restore cycle — a review round revealed the guard against duplicate-percent callbacks needed to stay; you rehabilitated it with a cleaner de-dupe (ef7852d).
+GX-288080 (May–Jun 2026, ongoing on r9.1 branch): Update logs for FTS DB updates. Cleaner log lines with throttled=N, committed=M, triggers=5%,5s, function/variable rename pass for readability (3200e9d).
+GX-261604 (Feb 2026, 2,013 LOC): Precondition work — added aidlc-docs/ + DOCS/ARCHITECTURE.md + DOCS/CONTEXT_NEW.md so the AI-DLC workflow had the context it needed.
+Evidence in the field. Chat 1923df20 shows a real production log line:
+{RpcHandler.cpp:984} FTS_TRANSFER_COMPLETED tid=15871 filetype=swimage committed=64 throttled=51 triggers=5%,5s — meaning per swimage transfer, ~115 progress callbacks fire, 64 make it to DB, 51 are absorbed (44% throttled).
+
+Related cursor chats (17 of the 55): d9436532, 17fbd9a3, fc60be84, f8122c0c, d970dba7, ab755294, 9a3a467b, 68d324dd, 8730d587, 0497dee2, 1923df20, 8112f1dc, 08c2c743, 612499dd, 19d5d920, 47ed79b2, 007225b1.
+
+Releases: master, R9.1.
+
+C.2 — GX-268026 + GX-230455 + GX-273852 : Ztp UT / CTC coverage via AI-DLC
+Problem. The Ztp component had almost no C++ unit test coverage. CTC (Code Test Coverage) reports were essentially blank for it. You couldn't do delta coverage on a Ztp change because there was no baseline to delta against.
+
+What you did.
+
+GX-230455 (Sep 2025, PR #37 in gx-integration-tests): stood up the ZTP code coverage infrastructure — scripts, symbol paths, delta_cov_local invocation.
+GX-268026 (Feb–Apr 2026, 15 commits, 19,042 LOC across 302 files — the single largest JIRA contribution): generated a full UT suite for Ztp/cpp/DbfAgent/ZtpAgent.cpp via AI-DLC. Includes:
+Stubs for ssm, dbf, mf (31e5dc2, 88f9ec9).
+test/ut/cpp/ztp_agent_test_api.h — a boundary contract for AI-generated tests.
+Rename pass Test → test (0386568, 5c7cedd) — convention alignment.
+Consolidation of UT-docs into Test/ut/docs/ (c69a9c3, b2e4e3e).
+CMake updates for CTC path (eed0113, fc65841).
+Fixes for ctc_runtime_stub duplicate-symbol (bb08965, 367ed6b, c44266c).
+Fix for ctc function signature drift (8c0ca20).
+Delay + seg-fault-test removal for MON generation (2b633f2).
+GX-273852 (Apr–May 2026, 2 commits, 1,048 LOC): UT enhancements + audit files — deepened coverage on branches not hit by the AI-generated baseline.
+Coverage achieved (from chat 8fcb9608, the coverage report):
+
+Decision: 31% (988 / 3,159)
+Function: 70% (284 / 404) ← from near-zero
+Statement: 7% (278 / 3,727)
+Related cursor chats: 47dfaca9, 1ee693bc, 25729d89, 63914c97, f502f1c9, b93f6074, 7d179462, 8fcb9608, 920eb913, e4e18791.
+
+Releases: master.
+
+C.3 — GX-186925 + GX-210345 + GX-215042 + GX-217540 + GX-242078 + GX-184887 + GX-179920 : ZTP-in-DSIM stack
+Problem. Every ZTP change had to be tested on real HW — slow, expensive, and gated on the physical lab. You needed a DSIM path that could exercise ZTP end-to-end, including multi-node and SNE-over-OSC topologies.
+
+What you did (chronologically):
+
+GX-179920 (Dec 2024): SSM Dev Test UT — the foundation. ssm PRs #86 + #87, matching DSIM PR #1628. Without this, no dev-test-in-container flow existed.
+GX-184887 (Jan 2025): DSIM FARM on SSM + MON files in scripts (6 DSIM commits, 87 LOC). Made the CTC / delta-coverage path work in DSIM containers.
+GX-186925 (Feb–Mar 2025): Change-Ztp-Mode functionality in DSIM env (dsim PRs #1793, #1801, #1927 + Ztp PR #229 + dhcp-mfproxy PR #43). Full multi-repo landing. The two-phase add-revert-re-add cycle (PRs #1793 → #1801 → #1927) reflects a controlled rollback while a design issue was fixed.
+GX-210345 (May 2025, dsim PRs #2341, #2343): Change-ZTP-mode API enhancements + parametric topology bring-up scripts.
+GX-215042 (Jun 2025, dsim PR #2553): 4-node topology with 2 SNEs. 400% scale-up from single-CC.
+GX-217540 (Jun 2025, dsim PRs #2603, #2605): README for ZTP topology setup + fix for the max-char limit on ZTP topology bridge names.
+GX-242078 (Oct 2025, Ztp PR #289): Retry for plug-in while in ZTP-enabled mode for DSIM. Closes a race where DSIM's plug-in event was dropped mid-ZTP.
+Related cursor chats: f502f1c9 (mon file generation), 0e9dd644 (MC test cases in fullsys/fts).
+
+Releases: master.
+
+Tier 2 — Production / customer bugfixes
+C.4 — GX-243105 : G30 multi-chassis failed to be applied in UTM2 during intra-release upgrade
+Problem. During intra-release upgrade on G30 multi-chassis, the upgrade was failing to be applied in UTM2. Diagnostic logs at the nginx proxy layer were too sparse to root-cause quickly in the field.
+
+What you did.
+
+In FTS (filetransferservice): added sync() after transfer completion so downstream stat operations see the file (5 commits, 20 LOC): c9eeee5, 716b428, 693d342, fdfe7ff. Merged as PR #342 to release/gx-r8.1.0, auto-merged to master as PR 34905.
+In chassisx-g30 main: enhanced nginx logging (5 commits, 109 LOC across 10 files): 2aaa0be9 branch for TAAS, 56574a8e enhance logging, 6ee89c82 improved failure logging, 58169f36 level tuning (info→warn).
+Related cursor chats: none — this was handled via BitBucket and terminal work, not chat sessions in the dataset.
+
+Releases: release/gx-r8.1.0 (hotfix), master (auto-merge).
+
+C.5 — GX-223031 : Tier 4 escalation, Ellalink random 24-hour PM missing
+Problem. Ellalink (customer) reported random 24-hour PM (Performance Monitoring) files going missing. The PM collector was doing a stat() on the rolled PM file before the writer's data had hit disk — race condition.
+
+What you did. In FTS, added two sync() calls before the stat is calculated to force VFS flush. 3 commits, 40 LOC: 7a43bdd two syncs, 9cf144a remove debugging code, e22599d remove redundant code. Merged as PR #344.
+
+Impact. Tier 4 = the highest-severity customer escalation tier. Closure with a 40-LOC surgical fix rather than a redesign.
+
+Releases: master.
+
+C.6 — GX-282836 : R9.1 HSC OLS CP post-ZTP completion LO-MGMT IP missing
+Problem. After ZTP completed on HSC OLS CP, the LO-MGMT IP was present in CLI but missing from is-running config. Sequence: NE gets IP 100.113.200.214 from DHCP server, config file has an error, ZTP clears DB and reboots, ZTP restarts and gets IP 100.113.193.87 from a different DHCP server — but the LO-MGMT IP from the second cycle didn't stick.
+
+What you did. Added dhclient cleanup step before applying the config, so any lingering dhclient lease from the previous cycle is torn down. 2 commits, +2 LOC: acdef04 rework, 191ed0b the actual dhclient cleanup. Merged as PR #340.
+
+Related cursor chats: 3b2926ab (JIRA GX-280791 sibling), 508fb2c8 (DHCP-assigns-same-IP-as-LO-IP scenario), 2931078c (ztpmgr.py LO-MGMT cleanup design), 0f4c21dc (133-line log walkthrough).
+
+Releases: master (with r9.1 relevance).
+
+C.7 — GX-244910 : R8.1 CP SNE-ZTP, active-CC-jacked-out during ZTP phase
+Problem. In SNE topology, during the ZTP phase, if the active CC card was "joji-ed" (jacked out), ZTP would fail because OSPF hadn't finished re-converging across the new active CC when ZTP tried its next hop.
+
+What you did.
+
+Increased IPv6 OSPF convergence wait time to 5 minutes (c7e6006).
+Added OSPF-convergence verification for IPv6 ZTP (e5cc460).
+Discovered subprocess sudo couldn't call dbi command; added a shell alias workaround (db0435a appending alias, 6788f9f removed sudo since ZTP runs with elevated privilege). Merged as PRs #297 + #300.
+Related cursor chats: de6b00c9 (120 lines — the IPv4 4000-routes mirror investigation for the same problem class).
+
+Releases: master + R8.1 CP.
+
+C.8 — GX-281131 : G30 HSC G34c chassis upgrade partially failed (load 2249 → newer)
+Problem. Chassis upgrade from load 2249 to newer partially failed because cfg-mgr was restarting while ZTP wasn't in an appropriate state to accept it.
+
+What you did. Added a ztp-enabled check guard before cfg-mgr restart. 3 commits, 26 LOC: b812acc the guard, e15374e rework, 03b9c2e further rework. Merged as PR #337.
+
+Related cursor chats: cdf16de9 (code review — caught an unsafe unique_ptr deref in mySecondPhaseDependencies before merge).
+
+Releases: master.
+
+C.9 — GX-274279 : ZTP HTTP downloads fail with DHCP option 43 (works with 66/67)
+Problem. ZTP could download image + config over HTTP when DHCP returned options 66/67 (siaddr/bootfile), but failed with option 43 (vendor-specific) — code inconsistently enforced FTP checks and secure-mode requirements across the two paths.
+
+What you did. 13 commits (heavy iteration on user-facing warning wording):
+
+d0ac061 allow HTTP downloads for config files.
+5c53525 removed http-check + allowhttp-check, block only FTP.
+8707828 length checks.
+183e430 conditional secure-protocol check.
+5a2c27f revert (secure-mode handled in model).
+ea2b93d/7be4a33 cleanup.
+d153f86/e1a50b2/ad59150/3bf0a69/2a3b933 console warning message iterations.
+8fc0a1f skip warning when secure mode is true.
+8a53d06 explicit handling for FTP transfer to option 43 (block). Merged as PRs #328, #332, #334.
+Related cursor chats: 58a11e9c (where to add the log — agent vs mgr), a6f38f90 (indentation check on the log commits).
+
+Releases: master.
+
+Tier 3 — Foundational / networking / subsystem work
+C.10 — GX-257707 + GX-264468 : OTS same-line alignment (ZTP over OSC)
+Problem. OTS (Optical Transport Section) messages arriving on the OSC (Optical Supervisory Channel) weren't line-specific — the code accepted an OTS message without validating that it came from the same OSC line that originally received the DHCP vendor options.
+
+What you did. 9 commits, 3,060 LOC across 45 files. Implemented interface-line-specific ots_msg receive, added length checks on instanceOtsMsg, and did a naming pass: renamed ost_instance → osc_inst for accuracy. Merged as PR #321. Related design doc: Ztp/ai_docs/ots-line-alignment/README.md.
+
+Releases: master.
+
+C.11 — GX-243941 : optional OSPF parameters for IPv4 ZTP-SNE-over-OSC
+Problem. OSPF over OSC for IPv4 ZTP-SNE needed optional parameter tuning (hello/dead intervals, area, etc.) and needed a symmetric cleanup path on ZTP disable.
+
+What you did. 2 commits, 64 LOC: fd02195 handle optional options for IPv4 ZTP over OSC, 179e278 add OSPF cleanup. Merged as PR #312.
+
+Releases: master.
+
+C.12 — GX-239631 : ZTP IPv4 SNE over OSC
+Problem. IPv4 provisioning of SNE via OSC channel wasn't supported.
+What you did. Full feature landing. Merged as PR #287.
+Releases: master.
+
+C.13 — GX-226006 : SNE-ZTP 1G OSC HW ZTP fails in redundant CC when active CC jacked out
+What you did. Merged as PR #276 — same class of problem as GX-244910 (CC-transition timing), earlier iteration.
+Releases: master.
+
+C.14 — GX-220230 : increase wait time for OSPF converge
+What you did. Merged as PR #271 — the initial baseline increase. GX-244910 later tuned it further per-scenario.
+Releases: master.
+
+C.15 — GX-186946 : ZTP SNE over OSC, process DHCPv4 vendor options
+What you did. Wired the dhcp-mfproxy relay path so DHCPv4 vendor options received by the relay NE are forwarded to the mf-service. Single commit in dhcp-mfproxy (PR #43, f5c0b8a).
+Releases: master.
+
+C.16 — GX-257141 : R9.0 change-ztp-mode disabled command taking ~5 mins
+Problem. The change-ztp-mode disabled CLI command was blocking for ~5 minutes because it kept running the OSPF-verify loop even after the disable had been requested.
+What you did. 1 commit, 5 LOC: b287eaf check for ZTP-disable interrupts during OSPF verifications — cooperative cancellation. Merged as PR #308.
+Releases: master + R9.0.
+
+C.17 — GX-282815 : zgrpc cleanup enhancements in ZTP-disabled mode
+Problem. When ZTP moved from enabled → disabled, the zgrpcclient systemd service wasn't being stopped cleanly; sockets persisted.
+What you did. 3 commits, 76 LOC across 4 files: 050cd5b initial enhancements, a076e15 review rework, f410fde further rework. Merged as PR #338.
+
+Related cursor chats: 52518ed4 (where is zgrpcclient service stopped?), 0cfe3d10 (start command analysis), eebdffb3 (does enabled→disabled clean up zgrpcclient_start.sh?), 96bf328e (log check for validation).
+
+Releases: master.
+
+C.18 — GX-269439 : R9.0 ZTP logs preventive for multiple requests (CFG_MGR_RESTART loops)
+Problem. Multiple subsystems could concurrently request CFG_MGR_RESTART during ZTP; every one logged a full trace, flooding the log.
+What you did. 3 commits, 8 LOC: 803ed18 + 718c13b add preventive soak for CFG_MGR_RESTART loops, aa60ef3 rework. Merged as PR #333.
+
+Related cursor chats: 920eb913 (125 lines — test-plan discussion for the soak).
+
+Releases: master + R9.0.
+
+C.19 — GX-277725 : ZTP image + config file download via HTTP from DHCP config
+What you did. 2 commits, 3 LOC (mostly log discipline): ec4d765 remove redundant log, 8fc0a1f remove ZTP log when secure mode is true. Companion to GX-274279. Merged as PR #334.
+Releases: master.
+
+C.20 — GX-247174 : FTS sync after operation succeeds
+What you did. 2 commits, 3 LOC. Companion to GX-243105 / GX-223031 sync-discipline family: 0b0d309 add sync after FTS operation succeeds, bfcb418 fix typo.
+Releases: master (with R8.1.0 sibling).
+
+Tier 4 — Sub-component fixes
+C.21 — GX-270222 : EQM ZTP callback narrowing
+Problem. After ZTP was introduced, EQM logs started blowing up. Root cause: EQM's dbfZtpModeCallback was registered on the entire s_DBioa_network_element__ztp DB table, so it fired on every change to any field in that table, not just ztp_mode. Each unrelated field change triggered a full callback pass.
+What you did. 5 commits, 213 LOC across 7 files in eqm: 5b27fb58 initial EQM ZTP changes, 165e912e rework, a0a14933 astyle pass, 7f3cae38 handle other ZTP states as non-error, f46d26bc added ZTP state mask.
+
+Related cursor chats: 9a47b106 (23-line problem statement), e6b2ab1f (40-line rework), 85c8e8fc (94-line HW-test-scenario plan), 8561a568 (strings command from EQM binary sanity check).
+
+Releases: master.
+
+Tier 5 — Documentation, hygiene, tooling
+C.22 — GX-261604 : Make FTS repo AI-workflow aware
+What you did. 1 commit, 2,013 LOC of structured documentation added: aidlc-docs/, DOCS/ARCHITECTURE.md (design intent, SRD traceability), DOCS/CONTEXT_NEW.md (implementation guide), 9fffe75. This is what made every subsequent AI-DLC change in FTS possible.
+Releases: master.
+
+C.23 — GX-284305 : README for FTS repo integration tests + UTs
+What you did. 3 commits in FTS (51 LOC): e1c2089 add readme, 1574fba + 2c719e9 rework. Plus 1 commit in gx-integration-tests (54 LOC): fa0f84af. Merged as PR #363.
+Related cursor chats: b8ff1685 (80 lines — nightly-sanity README design).
+Releases: master.
+
+C.24 — GX-235350 : end-to-end test case for DHCP relay with a different route
+What you did. Added the E2E test case. Merged as PR #128 in gx-integration-tests.
+Releases: master.
+
+C.25 — GX-248036 : SSM scripts changes for CTC
+What you did. Added sudo where CTC path required it (2 files, 4 LOC change): 025f605e + merge. Merged as PR #331 in gx-integration-tests.
+Releases: master.
+
+Part D — Technical domain map (what you've now touched or mastered)
+This is the "areas" list you asked for — the concrete technical domains, tools, and system layers your work has spanned.
+
+D.1 Networking / protocol layer
+DHCP client behaviour on Linux — dhclient lifecycle, lease persistence, LO-MGMT vs MGMT interface binding, cleanup semantics before config replay. (GX-282836, GX-244910, GX-186925.)
+DHCP options — option 43 (vendor-specific), 66 (siaddr/server-name), 67 (bootfile), and how ZTP dispatches on them. (GX-274279.)
+DHCP relay flow — end-to-end path when the relay node sits between DHCP server and SNE. (GX-235350, GX-186946.)
+OSPF over management-plane — convergence timers, hello/dead intervals, IPv4 vs IPv6 OSPF, over-OSC unnumbered OSPF, cooperative cancellation during verify. (GX-244910, GX-243941, GX-220230, GX-257141.)
+VRF (ip vrf exec) — running services scoped to specific routing tables (CTRL, MGMT), subprocess sudo pitfalls inside VRF. (GX-244910.)
+Optical transport basics — OSC channel, OTS/OMS/OCh layering, ROADM concepts. (GX-257707, GX-264468.)
+DHCP option → mf-service handoff — how DHCP vendor options end up programming hardware. (GX-186946.)
+D.2 Application-level design patterns
+Rate-limiting / coalescing — 5%+5s throttler (FTS), soak-window debounce (CFG_MGR_RESTART), callback-registration specificity (EQM).
+Producer-consumer with back-pressure — curl callback → RpcHandler → DB, and where to gate.
+Two-transport split — same source of truth (transfer state) surfaced at two cadences (CLI human-paced vs DB telemetry-paced) with different guarantees.
+Cooperative cancellation — interrupt-checked long-running verify loops.
+Guard-vs-revert design decision — introduce a de-dupe guard rather than restore removed filter code (GX-271524).
+Idempotent cleanup before re-apply — dhclient cleanup pre-config (GX-282836); ZTP-enabled guard pre-restart (GX-281131).
+D.3 Linux systems
+sync(2) / fsync(2) / syncfs(2) — flush semantics, PM-file race conditions, upgrade-artifact visibility. (GX-223031, GX-243105, GX-247174.)
+systemd unit lifecycle — zgrpcclient service teardown, ftsmgr.service. (GX-282815.)
+Linux netns / veth pairs / bridges — the DSIM substrate.
+popen / stderr piping — legacy shell-curl progress extraction (documented in cursor rule legacy-lo-mgmt-shell-curl-db-progress.mdc).
+D.4 nginx / proxy layer
+Configuring detail logging, log-level tuning (info vs warn), diagnostic surface for upgrade paths. (GX-243105.)
+D.5 Build / CI / test infrastructure
+CMake at multiple scales — top-level presets, per-submodule CMakeLists, CTC-only source inclusion gating.
+CTC instrumentation — how .sym symbol files are generated, how MON_*.txt files are captured from running instrumented binaries.
+Delta coverage — delta_cov_local --workspace --component --target_br workflow.
+Coverage taxonomy — decision, function, statement coverage; when to prioritise which.
+UT stub design — ssm/dbf/mf stubs; ztp_agent_test_api.h boundary contract.
+Test doubles (Meszaros) — practical stub vs fake usage.
+AI-DLC methodology — repo context docs as load-bearing input; boundary contracts as oracles.
+DSIM (Docker-based simulation) — topology bring-up scripts, MON file capture in containers, parameterised multi-node/multi-SNE topologies.
+D.6 Version-control / release engineering
+BitBucket PR workflow with auto-merge to master (Automatic merge to master for PR N).
+Cherrypicks to release branches (release/gx-r8.1.0).
+Version-file bumping across submodules.
+Revert-and-restore controlled rollback pattern (GX-186925 chain).
+D.7 Codebases mastered enough to design in
+filetransferservice — you're the de-facto owner of the progress-indicator + throttling + LO-MGMT paths.
+Ztp C++ path — ZtpAgent state machine, DBF callbacks, OSPF over OSC, HTTP-over-DHCP-option handling, cfg-mgr restart guards.
+Ztp Python path — ztpmgr.py, dhclient invocation, LO-MGMT cleanup, systemctl orchestration.
+dsim scripts — ZTP topology bring-up, MON generation.
+eqm — DBF callback registration patterns.
+Part E — Cross-cutting patterns / lessons
+These are the recurring engineering lessons visible across the JIRAs:
+
+Small surgical diffs for customer escalations. Every Tier-4/customer JIRA (GX-223031, GX-243105, GX-281131, GX-282836) landed with < 30 LOC of code change plus supporting logging. You explicitly rejected redesigns under time pressure.
+Documentation as load-bearing infrastructure. GX-261604 (FTS AI docs) enabled GX-265733 + GX-272386. GX-268026 UT docs enabled GX-273852. Docs are inputs to tools, not just for humans.
+Logging discipline is a product surface, not polish. Five JIRAs are essentially "get the right log at the right level" work: GX-243105 nginx, GX-274279 HTTP warning, GX-269439 CFG_MGR_RESTART soak, GX-288080 FTS logs, GX-282815 zgrpc cleanup logs.
+Rate limiting shows up everywhere. The same underlying pattern (coalesce high-frequency producer, gate at producer not consumer) appears in FTS throttler, CFG_MGR_RESTART soak, and EQM callback narrowing. Same lesson, three domains.
+Simulation parity is a force multiplier. Once ZTP-in-DSIM (GX-186925/210345/215042/217540) landed, iteration on subsequent ZTP JIRAs (GX-274279, 269439, 282836, 282815) sped up dramatically. Every hour spent on DSIM saved days on later customer fixes.
+AI-DLC = context + boundary contracts + review, not "run a prompt". The heavy commit counts on GX-268026 (rename, consolidate, fix link errors, remove seg-fault tests) show what the loop actually costs — the AI produced the volume, but you produced the shape.
+Multi-round reviews are the norm on customer hot paths. GX-272386 (~64% of commits were rework) and GX-274279 (13 commits to converge on a warning message) show that landing customer-critical code takes multiple review rounds by design.
+Part F — Cursor chats index (all 55, mapped)
+I'm grouping the 55 chat sessions by the work stream they belong to. Chat IDs prefixed with dates for sortability.
+
+FTS Progress Indicator family (17 chats — the most-discussed topic)
+2026-04-22 f8122c0c (62 lines) — "details" parameter of FTS DB update.
+2026-04-21 fc60be84 (24 lines) — settransferstate call frequency mind-map.
+2026-04-23 d9436532 (7 lines) — elapsed >= 5 || pct == 100U constexpr threshold.
+2026-04-23 17fbd9a3 (13 lines) — same threshold review, restated.
+2026-04-17 d970dba7 (162 lines) — guard-vs-revert design decision on curl-write callback.
+2026-04-20 0e9dd644 (11 lines) — MC test cases pointer in fullsys/fts.
+2026-04-30 ab755294 (30 lines) — cross-verify progress indicator + freq updates unaffected by branch task/GX-280069-fix-issues-found-during-validation.
+2026-05-05 19d5d920 (7 lines) — GX-278409 test binary swap.
+2026-05-12 b8ff1685 (80 lines) — nightly-sanity README (integration-tests).
+2026-05-14 68d324dd (20 lines) — where the CLI 5-second sync percentages are added.
+2026-05-14 9a3a467b (30 lines) — terminal-based file inspection for the same.
+2026-05-27 8730d587 (190 lines) — GX-242246/273537 GUI docs for the progress indicator across CRG/MIG/NMG.
+2026-05-29 0497dee2 (7 lines) — "error description" as a supported value for details param.
+2026-06-01 bac97b58 (79 lines) — code-walk of the recent throttler diff.
+2026-06-01 d9dea9a4 (31 lines) — GX-288080 log update commits inspection.
+2026-06-08 1923df20 (16 lines) — the production log with throttled=51, committed=64, triggers=5%,5s.
+2026-06-08 8112f1dc (9 lines) — 5%/5s/slow-path condition mapping.
+2026-06-05 08c2c743 (98 lines) — FTSManager transfer-status jump-to-100% analysis.
+2026-06-08 47ed79b2 (64 lines) — testing changes to LO-MGMT progress via 3-container DSIM.
+2026-06-09 612499dd (77 lines) — LO-MGMT total-bytes = 0 while details = completed; implementation estimate.
+2026-06-08 007225b1 (119 lines) — multichassis upgrade flow deep-dive (NC → sub-chassis → LC).
+ZTP UT / CTC coverage (10 chats)
+2026-04-07 47dfaca9 (12 lines) — why CTC is included again in tests; why logic is extracted separately for ztp's cpp.
+2026-04-07 1ee693bc (29 lines) — purpose of ztp_agent_test_api.h.
+2026-04-09 25729d89 (202 lines) — CTC report scripts + normal-build vs ctc-build linking.
+2026-04-09 7f0e125a (28 lines) — production log-flooding analysis (40k lines/min ztp.log) — actually informed multiple JIRAs.
+2026-04-23 63914c97 (280 lines) — DCC for a specific ZtpAgent.cpp line; deepest chat in the dataset.
+2026-04-23 f502f1c9 (72 lines) — MON_ZtpAgentMain.txt generation via DSIM container.
+2026-04-23 b93f6074 (5 lines) — delta_cov_local invocation for Ztp component.
+2026-04-22 8fcb9608 (162 lines) — the coverage report itself (31% / 70% / 7%).
+2026-04-26 7d179462 (46 lines) — plan to increase ZtpAgent coverage beyond 37%.
+2026-05-27 e4e18791 (83 lines) — filter the Ztp UT branch changes to only include non-breaking, clean UT.
+ZTP LO-MGMT / dhclient cleanup family (GX-282836 + siblings) (4 chats)
+2026-04-27 3b2926ab (43 lines) — GX-280791 JIRA — LO-MGMT missing scenario reproduction.
+2026-04-27 508fb2c8 (7 lines) — DHCP-server-assigns-same-IP-as-LO-IP scenario.
+2026-04-27 2931078c (23 lines) — ztpmgr.py LO-MGMT cleanup design.
+2026-05-29 0f4c21dc (133 lines) — GX-282836 full log walkthrough.
+zgrpc cleanup family (GX-282815) (4 chats)
+2026-04-30 52518ed4 (12 lines) — where is zgrpcclient stopped?
+2026-05-04 0cfe3d10 (49 lines) — start command for zgrpcclient; disabled-ZTP behaviour.
+2026-05-04 eebdffb3 (56 lines) — enabled→disabled cleanup of zgrpcclient_start.sh process.
+2026-05-08 96bf328e (3 lines) — log-based validation for the change.
+chassis-upgrade / cfg-mgr restart (GX-281131) (2 chats)
+2026-05-01 48e5b002 (28 lines) — HW image binary/lib swap for testing.
+2026-05-06 cdf16de9 (83 lines) — unique_ptr deref review flag before merge.
+EQM ZTP callback narrowing (GX-270222) (4 chats)
+2026-04-23 9a47b106 (23 lines) — EQM log spam problem statement.
+2026-04-29 e6b2ab1f (40 lines) — same problem, rework.
+2026-05-05 85c8e8fc (94 lines) — HW-test-scenarios plan for the commit.
+2026-04-29 8561a568 (0 lines) — strings command from EQM binary for SDEQM-DEBUG.
+ZTP HTTP option-43 (GX-274279) (2 chats)
+2026-04-07 58a11e9c (9 lines) — where to add the console log (agent vs mgr).
+2026-04-07 a6f38f90 (4 lines) — indentation check on two commits.
+CFG_MGR_RESTART soak (GX-269439) (1 chat)
+2026-04-15 920eb913 (125 lines) — test plan for the soak.
+IPv4 4000-routes ZTP investigation (mirror of GX-244910) (1 chat)
+2026-05-27 de6b00c9 (120 lines) — full scenario write-up + JIRA framing.
+INCI / gRPC / cross-cutting knowledge chats (2 chats)
+2026-05-07 69b74cf6 (62 lines) — INCI sequence diagram + role of the repo.
+2026-05-21 42d4218a (39 lines) — gRPC FaultRegistrationRequest → INCI server flow.
+Environment / tooling / meta (4 chats)
+2026-05-06 6cce1ad0 (19 lines) — Confluence MCP access probing.
+2026-05-07 589880d2 (0 lines) — a log paste (no query).
+2026-06-05 53ca4930 (4 lines) — workspace access confirmation for /home/sd/.
+2026-06-09 a87de4e0 (0 lines) — this current session's originating question.
+Part G — Source of every number in this document
+Commit list & LOC per JIRA: git log --author="Shreyas D" --all --pretty=format:"%h %s" --shortstat iterated across every submodule directory containing a .git. Aggregation script bucketed by JIRA prefix.
+Chat count and metadata: every .jsonl under ~/.cursor/projects/home-sd-chassisx-g30/agent-transcripts/; first user_query extracted per session; ordered by mtime.
+Coverage percentages (31/70/7): cursor chat 8fcb9608 — direct paste of the CTC report.
+Throttler percentages (51/64 → 44%): cursor chat 1923df20 — production log line.
+Repo purpose descriptions: each repo's README.md / DOCS/ARCHITECTURE.md / ai_docs/README.md where available, plus the code-layout snapshot of each repo's root directory.
+If any specific JIRA needs a deeper dive (files touched, exact diff, reviewer comments trail, or a fuller before/after code walk), point at it and I'll expand it inline.
