@@ -81,7 +81,7 @@ export function Band({ maxSpeed = 50, minSpeed = 10 }) {
               onPointerOut={() => hover(false)}
               onPointerUp={(e) => (e.target.releasePointerCapture(e.pointerId), drag(false))}
               onPointerDown={(e) => (e.target.setPointerCapture(e.pointerId), drag(new THREE.Vector3().copy(e.point).sub(vec.copy(card.current.translation()))))}>
-              <mesh geometry={nodes.card.geometry} castShadow receiveShadow>
+              <mesh name="card" geometry={nodes.card.geometry} castShadow receiveShadow>
                 <meshPhysicalMaterial map={materials.base.map} map-anisotropy={16} clearcoat={1} clearcoatRoughness={0.15} roughness={0.3} metalness={0.5} />
               </mesh>
               <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.3} castShadow receiveShadow />

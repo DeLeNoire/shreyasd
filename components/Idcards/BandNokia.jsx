@@ -13,7 +13,7 @@ useGLTF.preload('/Nokia/NokiaId.glb')
 // Placeholder tag texture; you can replace with the Nokia tag when available
 useTexture.preload('/NokiaTag.png')
 
-export default function NokiaId({ onNext, onPrev }) {
+export default function NokiaId({ onNext, onPrev, theme = 'dark' }) {
   // Cube component
   const Cube = ({ variant = 'default', label = '', className = '' }) => {
     return (
@@ -43,12 +43,12 @@ export default function NokiaId({ onNext, onPrev }) {
         
         {/* Canvas in center */}
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <div style={{ width: '100%', height: '100%' }}>
+          <div style={{ width: '100%', height: '100%', background: theme === 'dark' ? '#111111' : 'linear-gradient(180deg, #f7f7f7 0%, #eeeeee 100%)', borderRadius: '16px', border: theme === 'dark' ? '1px solid #2a2a2a' : '1px solid #e5e5e5', overflow: 'hidden' }}>
         <Canvas
           shadows
           camera={{ position: [0, 0, 13], fov: 25 }}
           dpr={[1, 2]}
-          style={{ background: 'radial-gradient(circle at top, rgba(255,59,59,0.16), transparent 40%), linear-gradient(to bottom, #0f0f0f, #161616)', width: '100%', height: '100%' }}
+          style={{ background: theme === 'dark' ? '#111111' : '#ffffff', width: '100%', height: '100%' }}
           gl={{
             alpha: true,
             toneMapping: THREE.NoToneMapping,
@@ -90,7 +90,7 @@ export default function NokiaId({ onNext, onPrev }) {
           />
 
           {/* Dots Background */}
-          <DotsBackground />
+          <DotsBackground theme={theme} />
 
           <Physics interpolate gravity={[0, -40, 0]} timeStep={1 / 60}>
             <BandNokia />
@@ -122,7 +122,7 @@ export default function NokiaId({ onNext, onPrev }) {
             style={{
               fontSize: 'clamp(1.25rem, 4.5vw, 1.5rem)',
               fontWeight: 700,
-              color: '#ff3b3b',
+              color: '#4c0013',
               letterSpacing: '0.05em',
               textTransform: 'uppercase',
               marginBottom: '0.4rem',
@@ -241,7 +241,7 @@ function BandNokia({ maxSpeed = 50, minSpeed = 10 }) {
             onPointerDown={(e) => (e.target.setPointerCapture(e.pointerId), drag(new THREE.Vector3().copy(e.point).sub(vec.copy(card.current.translation()))))}
           >
             {/* Render the Nokia model as the card. scene primitive preserves the model hierarchy and materials. */}
-            <primitive object={gltf.scene} castShadow receiveShadow />
+            <primitive name="card" object={gltf.scene} castShadow receiveShadow />
           </group>
         </RigidBody>
       </group>

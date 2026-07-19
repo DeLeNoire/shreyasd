@@ -3,39 +3,47 @@ import { useEffect, useState } from "react";
 import ExpandingLayout from "@/components/grids/homegrid";
 import PortfolioClone from "@/components/Project/rest";
 
+type ThemeMode = "dark" | "light";
+
 export default function Home() {
   const [isGifVisible, setIsGifVisible] = useState(true);
   const [isLayoutVisible, setIsLayoutVisible] = useState(false);
+  const [theme, setTheme] = useState<ThemeMode>("dark");
 
-  // Effect to handle the delay
   useEffect(() => {
-    // Set a timeout to hide the GIF and show the ExpandingLayout after 6 seconds
     const timer = setTimeout(() => {
       setIsGifVisible(false);
       setIsLayoutVisible(true);
     }, 1000);
 
-    return () => clearTimeout(timer); // Cleanup on unmount
+    return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", theme === "dark");
+    document.documentElement.style.colorScheme = theme;
+  }, [theme]);
 
   return (
     <>
       {isGifVisible && (
-        <div className="flex justify-center items-center h-screen bg-[#111111]">
-          <div className="text-center text-sm font-mono text-[#b4b2ad]">
+        <div className={`flex justify-center items-center h-screen ${theme === "dark" ? "bg-[#111111] text-[#b4b2ad]" : "bg-white text-[#4b463d]"}`}>
+          <div className="text-center text-sm font-mono">
             Loading portfolio…
           </div>
         </div>
       )}
 
-      {isLayoutVisible && <ExpandingLayout />}
+      {isLayoutVisible && (
+        <ExpandingLayout
+          theme={theme}
+          toggleTheme={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
+        />
+      )}
 
-
-      {/* Portfolio Clone Section - Full Width */}
-      <section className="w-full min-h-screen">
-        <PortfolioClone />
+      <section className={`w-full min-h-screen ${theme === "dark" ? "bg-[#111111]" : "bg-[#f7f2e8]"}`}>
+        <PortfolioClone theme={theme} />
       </section>
-
     </>
   );
 }

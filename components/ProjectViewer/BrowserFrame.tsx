@@ -14,7 +14,7 @@ export default function BrowserFrame({ url }: Props) {
         <span className="w-3 h-3 bg-[#4ade80] rounded-full" />
         <span className="ml-2 text-[10px] text-[#8a8784] truncate">{url}</span>
       </div>
-      <iframe src={url} className="w-full h-[calc(100%-32px)] bg-[#111111]" />
+      <iframe src={url} className="w-full h-[calc(100%-32px)] bg-[#cccccc]"/>
     </div>
   );
 }
